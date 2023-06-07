@@ -1,4 +1,7 @@
 package android.maxim.freshwallpapers.ui.image
 
-class Image {
+import android.maxim.freshwallpapers.R
+import androidx.fragment.app.Fragment
+
+class Image: Fragment(R.layout.fragment_image) {
 }
