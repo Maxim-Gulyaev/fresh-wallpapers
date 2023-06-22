@@ -2,6 +2,8 @@ package android.maxim.freshwallpapers.di
 
 import android.maxim.freshwallpapers.data.network.WallpapersApi
 import android.maxim.freshwallpapers.utils.Constants
+import android.maxim.freshwallpapers.utils.Constants.TAG
+import android.util.Log
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,8 +20,9 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideWallpapersApi(): WallpapersApi? {
+    fun provideWallpapersApi(): WallpapersApi {
 
+        Log.d(TAG, "AppModule.provideWallpapersApi()")
         val interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.BODY
 
