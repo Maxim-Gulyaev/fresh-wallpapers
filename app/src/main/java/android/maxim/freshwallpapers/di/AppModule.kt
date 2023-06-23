@@ -1,5 +1,7 @@
 package android.maxim.freshwallpapers.di
 
+import android.content.Context
+import android.maxim.freshwallpapers.data.models.CategoriesList
 import android.maxim.freshwallpapers.data.network.WallpapersApi
 import android.maxim.freshwallpapers.utils.Constants
 import android.maxim.freshwallpapers.utils.Constants.TAG
@@ -37,5 +39,11 @@ class AppModule {
             //.addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .build()
         return retrofit.create(WallpapersApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCategoriesList(): CategoriesList {
+        return CategoriesList()
     }
 }

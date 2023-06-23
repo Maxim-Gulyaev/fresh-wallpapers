@@ -1,4 +1,29 @@
 package android.maxim.freshwallpapers.ui.categories
 
-class CategoriesAdapter {
+import android.maxim.freshwallpapers.databinding.ItemCategoriesBinding
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
+
+class CategoriesAdapter(private val categoriesList: List<String>): RecyclerView.Adapter<CategoriesAdapter.CategoriesAdapterViewHolder>() {
+
+    inner class CategoriesAdapterViewHolder(private val itemBinding: ItemCategoriesBinding): ViewHolder(itemBinding.root) {
+        fun bind(title: String) {
+            itemBinding.tvCategory.text = title
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoriesAdapterViewHolder {
+        val itemBinding = ItemCategoriesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return CategoriesAdapterViewHolder(itemBinding)
+    }
+
+    override fun onBindViewHolder(holder: CategoriesAdapterViewHolder, position: Int) {
+        val title: String = categoriesList[position]
+        holder.bind(title)
+    }
+
+    override fun getItemCount(): Int = categoriesList.size
+
 }
