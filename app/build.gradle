@@ -59,11 +59,7 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     implementation "com.squareup.okhttp3:logging-interceptor:$okHttp_version"
-
-    //fragment
-    def fragment_version = '2.5.0'
-    implementation "androidx.navigation:navigation-fragment-ktx:$fragment_version"
-
+    
     //navigation
     def nav_version = "2.5.3"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
