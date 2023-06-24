@@ -9,12 +9,23 @@
         android:id="@+id/categoriesFragment"
         android:name="android.maxim.freshwallpapers.ui.categories.CategoriesFragment"
         android:label="CategoriesFragment"
-        tools:layout="@layout/fragment_categories"/>
+        tools:layout="@layout/fragment_categories">
+        <action
+            android:id="@+id/action_categoriesFragment_to_imagesListFragment"
+            app:destination="@id/imagesListFragment" />
+        <action
+            android:id="@+id/action_categoriesFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/imagesListFragment"
         android:name="android.maxim.freshwallpapers.ui.imageslist.ImagesListFragment"
         android:label="ImagesListFragment"
-        tools:layout="@layout/fragment_images_list"/>
+        tools:layout="@layout/fragment_images_list">
+        <action
+            android:id="@+id/action_imagesListFragment_to_imageFragment"
+            app:destination="@id/imageFragment" />
+    </fragment>
     <fragment
         android:id="@+id/imageFragment"
         android:name="android.maxim.freshwallpapers.ui.image.ImageFragment"
