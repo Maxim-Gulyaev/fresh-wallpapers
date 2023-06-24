@@ -14,7 +14,7 @@ class CategoriesViewModel @Inject constructor(): ViewModel() {
     lateinit var repository: WallpapersRepository
 
     fun getCategoriesList(): List<String> {
-        Log.d(Constants.TAG, "CategoriesViewModel.gerCategoriesList()")
+        Log.d(Constants.TAG, "CategoriesViewModel.getCategoriesList()")
         return repository.getCategoriesList()
     }
 }
