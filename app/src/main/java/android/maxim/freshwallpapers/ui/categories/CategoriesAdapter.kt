@@ -1,21 +1,16 @@
 package android.maxim.freshwallpapers.ui.categories
 
+import android.maxim.freshwallpapers.R
 import android.maxim.freshwallpapers.databinding.ItemCategoriesBinding
-import android.maxim.freshwallpapers.utils.Constants.TAG
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 
 class CategoriesAdapter(private val categoriesList: List<String>): RecyclerView.Adapter<CategoriesAdapter.CategoriesAdapterViewHolder>() {
 
     inner class CategoriesAdapterViewHolder(private val itemBinding: ItemCategoriesBinding): ViewHolder(itemBinding.root) {
-        init {
-            itemBinding.tvCategory.setOnClickListener {
-                Log.i(TAG, "Recycler was clicked")
-            }
-        }
         fun bind(title: String) {
             itemBinding.tvCategory.text = title
         }
@@ -29,6 +24,8 @@ class CategoriesAdapter(private val categoriesList: List<String>): RecyclerView.
     override fun onBindViewHolder(holder: CategoriesAdapterViewHolder, position: Int) {
         val title: String = categoriesList[position]
         holder.bind(title)
+        holder.itemView.setOnClickListener {
+            Navigation.createNavigateOnClickListener(R.id.action_categoriesFragment_to_imagesListFragment).onClick(holder.itemView) }
     }
 
     override fun getItemCount(): Int = categoriesList.size

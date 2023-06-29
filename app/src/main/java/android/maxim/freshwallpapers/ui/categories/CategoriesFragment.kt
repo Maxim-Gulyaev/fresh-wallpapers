@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -34,6 +35,12 @@ class CategoriesFragment: Fragment(R.layout.fragment_categories) {
         super.onViewCreated(view, savedInstanceState)
         Log.d(TAG, "CategoriesFragment.onViewCreated()")
         binding.collectionsToolbar.inflateMenu(R.menu.categories_toolbar_menu)
+        binding.collectionsToolbar.setOnMenuItemClickListener {
+            if (it.itemId == R.id.action_settings) {
+                findNavController().navigate(R.id.action_categoriesFragment_to_settingsFragment)
+            }
+            false
+        }
         binding.recyclerCategories.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = CategoriesAdapter(categoriesViewModel.getCategoriesList())
