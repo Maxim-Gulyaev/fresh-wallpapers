@@ -34,12 +34,14 @@ class CategoriesFragment: Fragment(R.layout.fragment_categories) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d(TAG, "CategoriesFragment.onViewCreated()")
-        binding.collectionsToolbar.inflateMenu(R.menu.categories_toolbar_menu)
-        binding.collectionsToolbar.setOnMenuItemClickListener {
-            if (it.itemId == R.id.action_settings) {
-                findNavController().navigate(R.id.action_categoriesFragment_to_settingsFragment)
+        binding.collectionsToolbar.apply {
+            inflateMenu(R.menu.categories_toolbar_menu)
+            setOnMenuItemClickListener {
+                if (it.itemId == R.id.action_settings) {
+                    findNavController().navigate(R.id.action_categoriesFragment_to_settingsFragment)
+                }
+                false
             }
-            false
         }
         binding.recyclerCategories.apply {
             layoutManager = LinearLayoutManager(activity)
