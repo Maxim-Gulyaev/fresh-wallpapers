@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -34,6 +33,7 @@ class CategoriesFragment: Fragment(R.layout.fragment_categories) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d(TAG, "CategoriesFragment.onViewCreated()")
+        binding.collectionsToolbar.inflateMenu(R.menu.categories_toolbar_menu)
         binding.recyclerCategories.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = CategoriesAdapter(categoriesViewModel.getCategoriesList())
