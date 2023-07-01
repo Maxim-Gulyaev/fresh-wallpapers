@@ -25,7 +25,8 @@ class CategoriesAdapter(private val categoriesList: List<String>): RecyclerView.
         val title: String = categoriesList[position]
         holder.bind(title)
         holder.itemView.setOnClickListener {
-            Navigation.createNavigateOnClickListener(R.id.action_categoriesFragment_to_imagesListFragment).onClick(holder.itemView) }
+            Navigation.createNavigateOnClickListener(R.id.action_categoriesFragment_to_imagesListFragment).onClick(holder.itemView)
+        }
     }
 
     override fun getItemCount(): Int = categoriesList.size
