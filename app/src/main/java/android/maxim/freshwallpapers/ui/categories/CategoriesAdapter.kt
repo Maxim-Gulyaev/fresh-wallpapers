@@ -2,6 +2,7 @@ package android.maxim.freshwallpapers.ui.categories
 
 import android.maxim.freshwallpapers.R
 import android.maxim.freshwallpapers.databinding.ItemCategoriesBinding
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.Navigation
@@ -25,7 +26,9 @@ class CategoriesAdapter(private val categoriesList: List<String>): RecyclerView.
         val title: String = categoriesList[position]
         holder.bind(title)
         holder.itemView.setOnClickListener {
-            Navigation.createNavigateOnClickListener(R.id.action_categoriesFragment_to_imagesListFragment).onClick(holder.itemView)
+            val bundle = Bundle()
+            bundle.putString("category", title)
+            Navigation.createNavigateOnClickListener(R.id.action_categoriesFragment_to_imagesListFragment, bundle).onClick(holder.itemView)
         }
     }
 

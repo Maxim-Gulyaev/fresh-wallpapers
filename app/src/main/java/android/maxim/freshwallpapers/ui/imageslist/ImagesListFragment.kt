@@ -29,7 +29,9 @@ class ImagesListFragment: Fragment(R.layout.fragment_images_list) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d(Constants.TAG, "ImagesListFragment.onViewCreated()")
+        val toolbarTitle = arguments?.getString("category")?.replaceFirstChar(Char::titlecase)
         binding.imageListToolbar.apply {
+            title = toolbarTitle
             setNavigationIcon(R.drawable.baseline_arrow_back_ios_black_24)
             setNavigationOnClickListener {
                 findNavController().navigate(R.id.categoriesFragment)
