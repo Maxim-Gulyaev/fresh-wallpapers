@@ -1,7 +1,7 @@
 package android.maxim.freshwallpapers.ui.imageslist
 
 import android.maxim.freshwallpapers.R
-import android.maxim.freshwallpapers.databinding.FragmentImagesListBinding
+import android.maxim.freshwallpapers.databinding.FragmentImageListBinding
 import android.maxim.freshwallpapers.utils.Constants
 import android.os.Bundle
 import android.util.Log
@@ -11,9 +11,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 
-class ImagesListFragment: Fragment(R.layout.fragment_images_list) {
+class ImageListFragment: Fragment(R.layout.fragment_image_list) {
 
-    private var _binding: FragmentImagesListBinding? = null
+    private var _binding: FragmentImageListBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -21,14 +21,14 @@ class ImagesListFragment: Fragment(R.layout.fragment_images_list) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        Log.d(Constants.TAG, "ImagesListFragment.onCreateView()")
-        _binding = FragmentImagesListBinding.inflate(layoutInflater, container, false)
+        Log.d(Constants.TAG, "ImageListFragment.onCreateView()")
+        _binding = FragmentImageListBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d(Constants.TAG, "ImagesListFragment.onViewCreated()")
+        Log.d(Constants.TAG, "ImageListFragment.onViewCreated()")
         val toolbarTitle = arguments?.getString("category")?.replaceFirstChar(Char::titlecase)
         binding.imageListToolbar.apply {
             title = toolbarTitle
@@ -41,7 +41,7 @@ class ImagesListFragment: Fragment(R.layout.fragment_images_list) {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.d(Constants.TAG, "CategoriesFragment.onDestroyView()")
+        Log.d(Constants.TAG, "ImageListFragment.onDestroyView()")
         _binding = null
     }
 }

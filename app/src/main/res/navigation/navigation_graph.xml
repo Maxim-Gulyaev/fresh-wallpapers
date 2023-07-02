@@ -19,9 +19,9 @@
     </fragment>
     <fragment
         android:id="@+id/imagesListFragment"
-        android:name="android.maxim.freshwallpapers.ui.imageslist.ImagesListFragment"
+        android:name="android.maxim.freshwallpapers.ui.imageslist.ImageListFragment"
         android:label="ImagesListFragment"
-        tools:layout="@layout/fragment_images_list">
+        tools:layout="@layout/fragment_image_list">
         <action
             android:id="@+id/action_imagesListFragment_to_imageFragment"
             app:destination="@id/imageFragment" />
