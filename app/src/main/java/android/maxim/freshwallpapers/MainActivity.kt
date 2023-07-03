@@ -20,8 +20,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        Log.d(TAG, "MainActivity.onCreate()")
 
-        Log.i(TAG, mainActivityViewModel.getCategoriesList().toString())
+        repository.getImageList("sports")
+
     }
 }

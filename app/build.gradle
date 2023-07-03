@@ -68,4 +68,14 @@ dependencies {
     //fragment
     def fragment_version = "1.5.7"
     implementation "androidx.fragment:fragment-ktx:$fragment_version"
+
+    //coroutines
+    def coroutines_version = "1.6.4"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+
+    //lifecycle
+    def lifecycle_extension_version = '2.2.0-beta01'
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_extension_version"
+
+
 }

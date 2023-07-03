@@ -15,8 +15,12 @@ import retrofit2.Response
 import javax.inject.Inject
 import android.content.Context
 import android.maxim.freshwallpapers.di.WallpapersRepositoryEntryPoint
+import android.maxim.freshwallpapers.utils.Constants.TAG
 import dagger.hilt.EntryPoints
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class WallpapersRepository @Inject constructor(@ApplicationContext context: Context) {
 
@@ -25,19 +29,39 @@ class WallpapersRepository @Inject constructor(@ApplicationContext context: Cont
     private val categoriesList = hiltEntryPoint.categoriesList()
 
     fun getCategoriesList(): List<String> {
-        Log.d(Constants.TAG, "WallpapersRepository.getCategoriesList()")
+        Log.d(TAG, "WallpapersRepository.getCategoriesList()")
         val categoriesList = CategoriesList()
         //TODO():inject categoriesList
         return categoriesList.categoriesList
     }
 
-    /*fun getCategoriesList() {
-        wallpapersApi.getCategoriesList(Constants.PIXABAY_API_KEY, "").enqueue(object:
-            Callback<ResponseBody> {
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+    /*fun getImageList(category: String) {
+        Log.d(TAG, "WallpapersRepository.getImageList() with parameter $category")
+        wallpapersApi.getImageList(Constants.PIXABAY_API_KEY, category).enqueue(
+            object: Callback<ResponseBody> {
+                override fun onResponse(
+                    call: Call<ResponseBody>,
+                    response: Response<ResponseBody>
+                ) {
+                    Log.d(TAG, "WallpapersRepository.getImageList().onResponse")
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    Log.d(TAG, "WallpapersRepository.getImageList().onFailure")
+                }
+
             }
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-            }
-        })
+        )
     }*/
+
+    fun getImageList(category: String) {
+        Log.d(TAG, "WallpapersRepository.getImageList() with parameter $category")
+        GlobalScope.launch(Dispatchers.IO) {
+            val response = wallpapersApi.getImageList(Constants.PIXABAY_API_KEY, category)
+            if (response.isSuccessful) {
+                Log.d(TAG, "WallpapersRepository.getImageList() coroutine response")
+            }
+        }
+
+    }
 }
