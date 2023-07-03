@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -19,6 +20,7 @@ class ImageListFragment: Fragment(R.layout.fragment_image_list) {
     private var _binding: FragmentImageListBinding? = null
     private val binding get() = _binding!!
     private val imageListViewModel: ImageListViewModel by viewModels()
+    private var category: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,7 +30,8 @@ class ImageListFragment: Fragment(R.layout.fragment_image_list) {
         Log.d(Constants.TAG, "ImageListFragment.onCreateView()")
         _binding = FragmentImageListBinding.inflate(layoutInflater, container, false)
 
-        imageListViewModel.testRequest("sports")
+        category = arguments?.getString("category")
+        imageListViewModel.getImageList(category!!)
 
         return binding.root
     }
@@ -36,7 +39,7 @@ class ImageListFragment: Fragment(R.layout.fragment_image_list) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d(Constants.TAG, "ImageListFragment.onViewCreated()")
-        val toolbarTitle = arguments?.getString("category")?.replaceFirstChar(Char::titlecase)
+        val toolbarTitle = category?.replaceFirstChar(Char::titlecase)
         binding.imageListToolbar.apply {
             title = toolbarTitle
             setNavigationIcon(R.drawable.baseline_arrow_back_ios_black_24)

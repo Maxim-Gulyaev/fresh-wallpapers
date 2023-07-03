@@ -35,31 +35,11 @@ class WallpapersRepository @Inject constructor(@ApplicationContext context: Cont
         return categoriesList.categoriesList
     }
 
-    /*fun getImageList(category: String) {
-        Log.d(TAG, "WallpapersRepository.getImageList() with parameter $category")
-        wallpapersApi.getImageList(Constants.PIXABAY_API_KEY, category).enqueue(
-            object: Callback<ResponseBody> {
-                override fun onResponse(
-                    call: Call<ResponseBody>,
-                    response: Response<ResponseBody>
-                ) {
-                    Log.d(TAG, "WallpapersRepository.getImageList().onResponse")
-                }
-
-                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                    Log.d(TAG, "WallpapersRepository.getImageList().onFailure")
-                }
-
-            }
-        )
-    }*/
-
     suspend fun getImageList(category: String) {
         Log.d(TAG, "WallpapersRepository.getImageList() with parameter $category")
         val response = wallpapersApi.getImageList(Constants.PIXABAY_API_KEY, category)
         if (response.isSuccessful) {
             Log.d(TAG, "WallpapersRepository.getImageList() coroutine response")
         }
-
     }
 }
