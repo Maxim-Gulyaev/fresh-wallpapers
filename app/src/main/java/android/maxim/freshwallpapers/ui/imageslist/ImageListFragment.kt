@@ -11,7 +11,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ImageListFragment: Fragment(R.layout.fragment_image_list) {
 
     private var _binding: FragmentImageListBinding? = null
@@ -25,6 +27,9 @@ class ImageListFragment: Fragment(R.layout.fragment_image_list) {
     ): View {
         Log.d(Constants.TAG, "ImageListFragment.onCreateView()")
         _binding = FragmentImageListBinding.inflate(layoutInflater, container, false)
+
+        imageListViewModel.testRequest("sports")
+
         return binding.root
     }
 
