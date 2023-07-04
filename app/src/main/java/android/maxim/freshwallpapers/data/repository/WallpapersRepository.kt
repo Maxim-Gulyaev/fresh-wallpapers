@@ -1,26 +1,14 @@
 package android.maxim.freshwallpapers.data.repository
 
-import android.maxim.freshwallpapers.data.models.CategoriesList
-import android.maxim.freshwallpapers.data.network.WallpapersApi
-import android.maxim.freshwallpapers.utils.Constants
-import android.util.Log
-import dagger.hilt.EntryPoint
-import dagger.hilt.InstallIn
-import dagger.hilt.android.EntryPointAccessors
-import dagger.hilt.components.SingletonComponent
-import okhttp3.ResponseBody
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import javax.inject.Inject
 import android.content.Context
+import android.maxim.freshwallpapers.data.models.CategoriesList
 import android.maxim.freshwallpapers.di.WallpapersRepositoryEntryPoint
+import android.maxim.freshwallpapers.utils.Constants
 import android.maxim.freshwallpapers.utils.Constants.TAG
+import android.util.Log
 import dagger.hilt.EntryPoints
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class WallpapersRepository @Inject constructor(@ApplicationContext context: Context) {
 
