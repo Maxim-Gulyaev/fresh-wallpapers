@@ -37,7 +37,13 @@ class WallpapersRepository @Inject constructor(@ApplicationContext context: Cont
 
     suspend fun getImageList(category: String) {
         Log.d(TAG, "WallpapersRepository.getImageList() with parameter $category")
-        val response = wallpapersApi.getImageList(Constants.PIXABAY_API_KEY, category)
+        val response = wallpapersApi.getImageList(
+            Constants.PIXABAY_API_KEY,
+            200,
+            "background",
+            "vertical",
+            "photo",
+            category)
         if (response.isSuccessful) {
             Log.d(TAG, "WallpapersRepository.getImageList() coroutine response")
         }
