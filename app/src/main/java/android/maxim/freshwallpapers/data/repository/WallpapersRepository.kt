@@ -1,7 +1,6 @@
 package android.maxim.freshwallpapers.data.repository
 
 import android.content.Context
-import android.maxim.freshwallpapers.data.models.CategoriesList
 import android.maxim.freshwallpapers.di.WallpapersRepositoryEntryPoint
 import android.maxim.freshwallpapers.utils.Constants
 import android.maxim.freshwallpapers.utils.Constants.TAG
@@ -12,14 +11,14 @@ import javax.inject.Inject
 
 class WallpapersRepository @Inject constructor(@ApplicationContext context: Context) {
 
-    private val hiltEntryPoint = EntryPoints.get(context.applicationContext, WallpapersRepositoryEntryPoint::class.java)
+    private val hiltEntryPoint = EntryPoints.get(
+        context.applicationContext,
+        WallpapersRepositoryEntryPoint::class.java)
     private val wallpapersApi = hiltEntryPoint.wallpapersApi()
-    private val categoriesList = hiltEntryPoint.categoriesList()
+    private var categoriesList = hiltEntryPoint.categoriesList()
 
     fun getCategoriesList(): List<String> {
         Log.d(TAG, "WallpapersRepository.getCategoriesList()")
-        val categoriesList = CategoriesList()
-        //TODO():inject categoriesList
         return categoriesList.categoriesList
     }
 
