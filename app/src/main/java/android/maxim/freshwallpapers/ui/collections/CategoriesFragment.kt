@@ -1,4 +1,4 @@
-package android.maxim.freshwallpapers.ui.categories
+package android.maxim.freshwallpapers.ui.collections
 
 import android.maxim.freshwallpapers.R
 import android.maxim.freshwallpapers.databinding.FragmentCategoriesBinding
