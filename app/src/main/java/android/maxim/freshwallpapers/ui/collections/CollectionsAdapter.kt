@@ -9,34 +9,29 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 
-class CollectionsAdapter(private val collectionsList: List<String>)
-    : RecyclerView.Adapter<CollectionsAdapter.CollectionsAdapterViewHolder>() {
+class CollectionsAdapter(private val collectionsList: List<String>): RecyclerView.Adapter<CollectionsAdapter.CollectionsAdapterViewHolder>() {
 
-    inner class CollectionsAdapterViewHolder(
-        val itemBinding: ItemCollectionsBinding
-        ): ViewHolder(itemBinding.root)
+    inner class CollectionsAdapterViewHolder(private val itemBinding: ItemCollectionsBinding): ViewHolder(itemBinding.root) {
+        fun bind(title: String) {
+            itemBinding.tvCollection.text = title
+        }
+    }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
-    : CollectionsAdapterViewHolder {
-        val itemBinding = ItemCollectionsBinding
-            .inflate(LayoutInflater.from(parent.context), parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CollectionsAdapterViewHolder {
+        val itemBinding = ItemCollectionsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return CollectionsAdapterViewHolder(itemBinding)
     }
 
     override fun onBindViewHolder(holder: CollectionsAdapterViewHolder, position: Int) {
         val title: String = collectionsList[position]
-        with(holder) {
-            itemBinding.tvCollection.text = title
-            itemView.setOnClickListener {
-                val bundle = Bundle()
-                bundle.putString("category", title)
-                Navigation.createNavigateOnClickListener(
-                    R.id.action_collectionsFragment_to_imagesListFragment,
-                    bundle
-                ).onClick(holder.itemView)
-            }
+        holder.bind(title)
+        holder.itemView.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putString("category", title)
+            Navigation.createNavigateOnClickListener(R.id.action_collectionsFragment_to_imagesListFragment, bundle).onClick(holder.itemView)
         }
     }
 
     override fun getItemCount(): Int = collectionsList.size
+
 }
