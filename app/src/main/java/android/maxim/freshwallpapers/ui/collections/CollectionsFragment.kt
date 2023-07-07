@@ -1,7 +1,7 @@
 package android.maxim.freshwallpapers.ui.collections
 
 import android.maxim.freshwallpapers.R
-import android.maxim.freshwallpapers.databinding.FragmentCategoriesBinding
+import android.maxim.freshwallpapers.databinding.FragmentCollectionsBinding
 import android.maxim.freshwallpapers.utils.Constants.TAG
 import android.os.Bundle
 import android.util.Log
@@ -15,43 +15,43 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CategoriesFragment: Fragment(R.layout.fragment_categories) {
+class CollectionsFragment: Fragment(R.layout.fragment_collections) {
 
-    private var _binding: FragmentCategoriesBinding? = null
+    private var _binding: FragmentCollectionsBinding? = null
     private val binding get() = _binding!!
-    private val categoriesViewModel: CategoriesViewModel by viewModels()
+    private val collectionsViewModel: CollectionsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        Log.d(TAG, "CategoriesFragment.onCreateView()")
-        _binding = FragmentCategoriesBinding.inflate(layoutInflater, container, false)
+        Log.d(TAG, "CollectionsFragment.onCreateView()")
+        _binding = FragmentCollectionsBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d(TAG, "CategoriesFragment.onViewCreated()")
+        Log.d(TAG, "CollectionsFragment.onViewCreated()")
         binding.collectionsToolbar.apply {
-            inflateMenu(R.menu.categories_toolbar_menu)
+            inflateMenu(R.menu.collections_toolbar_menu)
             setOnMenuItemClickListener {
                 if (it.itemId == R.id.action_settings) {
-                    findNavController().navigate(R.id.action_categoriesFragment_to_settingsFragment)
+                    findNavController().navigate(R.id.action_collectionsFragment_to_settingsFragment)
                 }
                 false
             }
         }
-        binding.recyclerCategories.apply {
+        binding.recyclerCollections.apply {
             layoutManager = LinearLayoutManager(activity)
-            adapter = CategoriesAdapter(categoriesViewModel.getCategoriesList())
+            adapter = CollectionsAdapter(collectionsViewModel.getCategoriesList())
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.d(TAG, "CategoriesFragment.onDestroyView()")
+        Log.d(TAG, "CollectionsFragment.onDestroyView()")
         _binding = null
     }
 }

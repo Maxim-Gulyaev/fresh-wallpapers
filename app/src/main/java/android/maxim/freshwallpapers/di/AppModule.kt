@@ -1,7 +1,6 @@
 package android.maxim.freshwallpapers.di
 
-import android.content.Context
-import android.maxim.freshwallpapers.data.models.CategoriesList
+import android.maxim.freshwallpapers.data.models.CollectionsList
 import android.maxim.freshwallpapers.data.network.WallpapersApi
 import android.maxim.freshwallpapers.utils.Constants
 import android.maxim.freshwallpapers.utils.Constants.TAG
@@ -43,7 +42,7 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideCategoriesList(): CategoriesList {
-        return CategoriesList()
+    fun provideCollectionsList(): CollectionsList {
+        return CollectionsList()
     }
 }

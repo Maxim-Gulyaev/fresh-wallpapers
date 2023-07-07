@@ -11,10 +11,10 @@ interface WallpapersApi {
     suspend fun getImageList(
         @Query("key") apiKey: String,
         @Query("per_page") perPage: Int,
-        @Query("category") backgroundCategory: String,
+        @Query("category") category: String,
         @Query("orientation") orientation: String,
         @Query("image_type") imageType: String,
-        @Query("q") category: String
+        @Query("q") collection: String
     ): Response<ImageList>
 
 }

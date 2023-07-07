@@ -1,7 +1,7 @@
 package android.maxim.freshwallpapers.data.models
 
-data class CategoriesList (
-    val categoriesList: List<String> = listOf(
+data class CollectionsList (
+    val collectionsList: List<String> = listOf(
         "nature",
         "science",
         "education",

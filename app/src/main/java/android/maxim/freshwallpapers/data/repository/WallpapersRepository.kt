@@ -15,22 +15,22 @@ class WallpapersRepository @Inject constructor(@ApplicationContext context: Cont
         context.applicationContext,
         WallpapersRepositoryEntryPoint::class.java)
     private val wallpapersApi = hiltEntryPoint.wallpapersApi()
-    private var categoriesList = hiltEntryPoint.categoriesList()
+    private var collectionsList = hiltEntryPoint.collectionsList()
 
     fun getCategoriesList(): List<String> {
         Log.d(TAG, "WallpapersRepository.getCategoriesList()")
-        return categoriesList.categoriesList
+        return collectionsList.collectionsList
     }
 
-    suspend fun getImageList(category: String) {
-        Log.d(TAG, "WallpapersRepository.getImageList() with parameter $category")
+    suspend fun getImageList(collection: String) {
+        Log.d(TAG, "WallpapersRepository.getImageList() with parameter $collection")
         val response = wallpapersApi.getImageList(
             Constants.PIXABAY_API_KEY,
             200,
             "background",
             "vertical",
             "photo",
-            category)
+            collection)
         if (response.isSuccessful) {
             Log.d(TAG, "WallpapersRepository.getImageList() coroutine response")
         }

@@ -3,18 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph"
-    app:startDestination="@id/categoriesFragment">
+    app:startDestination="@id/collectionsFragment">
 
     <fragment
-        android:id="@+id/categoriesFragment"
-        android:name="android.maxim.freshwallpapers.ui.collections.CategoriesFragment"
-        android:label="CategoriesFragment"
-        tools:layout="@layout/fragment_categories">
+        android:id="@+id/collectionsFragment"
+        android:name="android.maxim.freshwallpapers.ui.collections.CollectionsFragment"
+        android:label="CollectionsFragment"
+        tools:layout="@layout/fragment_collections">
         <action
-            android:id="@+id/action_categoriesFragment_to_imagesListFragment"
+            android:id="@+id/action_collectionsFragment_to_imagesListFragment"
             app:destination="@id/imagesListFragment" />
         <action
-            android:id="@+id/action_categoriesFragment_to_settingsFragment"
+            android:id="@+id/action_collectionsFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
     </fragment>
     <fragment

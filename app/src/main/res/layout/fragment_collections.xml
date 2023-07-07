@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ui.collections.CategoriesFragment">
+    tools:context="ui.collections.CollectionsFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/collections_toolbar"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_categories"
+        android:id="@+id/recycler_collections"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -8,13 +8,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class CategoriesViewModel @Inject constructor(): ViewModel() {
+class CollectionsViewModel @Inject constructor(): ViewModel() {
 
     @Inject
     lateinit var repository: WallpapersRepository
 
     fun getCategoriesList(): List<String> {
-        Log.d(Constants.TAG, "CategoriesViewModel.getCategoriesList()")
+        Log.d(Constants.TAG, "CollectionsViewModel.getCategoriesList()")
         return repository.getCategoriesList()
     }
 }
