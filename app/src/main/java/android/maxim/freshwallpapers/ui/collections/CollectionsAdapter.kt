@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 class CollectionsAdapter(private val collectionsList: List<String>)
     : RecyclerView.Adapter<CollectionsAdapter.CollectionsAdapterViewHolder>() {
 
-    inner class CollectionsAdapterViewHolder(
+    class CollectionsAdapterViewHolder(
         val itemBinding: ItemCollectionsBinding
         ): ViewHolder(itemBinding.root)
 
