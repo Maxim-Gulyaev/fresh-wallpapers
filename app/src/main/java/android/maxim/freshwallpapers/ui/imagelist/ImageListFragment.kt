@@ -1,4 +1,4 @@
-package android.maxim.freshwallpapers.ui.imageslist
+package android.maxim.freshwallpapers.ui.imagelist
 
 import android.maxim.freshwallpapers.R
 import android.maxim.freshwallpapers.databinding.FragmentImageListBinding

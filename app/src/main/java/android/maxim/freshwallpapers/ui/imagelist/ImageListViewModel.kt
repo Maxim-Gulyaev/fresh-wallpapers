@@ -1,4 +1,4 @@
-package android.maxim.freshwallpapers.ui.imageslist
+package android.maxim.freshwallpapers.ui.imagelist
 
 import android.maxim.freshwallpapers.data.repository.WallpapersRepository
 import androidx.lifecycle.ViewModel

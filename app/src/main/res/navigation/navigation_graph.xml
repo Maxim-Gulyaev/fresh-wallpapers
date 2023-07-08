@@ -12,15 +12,15 @@
         tools:layout="@layout/fragment_collections">
         <action
             android:id="@+id/action_collectionsFragment_to_imagesListFragment"
-            app:destination="@id/imagesListFragment" />
+            app:destination="@id/imageListFragment" />
         <action
             android:id="@+id/action_collectionsFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
-        android:id="@+id/imagesListFragment"
-        android:name="android.maxim.freshwallpapers.ui.imageslist.ImageListFragment"
-        android:label="ImagesListFragment"
+        android:id="@+id/imageListFragment"
+        android:name="android.maxim.freshwallpapers.ui.imagelist.ImageListFragment"
+        android:label="ImageListFragment"
         tools:layout="@layout/fragment_image_list">
         <action
             android:id="@+id/action_imagesListFragment_to_imageFragment"
