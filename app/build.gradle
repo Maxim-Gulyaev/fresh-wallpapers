@@ -77,5 +77,9 @@ dependencies {
     def lifecycle_extension_version = '2.2.0-beta01'
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_extension_version"
 
+    //picasso
+    def picasso_version = "2.71828"
+    implementation "com.squareup.picasso:picasso:$picasso_version"
+
 
 }
