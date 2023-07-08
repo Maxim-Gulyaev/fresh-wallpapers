@@ -1,7 +1,7 @@
-package android.maxim.freshwallpapers.ui.imageslist
+package android.maxim.freshwallpapers.ui.imagelist
 
 import android.maxim.freshwallpapers.R
-import android.maxim.freshwallpapers.data.models.ImageList
+import android.maxim.freshwallpapers.data.models.Image
 import android.maxim.freshwallpapers.databinding.ItemImageListBinding
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 
-class ImageListAdapter(private val imageList: ImageList)
+class ImageListAdapter(private val imageList: List<Image>)
     : RecyclerView.Adapter<ImageListAdapter.ImageListViewHolder>(){
 
     inner class ImageListViewHolder(private val itemBinding: ItemImageListBinding)
@@ -29,7 +29,7 @@ class ImageListAdapter(private val imageList: ImageList)
     }
 
     override fun onBindViewHolder(holder: ImageListViewHolder, position: Int) {
-        val id: String = imageList.imageList[position].id
+        val id: String = imageList[position].id
         holder.bind(id)
         holder.itemView.setOnClickListener {
             val bundle = Bundle()
@@ -42,7 +42,7 @@ class ImageListAdapter(private val imageList: ImageList)
         }
     }
 
-    override fun getItemCount(): Int = imageList.imageList.size
+    override fun getItemCount(): Int = imageList.size
 
 
 }

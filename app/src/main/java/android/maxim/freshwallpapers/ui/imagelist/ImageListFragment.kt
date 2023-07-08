@@ -10,7 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,6 +33,13 @@ class ImageListFragment: Fragment(R.layout.fragment_image_list) {
 
         collection = arguments?.getString("category")
         imageListViewModel.getImageList(collection!!)
+
+        imageListViewModel.imageList.observe(viewLifecycleOwner, Observer { imageList ->
+            binding.recyclerImageList.also {
+                it.layoutManager = LinearLayoutManager(requireContext())
+                it.adapter = ImageListAdapter(imageList)
+            }
+        })
 
         return binding.root
     }
