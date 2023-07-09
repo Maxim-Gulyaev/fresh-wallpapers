@@ -7,7 +7,7 @@ import retrofit2.http.Query
 
 interface WallpapersApi {
 
-    @GET(".")
+    @GET("api/")
     suspend fun getImageList(
         @Query("key") apiKey: String,
         @Query("per_page") perPage: Int,
