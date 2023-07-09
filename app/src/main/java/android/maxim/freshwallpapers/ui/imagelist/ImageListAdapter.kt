@@ -14,8 +14,8 @@ class ImageListAdapter(private val imageList: List<Image>)
 
     inner class ImageListViewHolder(private val itemBinding: ItemImageListBinding)
         : RecyclerView.ViewHolder(itemBinding.root) {
-        fun bind(id: String) {
-            itemBinding.tvImageTitle.text = id
+        fun bind(largeImageURL: String) {
+            itemBinding.tvImageTitle.text = largeImageURL
         }
     }
 
@@ -29,11 +29,11 @@ class ImageListAdapter(private val imageList: List<Image>)
     }
 
     override fun onBindViewHolder(holder: ImageListViewHolder, position: Int) {
-        val id: String = imageList[position].id
-        holder.bind(id)
+        val largeImageURL: String = imageList[position].largeImageURL
+        holder.bind(largeImageURL)
         holder.itemView.setOnClickListener {
             val bundle = Bundle()
-            bundle.putString("id", id)
+            bundle.putString("largeImageURL", largeImageURL)
             Navigation
                 .createNavigateOnClickListener(
                     R.id.action_imagesListFragment_to_imageFragment,
