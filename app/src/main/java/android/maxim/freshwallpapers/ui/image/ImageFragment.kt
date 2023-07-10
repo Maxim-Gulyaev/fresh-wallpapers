@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,6 +29,17 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
         largeImageURL = arguments?.getString("largeImageURL")
         Picasso.get().load(largeImageURL).into(binding.ivImage)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.imageToolbar.apply {
+            setNavigationIcon(R.drawable.baseline_arrow_back_ios_black_24)
+            setNavigationOnClickListener {
+                findNavController().navigate(R.id.imageListFragment)
+            }
+            inflateMenu(R.menu.image_toolbar_menu)
+        }
     }
 
     override fun onDestroyView() {
