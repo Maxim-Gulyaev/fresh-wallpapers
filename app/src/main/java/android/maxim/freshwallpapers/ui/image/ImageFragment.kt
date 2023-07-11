@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable
 import android.maxim.freshwallpapers.R
 import android.maxim.freshwallpapers.databinding.FragmentImageBinding
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,7 +49,7 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
             inflateMenu(R.menu.image_toolbar_menu)
             setOnMenuItemClickListener {
                 if (it.itemId == R.id.action_set_wallpaper) {
-                    setWallpaper()
+                    setWallpaper(getDisplayMetrics())
                 }
                 false
             }
@@ -60,13 +61,17 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
         _binding = null
     }
 
-    private fun setWallpaper() {
+    private fun setWallpaper(displayMetrics: DisplayMetrics) {
         Picasso.get()
             .load(largeImageURL)
+            .resize(displayMetrics.widthPixels, displayMetrics.heightPixels)
+            .centerCrop()
             .into(object : Target {
                 override fun onBitmapLoaded(resource: Bitmap, from: Picasso.LoadedFrom) {
                     try {
-                        WallpaperManager.getInstance(context).setBitmap(resource)
+                        WallpaperManager
+                            .getInstance(context)
+                            .setBitmap(resource)
                         showToast(R.string.setWallpaper_done)
                     } catch (e: IOException) {
                         e.printStackTrace()
@@ -85,5 +90,17 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
             requireActivity(),
             requireActivity().getString(resId),
             Toast.LENGTH_LONG).show()
+    }
+
+    @Suppress("DEPRECATION")
+    private fun getDisplayMetrics(): DisplayMetrics {
+        val outMetrics = DisplayMetrics()
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+            val display = activity?.display
+            display?.getRealMetrics(outMetrics)
+        } else {
+            activity?.windowManager?.defaultDisplay?.getMetrics(outMetrics)
+        }
+        return outMetrics
     }
 }
