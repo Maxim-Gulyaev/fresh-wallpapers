@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -44,7 +44,7 @@ class CollectionsFragment: Fragment(R.layout.fragment_collections) {
             }
         }
         binding.recyclerCollections.apply {
-            layoutManager = LinearLayoutManager(activity)
+            layoutManager = GridLayoutManager(activity, 2, GridLayoutManager.VERTICAL, false)
             adapter = CollectionsAdapter(collectionsViewModel.getCategoriesList())
         }
     }
