@@ -44,7 +44,11 @@ class CollectionsFragment: Fragment(R.layout.fragment_collections) {
             }
         }
         binding.recyclerCollections.apply {
-            layoutManager = GridLayoutManager(activity, 2, GridLayoutManager.VERTICAL, false)
+            layoutManager = GridLayoutManager(
+                activity,
+                2,
+                GridLayoutManager.VERTICAL,
+                false)
             adapter = CollectionsAdapter(collectionsViewModel.getCategoriesList())
         }
     }
