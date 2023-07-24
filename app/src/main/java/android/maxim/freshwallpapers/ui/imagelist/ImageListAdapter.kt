@@ -8,14 +8,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 
 class ImageListAdapter(private val imageList: List<Image>)
     : RecyclerView.Adapter<ImageListAdapter.ImageListViewHolder>(){
 
     inner class ImageListViewHolder(private val itemBinding: ItemImageListBinding)
         : RecyclerView.ViewHolder(itemBinding.root) {
-        fun bind(largeImageURL: String) {
-            itemBinding.tvImageTitle.text = largeImageURL
+        fun bind(previewURL: String) {
+            Picasso.get().load(previewURL).into(itemBinding.ivPreviewImage)
         }
     }
 
@@ -30,7 +31,8 @@ class ImageListAdapter(private val imageList: List<Image>)
 
     override fun onBindViewHolder(holder: ImageListViewHolder, position: Int) {
         val largeImageURL: String = imageList[position].largeImageURL
-        holder.bind(largeImageURL)
+        val previewURL: String = imageList[position].previewURL
+        holder.bind(previewURL)
         holder.itemView.setOnClickListener {
             val bundle = Bundle()
             bundle.putString("largeImageURL", largeImageURL)

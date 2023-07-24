@@ -5,9 +5,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="8dp">
 
+    <ImageView
+        android:id="@+id/iv_preview_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/preview_image" />
+
     <TextView
         android:id="@+id/tv_image_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        />
 
 </androidx.cardview.widget.CardView>
