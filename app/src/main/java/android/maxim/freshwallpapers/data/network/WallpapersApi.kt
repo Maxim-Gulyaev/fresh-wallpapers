@@ -14,6 +14,7 @@ interface WallpapersApi {
         @Query("category") category: String,
         @Query("orientation") orientation: String,
         @Query("image_type") imageType: String,
+        @Query("safesearch") safeSearch: Boolean,
         @Query("q") collection: String
     ): Response<ImageList>
 

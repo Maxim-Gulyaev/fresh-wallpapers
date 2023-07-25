@@ -32,6 +32,7 @@ class WallpapersRepository @Inject constructor(@ApplicationContext context: Cont
             "background",
             "vertical",
             "photo",
+            true,
             collection)
         if (response.isSuccessful) {
             Log.d(TAG, "WallpapersRepository.getImageList() coroutine response")
