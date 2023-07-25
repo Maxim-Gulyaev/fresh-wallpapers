@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
-import com.squareup.picasso.Picasso
+import com.bumptech.glide.Glide
 
 class ImageListAdapter(private val imageList: List<Image>)
     : RecyclerView.Adapter<ImageListAdapter.ImageListViewHolder>(){
@@ -16,11 +16,9 @@ class ImageListAdapter(private val imageList: List<Image>)
     inner class ImageListViewHolder(private val itemBinding: ItemImageListBinding)
         : RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(previewURL: String) {
-            Picasso
-                .get()
+            Glide
+                .with(itemView.context)
                 .load(previewURL)
-                //.resizeDimen(R.dimen.preview_width, R.dimen.preview_height)
-                .fit()
                 .centerCrop()
                 .into(itemBinding.ivPreviewImage)
         }
@@ -51,6 +49,4 @@ class ImageListAdapter(private val imageList: List<Image>)
     }
 
     override fun getItemCount(): Int = imageList.size
-
-
 }
