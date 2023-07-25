@@ -16,7 +16,13 @@ class ImageListAdapter(private val imageList: List<Image>)
     inner class ImageListViewHolder(private val itemBinding: ItemImageListBinding)
         : RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(previewURL: String) {
-            Picasso.get().load(previewURL).into(itemBinding.ivPreviewImage)
+            Picasso
+                .get()
+                .load(previewURL)
+                //.resizeDimen(R.dimen.preview_width, R.dimen.preview_height)
+                .fit()
+                .centerCrop()
+                .into(itemBinding.ivPreviewImage)
         }
     }
 
