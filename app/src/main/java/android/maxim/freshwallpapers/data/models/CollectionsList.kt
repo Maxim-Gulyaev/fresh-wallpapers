@@ -23,7 +23,7 @@ data class CollectionsList (
         "disney",
         "festivals",
         "color",
-        "space",
+        "astronomy",
         "art",
         "cool",
         "vintage"
