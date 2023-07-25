@@ -2,7 +2,6 @@ package android.maxim.freshwallpapers.ui.image
 
 import android.app.WallpaperManager
 import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
 import android.maxim.freshwallpapers.R
 import android.maxim.freshwallpapers.databinding.FragmentImageBinding
 import android.os.Bundle
@@ -13,11 +12,15 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.squareup.picasso.Picasso
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
 import dagger.hilt.android.AndroidEntryPoint
-import com.squareup.picasso.Target
-import java.io.IOException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ImageFragment: Fragment(R.layout.fragment_image) {
@@ -35,7 +38,10 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
     ): View {
         _binding = FragmentImageBinding.inflate(layoutInflater, container, false)
         largeImageURL = arguments?.getString("largeImageURL")
-        Picasso.get().load(largeImageURL).into(binding.ivImage)
+        Glide
+            .with(requireActivity())
+            .load(largeImageURL)
+            .into(binding.ivImage)
         return binding.root
     }
 
@@ -62,27 +68,45 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
     }
 
     private fun setWallpaper(displayMetrics: DisplayMetrics) {
-        Picasso.get()
+        Glide
+            .with(requireActivity())
+            .asBitmap()
             .load(largeImageURL)
-            .resize(displayMetrics.widthPixels, displayMetrics.heightPixels)
+            .override(displayMetrics.widthPixels, displayMetrics.heightPixels)
             .centerCrop()
-            .into(object : Target {
-                override fun onBitmapLoaded(resource: Bitmap, from: Picasso.LoadedFrom) {
+            .listener(object : RequestListener<Bitmap> {
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: com.bumptech.glide.request.target.Target<Bitmap>?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    return false
+                }
+                override fun onResourceReady(
+                    resource: Bitmap?,
+                    model: Any?,
+                    target: com.bumptech.glide.request.target.Target<Bitmap>?,
+                    dataSource: DataSource?,
+                    isFirstResource: Boolean
+                ): Boolean {
                     try {
                         WallpaperManager
                             .getInstance(context)
                             .setBitmap(resource)
-                        showToast(R.string.setWallpaper_done)
-                    } catch (e: IOException) {
+                        lifecycleScope.launch(Dispatchers.Main) {
+                            showToast(R.string.setWallpaper_done)
+                        }
+                    } catch (e: Exception) {
                         e.printStackTrace()
-                        showToast(R.string.setWallpaper_error)
+                        lifecycleScope.launch(Dispatchers.Main) {
+                            showToast(R.string.setWallpaper_error)
+                        }
                     }
+                    return false
                 }
-                override fun onBitmapFailed(e: Exception, errorDrawable: Drawable) {
-                    e.printStackTrace()
-                }
-                override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
             })
+            .submit()
     }
 
     private fun showToast(resId: Int) {
