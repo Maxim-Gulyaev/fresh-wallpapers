@@ -3,7 +3,6 @@ package android.maxim.freshwallpapers.ui.imagelist
 import android.maxim.freshwallpapers.R
 import android.maxim.freshwallpapers.databinding.FragmentImageListBinding
 import android.maxim.freshwallpapers.utils.Constants
-import android.maxim.freshwallpapers.utils.GridSpacing
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -36,14 +35,12 @@ class ImageListFragment: Fragment(R.layout.fragment_image_list) {
         imageListViewModel.getImageList(collection!!)
 
         imageListViewModel.imageList.observe(viewLifecycleOwner, Observer { imageList ->
-            val spacing = resources.getDimensionPixelSize(R.dimen.spacing)
             binding.recyclerImageList.also {
                 it.layoutManager = GridLayoutManager(
                     activity,
                     2,
                     GridLayoutManager.VERTICAL,
                     false)
-                it.addItemDecoration(GridSpacing(spacing))
                 it.adapter = ImageListAdapter(imageList)
             }
         })
