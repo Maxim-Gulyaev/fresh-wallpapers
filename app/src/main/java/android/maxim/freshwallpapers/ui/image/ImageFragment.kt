@@ -50,7 +50,7 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
         binding.imageToolbar.apply {
             setNavigationIcon(R.drawable.baseline_arrow_back_ios_black_24)
             setNavigationOnClickListener {
-                findNavController().navigate(R.id.imageListFragment)
+                requireActivity().onBackPressedDispatcher.onBackPressed()
             }
             inflateMenu(R.menu.image_toolbar_menu)
             setOnMenuItemClickListener {
