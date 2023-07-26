@@ -42,9 +42,7 @@ class ImageListFragment: Fragment(R.layout.fragment_image_list) {
         imageListViewModel.getImageList(collection!!)
 
         imageListViewModel.imageList.observe(viewLifecycleOwner, Observer { imageList ->
-            if (recyclerStateBundle != null) {
-                restoreRecyclerState()
-            }
+            if (recyclerStateBundle != null) restoreRecyclerState()
             initRecycler(imageList)
         })
         return binding.root
@@ -82,6 +80,7 @@ class ImageListFragment: Fragment(R.layout.fragment_image_list) {
 
     private fun restoreRecyclerState() {
         lifecycleScope.launch(Dispatchers.Main) {
+            //TODO Replace getParcelable method
             recyclerState = recyclerStateBundle!!.getParcelable("KEY_RECYCLER_STATE")
             binding.recyclerImageList.layoutManager?.onRestoreInstanceState(recyclerState)
         }
