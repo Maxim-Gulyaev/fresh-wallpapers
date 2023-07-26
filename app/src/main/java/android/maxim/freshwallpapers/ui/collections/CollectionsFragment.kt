@@ -2,9 +2,7 @@ package android.maxim.freshwallpapers.ui.collections
 
 import android.maxim.freshwallpapers.R
 import android.maxim.freshwallpapers.databinding.FragmentCollectionsBinding
-import android.maxim.freshwallpapers.utils.Constants.TAG
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,14 +24,12 @@ class CollectionsFragment: Fragment(R.layout.fragment_collections) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        Log.d(TAG, "CollectionsFragment.onCreateView()")
         _binding = FragmentCollectionsBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d(TAG, "CollectionsFragment.onViewCreated()")
         binding.collectionsToolbar.apply {
             inflateMenu(R.menu.collections_toolbar_menu)
             setOnMenuItemClickListener {
@@ -55,7 +51,6 @@ class CollectionsFragment: Fragment(R.layout.fragment_collections) {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.d(TAG, "CollectionsFragment.onDestroyView()")
         _binding = null
     }
 }
