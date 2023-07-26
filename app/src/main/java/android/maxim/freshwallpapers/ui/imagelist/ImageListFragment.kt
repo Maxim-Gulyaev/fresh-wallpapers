@@ -38,7 +38,7 @@ class ImageListFragment: Fragment(R.layout.fragment_image_list) {
             binding.recyclerImageList.also {
                 it.layoutManager = GridLayoutManager(
                     activity,
-                    2,
+                    3,
                     GridLayoutManager.VERTICAL,
                     false)
                 it.adapter = ImageListAdapter(imageList)

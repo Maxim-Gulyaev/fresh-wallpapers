@@ -29,3 +29,5 @@ data class CollectionsList (
         "vintage"
     )
 )
+
+// TODO consider to replace by something: feelings, education
