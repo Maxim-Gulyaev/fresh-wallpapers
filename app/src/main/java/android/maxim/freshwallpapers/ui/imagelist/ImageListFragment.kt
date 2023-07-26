@@ -27,8 +27,8 @@ class ImageListFragment: Fragment(R.layout.fragment_image_list) {
     private val binding get() = _binding!!
     private val imageListViewModel: ImageListViewModel by viewModels()
     private var collection: String? = null
-    private var mBundleRecyclerViewState: Bundle? = null
-    private var mListState: Parcelable? = null
+    private var recyclerStateBundle: Bundle? = null
+    private var recyclerState: Parcelable? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,7 +42,7 @@ class ImageListFragment: Fragment(R.layout.fragment_image_list) {
         imageListViewModel.getImageList(collection!!)
 
         imageListViewModel.imageList.observe(viewLifecycleOwner, Observer { imageList ->
-            if (mBundleRecyclerViewState != null) {
+            if (recyclerStateBundle != null) {
                 restoreRecyclerState()
             }
             initRecycler(imageList)
@@ -65,9 +65,9 @@ class ImageListFragment: Fragment(R.layout.fragment_image_list) {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        mBundleRecyclerViewState = Bundle()
+        recyclerStateBundle = Bundle()
         val mListState = binding.recyclerImageList.layoutManager?.onSaveInstanceState()
-        mBundleRecyclerViewState!!.putParcelable("KEY_RECYCLER_STATE", mListState)
+        recyclerStateBundle!!.putParcelable("KEY_RECYCLER_STATE", mListState)
         _binding = null
     }
 
@@ -82,8 +82,8 @@ class ImageListFragment: Fragment(R.layout.fragment_image_list) {
 
     private fun restoreRecyclerState() {
         lifecycleScope.launch(Dispatchers.Main) {
-            mListState = mBundleRecyclerViewState!!.getParcelable("KEY_RECYCLER_STATE")
-            binding.recyclerImageList.layoutManager?.onRestoreInstanceState(mListState)
+            recyclerState = recyclerStateBundle!!.getParcelable("KEY_RECYCLER_STATE")
+            binding.recyclerImageList.layoutManager?.onRestoreInstanceState(recyclerState)
         }
     }
 }
