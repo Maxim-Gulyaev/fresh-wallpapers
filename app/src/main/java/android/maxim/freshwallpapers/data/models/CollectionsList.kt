@@ -3,8 +3,6 @@ package android.maxim.freshwallpapers.data.models
 data class CollectionsList (
     val collectionsList: List<String> = listOf(
         "landscape",
-        "education",
-        "feelings",
         "people",
         "religion",
         "cities",
