@@ -6,3 +6,5 @@ data class ImageList(
     @SerializedName("hits")
     val imageList: List<Image>
 )
+
+// TODO do not like this class, consider to rid it
