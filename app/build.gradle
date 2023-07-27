@@ -44,7 +44,6 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'com.google.firebase:firebase-analytics-ktx:21.3.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
@@ -56,30 +55,27 @@ dependencies {
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
 
     //internet
-    def retrofit_version = '2.9.0'
-    def okHttp_version = '4.9.0'
-    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
-    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
-    implementation "com.squareup.okhttp3:logging-interceptor:$okHttp_version"
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.9.0"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.9.0"
 
     //navigation
-    def nav_version = "2.5.3"
-    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
-    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-fragment-ktx:2.5.3"
+    implementation "androidx.navigation:navigation-ui-ktx:2.5.3"
 
     //fragment
-    def fragment_version = "1.5.7"
-    implementation "androidx.fragment:fragment-ktx:$fragment_version"
+    implementation "androidx.fragment:fragment-ktx:1.5.7"
 
     //coroutines
-    def coroutines_version = "1.6.4"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
 
     //lifecycle
-    def lifecycle_extension_version = '2.2.0-beta01'
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_extension_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0-beta01"
 
     //glide
-    def glide_version = "4.14.2"
-    implementation "com.github.bumptech.glide:glide:$glide_version"
+    implementation "com.github.bumptech.glide:glide:4.14.2"
+
+    //firebase
+    implementation 'com.google.firebase:firebase-analytics-ktx:21.3.0'
+    implementation 'com.google.firebase:firebase-firestore-ktx:24.7.0'
 }
