@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1055069843595",
+    "project_id": "fresh-wallpapers-6c3e4",
+    "storage_bucket": "fresh-wallpapers-6c3e4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1055069843595:android:b613ce28244841a8f7248e",
+        "android_client_info": {
+          "package_name": "android.maxim.freshwallpapers"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1055069843595-lp2qv87575rj0b6sn3g0vgquk9rs32v9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwmllDmoyQXyjVk7CC1zb5SqjDTCnsArs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1055069843595-lp2qv87575rj0b6sn3g0vgquk9rs32v9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
