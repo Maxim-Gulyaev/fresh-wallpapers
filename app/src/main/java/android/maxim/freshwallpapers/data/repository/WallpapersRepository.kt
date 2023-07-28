@@ -39,12 +39,15 @@ class WallpapersRepository @Inject constructor(@ApplicationContext context: Cont
         return collectionsList.collectionsList
     }*/
 
-    fun getCollectionsList(): Flow<List<WallpapersCollection>> = flow<List<WallpapersCollection>> {
-        /*val wallpapersCollection = WallpapersCollection("one", "someUrl")
+    /*fun getCollectionsList(): Flow<List<WallpapersCollection>> = flow<List<WallpapersCollection>> {
+        val wallpapersCollection = WallpapersCollection("one", "someUrl")
         val wallpapersCollection2 = WallpapersCollection("two", "someUrl")
         val collectionsList = mutableListOf<WallpapersCollection>()
         collectionsList.add(wallpapersCollection)
-        collectionsList.add(wallpapersCollection2)*/
+        collectionsList.add(wallpapersCollection2)
+    }.flowOn(Dispatchers.IO)*/
+
+    fun getCollectionsList(): Flow<List<WallpapersCollection>> = flow<List<WallpapersCollection>> {
         val collectionsList = mutableListOf<WallpapersCollection>()
         firestoreReference
             .get()
