@@ -1,15 +1,18 @@
 package android.maxim.freshwallpapers.ui.collections
 
 import android.maxim.freshwallpapers.R
+import android.maxim.freshwallpapers.data.models.WallpapersCollection
 import android.maxim.freshwallpapers.databinding.ItemCollectionsBinding
+import android.maxim.freshwallpapers.utils.Constants
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 
-class CollectionsAdapter(private val collectionsList: List<String>)
+class CollectionsAdapter(private val collectionsList: List<WallpapersCollection>)
     : RecyclerView.Adapter<CollectionsAdapter.CollectionsAdapterViewHolder>() {
 
     inner class CollectionsAdapterViewHolder(private val itemBinding: ItemCollectionsBinding)
@@ -29,7 +32,7 @@ class CollectionsAdapter(private val collectionsList: List<String>)
     }
 
     override fun onBindViewHolder(holder: CollectionsAdapterViewHolder, position: Int) {
-        val title: String = collectionsList[position]
+        val title: String = collectionsList[position].title
         holder.bind(title)
         holder.itemView.setOnClickListener {
             val bundle = Bundle()
