@@ -67,10 +67,12 @@ dependencies {
     implementation "androidx.fragment:fragment-ktx:1.5.7"
 
     //coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
 
     //lifecycle
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0-beta01"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.5.0"
 
     //glide
     implementation "com.github.bumptech.glide:glide:4.14.2"
