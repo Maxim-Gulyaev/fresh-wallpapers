@@ -39,18 +39,16 @@ class WallpapersRepository @Inject constructor(@ApplicationContext context: Cont
         return collectionsList.collectionsList
     }*/
 
-    fun getCollectionsList(): Flow<List<WallpapersCollection>> {
-        Log.d(TAG, "WallpapersRepository.getCategoriesList()")
-        return flow<List<WallpapersCollection>> {
-            /*val wallpapersCollection = WallpapersCollection("one", "someUrl")
-            val wallpapersCollection2 = WallpapersCollection("two", "someUrl")
-            val collectionsList = mutableListOf<WallpapersCollection>()
-            collectionsList.add(wallpapersCollection)
-            collectionsList.add(wallpapersCollection2)*/
-            val collectionsList = mutableListOf<WallpapersCollection>()
-            firestoreReference
-                .get()
-                .addOnSuccessListener { result ->
+    fun getCollectionsList(): Flow<List<WallpapersCollection>> = flow<List<WallpapersCollection>> {
+        /*val wallpapersCollection = WallpapersCollection("one", "someUrl")
+        val wallpapersCollection2 = WallpapersCollection("two", "someUrl")
+        val collectionsList = mutableListOf<WallpapersCollection>()
+        collectionsList.add(wallpapersCollection)
+        collectionsList.add(wallpapersCollection2)*/
+        val collectionsList = mutableListOf<WallpapersCollection>()
+        firestoreReference
+            .get()
+            .addOnSuccessListener { result ->
                 for (document in result) {
                     val collection = WallpapersCollection(
                         document.getString("title").toString(),
@@ -58,34 +56,13 @@ class WallpapersRepository @Inject constructor(@ApplicationContext context: Cont
                     )
                     collectionsList.add(collection)
                 }
-                }
-                .addOnFailureListener {
-                    it.printStackTrace()
-                }
-            Log.d(TAG, collectionsList.size.toString())
-            emit(collectionsList)
-        }.flowOn(Dispatchers.IO)
-    }
-
-        /*val list = mutableListOf<WallpapersCollection>()
-        firestoreReference
-            .get()
-            .addOnCompleteListener(OnCompleteListener<QuerySnapshot?> { task ->
-                if (task.isSuccessful) {
-                    for (document in task.result) {
-                        val wallpapersCollection = WallpapersCollection(
-                            document.getString("title").toString(),
-                            document.getString("imageUrl").toString())
-                        list.add(wallpapersCollection)
-                        list.asFlow()
-                    }
-                } else {
-                    Log.d(TAG, "Error getting documents: ", task.exception)
-                }
-            })
-        Log.d(TAG, list.size.toString())
-        return list
-    }*/
+            }
+            .addOnFailureListener {
+                it.printStackTrace()
+            }
+        Log.d(TAG, collectionsList.size.toString())
+        emit(collectionsList)
+    }.flowOn(Dispatchers.IO)
 
     suspend fun getImageList(collection: String): Response<ImageList> {
         Log.d(TAG, "WallpapersRepository.getImageList() with parameter $collection")
