@@ -1,25 +1,18 @@
 package android.maxim.freshwallpapers.ui.collections
 
 import android.maxim.freshwallpapers.R
-import android.maxim.freshwallpapers.data.models.WallpapersCollection
 import android.maxim.freshwallpapers.databinding.FragmentCollectionsBinding
-import android.maxim.freshwallpapers.utils.Constants
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.liveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-
 
 @AndroidEntryPoint
 class CollectionsFragment: Fragment(R.layout.fragment_collections) {
@@ -27,8 +20,6 @@ class CollectionsFragment: Fragment(R.layout.fragment_collections) {
     private var _binding: FragmentCollectionsBinding? = null
     private val binding get() = _binding!!
     private val collectionsViewModel: CollectionsViewModel by viewModels()
-    private val firestoreDb = Firebase.firestore
-    private val firestoreReference = firestoreDb.collection("database").document("check")
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,26 +43,17 @@ class CollectionsFragment: Fragment(R.layout.fragment_collections) {
         }
 
         lifecycleScope.launch {
-            collectionsViewModel.getCategoriesList().observe(viewLifecycleOwner) { it ->
+            collectionsViewModel.getCategoriesList().observe(viewLifecycleOwner) { collection ->
                 binding.recyclerCollections.apply {
                     layoutManager = GridLayoutManager(
                         activity,
                         2,
                         GridLayoutManager.VERTICAL,
                         false)
-                    adapter = CollectionsAdapter(it)
+                    adapter = CollectionsAdapter(collection)
                 }
             }
         }
-
-        /*binding.recyclerCollections.apply {
-            layoutManager = GridLayoutManager(
-                activity,
-                2,
-                GridLayoutManager.VERTICAL,
-                false)
-            adapter = CollectionsAdapter(collectionsViewModel.getCategoriesList())
-        }*/
     }
 
     override fun onDestroyView() {
