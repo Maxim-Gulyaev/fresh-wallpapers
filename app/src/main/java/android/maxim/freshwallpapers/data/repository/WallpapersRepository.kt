@@ -11,14 +11,11 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.EntryPoints
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.launch
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -45,6 +42,8 @@ class WallpapersRepository @Inject constructor(@ApplicationContext context: Cont
         val collectionsList = mutableListOf<WallpapersCollection>()
         collectionsList.add(wallpapersCollection)
         collectionsList.add(wallpapersCollection2)
+        Log.d(TAG, collectionsList.size.toString())
+        emit(collectionsList)
     }.flowOn(Dispatchers.IO)*/
 
     fun getCollectionsList(): Flow<List<WallpapersCollection>> = flow<List<WallpapersCollection>> {
@@ -59,11 +58,13 @@ class WallpapersRepository @Inject constructor(@ApplicationContext context: Cont
                     )
                     collectionsList.add(collection)
                 }
+                Log.d(TAG, "in addOnSuccessListener " + collectionsList.size.toString())
             }
             .addOnFailureListener {
                 it.printStackTrace()
             }
-        Log.d(TAG, collectionsList.size.toString())
+        Thread.sleep(1000)
+        Log.d(TAG, "before emit " + collectionsList.size.toString())
         emit(collectionsList)
     }.flowOn(Dispatchers.IO)
 
