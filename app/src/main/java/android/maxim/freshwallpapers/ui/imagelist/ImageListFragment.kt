@@ -3,10 +3,8 @@ package android.maxim.freshwallpapers.ui.imagelist
 import android.maxim.freshwallpapers.R
 import android.maxim.freshwallpapers.data.models.Image
 import android.maxim.freshwallpapers.databinding.FragmentImageListBinding
-import android.maxim.freshwallpapers.utils.Constants
 import android.os.Bundle
 import android.os.Parcelable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,7 +33,6 @@ class ImageListFragment: Fragment(R.layout.fragment_image_list) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        Log.d(Constants.TAG, "ImageListFragment.onCreateView()")
         _binding = FragmentImageListBinding.inflate(layoutInflater, container, false)
 
         collection = arguments?.getString("category")
@@ -50,7 +47,6 @@ class ImageListFragment: Fragment(R.layout.fragment_image_list) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d(Constants.TAG, "ImageListFragment.onViewCreated()")
         val toolbarTitle = collection?.replaceFirstChar(Char::titlecase)
         binding.imageListToolbar.apply {
             title = toolbarTitle
