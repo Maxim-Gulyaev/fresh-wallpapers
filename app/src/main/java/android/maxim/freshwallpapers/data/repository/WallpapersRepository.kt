@@ -64,6 +64,8 @@ class WallpapersRepository @Inject constructor(@ApplicationContext context: Cont
             collection)
         if (response.isSuccessful) {
             Log.d(TAG, "WallpapersRepository.getImageList() coroutine response")
+        } else {
+            //TODO handle the exception
         }
         return response
     }
