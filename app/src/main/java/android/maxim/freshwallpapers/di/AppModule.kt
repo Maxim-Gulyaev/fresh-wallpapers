@@ -3,6 +3,9 @@ package android.maxim.freshwallpapers.di
 import android.maxim.freshwallpapers.data.models.CollectionsList
 import android.maxim.freshwallpapers.data.network.WallpapersApi
 import android.maxim.freshwallpapers.utils.Constants
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -40,5 +43,11 @@ class AppModule {
     @Singleton
     fun provideCollectionsList(): CollectionsList {
         return CollectionsList()
+    }
+
+    @Provides
+    @Singleton
+    fun provideFirestore(): FirebaseFirestore {
+        return Firebase.firestore
     }
 }

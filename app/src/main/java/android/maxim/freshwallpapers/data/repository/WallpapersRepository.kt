@@ -5,10 +5,6 @@ import android.maxim.freshwallpapers.data.models.ImageList
 import android.maxim.freshwallpapers.data.models.WallpapersCollection
 import android.maxim.freshwallpapers.di.WallpapersRepositoryEntryPoint
 import android.maxim.freshwallpapers.utils.Constants
-import android.maxim.freshwallpapers.utils.Constants.TAG
-import android.util.Log
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import dagger.hilt.EntryPoints
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
@@ -26,9 +22,10 @@ class WallpapersRepository @Inject constructor(@ApplicationContext context: Cont
         context.applicationContext,
         WallpapersRepositoryEntryPoint::class.java)
     private val wallpapersApi = hiltEntryPoint.wallpapersApi()
-
-    private val firestoreDb = Firebase.firestore
+    private val firestoreDb = hiltEntryPoint.firestoreDb()
     private val firestoreReference = firestoreDb.collection("collections")
+
+    //TODO consider to cash requests
 
     fun getCollectionsList(): Flow<List<WallpapersCollection>> = flow {
        val collectionsList = suspendCoroutine<List<WallpapersCollection>> { continuation ->
@@ -53,7 +50,6 @@ class WallpapersRepository @Inject constructor(@ApplicationContext context: Cont
     }.flowOn(Dispatchers.IO)
 
     suspend fun getImageList(collection: String): Response<ImageList> {
-        Log.d(TAG, "WallpapersRepository.getImageList() with parameter $collection")
         val response = wallpapersApi.getImageList(
             Constants.PIXABAY_API_KEY,
             200,
@@ -62,9 +58,7 @@ class WallpapersRepository @Inject constructor(@ApplicationContext context: Cont
             "photo",
             true,
             collection)
-        if (response.isSuccessful) {
-            Log.d(TAG, "WallpapersRepository.getImageList() coroutine response")
-        } else {
+        if (!response.isSuccessful) {
             //TODO handle the exception
         }
         return response
