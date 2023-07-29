@@ -3,6 +3,7 @@ package android.maxim.freshwallpapers.ui.imagelist
 import android.maxim.freshwallpapers.R
 import android.maxim.freshwallpapers.data.models.Image
 import android.maxim.freshwallpapers.databinding.FragmentImageListBinding
+import android.maxim.freshwallpapers.utils.Constants.KEY_RECYCLER_STATE
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.LayoutInflater
@@ -61,7 +62,7 @@ class ImageListFragment: Fragment(R.layout.fragment_image_list) {
         super.onDestroyView()
         recyclerStateBundle = Bundle()
         val mListState = binding.recyclerImageList.layoutManager?.onSaveInstanceState()
-        recyclerStateBundle!!.putParcelable("KEY_RECYCLER_STATE", mListState)
+        recyclerStateBundle!!.putParcelable(KEY_RECYCLER_STATE, mListState)
         _binding = null
     }
 
@@ -77,7 +78,7 @@ class ImageListFragment: Fragment(R.layout.fragment_image_list) {
     private fun restoreRecyclerState() {
         lifecycleScope.launch(Dispatchers.Main) {
             //TODO Replace getParcelable method
-            recyclerState = recyclerStateBundle!!.getParcelable("KEY_RECYCLER_STATE")
+            recyclerState = recyclerStateBundle!!.getParcelable(KEY_RECYCLER_STATE)
             binding.recyclerImageList.layoutManager?.onRestoreInstanceState(recyclerState)
         }
     }
