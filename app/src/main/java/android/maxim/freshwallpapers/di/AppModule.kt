@@ -1,6 +1,5 @@
 package android.maxim.freshwallpapers.di
 
-import android.maxim.freshwallpapers.data.models.CollectionsList
 import android.maxim.freshwallpapers.data.network.WallpapersApi
 import android.maxim.freshwallpapers.utils.Constants
 import com.google.firebase.firestore.FirebaseFirestore
@@ -37,12 +36,6 @@ class AppModule {
             .build()
 
         return retrofit.create(WallpapersApi::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideCollectionsList(): CollectionsList {
-        return CollectionsList()
     }
 
     @Provides
