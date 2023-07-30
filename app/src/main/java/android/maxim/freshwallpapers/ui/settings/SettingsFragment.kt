@@ -19,11 +19,11 @@ class SettingsFragment: Fragment(R.layout.fragment_settings) {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSettingsBinding.inflate(layoutInflater, container, false)
-        return binding.root
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        binding.llAppearance.setOnClickListener {
+            //TODO open dialog
+        }
+        return binding.root
     }
 
     override fun onDestroyView() {

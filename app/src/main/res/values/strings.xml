@@ -8,4 +8,5 @@
     <string name="setWallpaper_done">Done!</string>
     <string name="preview_image">preview image</string>
     <string name="settings_title">Settings</string>
+    <string name="appearance">Appearance</string>
 </resources>
