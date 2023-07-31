@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.fragment.app.DialogFragment
 
 class AppearanceDialogFragment: DialogFragment(R.layout.fragment_dialog_appearance) {
@@ -26,9 +26,9 @@ class AppearanceDialogFragment: DialogFragment(R.layout.fragment_dialog_appearan
             val clickedButton = view?.findViewById<RadioButton>(checkedId)
             binding.apply {
                 when (clickedButton) {
-                    rbLight -> Toast.makeText(requireActivity(), "Light", Toast.LENGTH_SHORT).show()
-                    rbDark -> Toast.makeText(requireActivity(), "Dark", Toast.LENGTH_SHORT).show()
-                    rbSystem -> Toast.makeText(requireActivity(), "System", Toast.LENGTH_SHORT).show()
+                    rbLight -> setDefaultNightMode(MODE_NIGHT_NO)
+                    rbDark -> setDefaultNightMode(MODE_NIGHT_YES)
+                    rbSystem -> setDefaultNightMode(MODE_NIGHT_FOLLOW_SYSTEM)
                 }
             }
         }
