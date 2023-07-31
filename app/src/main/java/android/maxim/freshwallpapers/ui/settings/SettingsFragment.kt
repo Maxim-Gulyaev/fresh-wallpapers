@@ -21,7 +21,7 @@ class SettingsFragment: Fragment(R.layout.fragment_settings) {
         _binding = FragmentSettingsBinding.inflate(layoutInflater, container, false)
 
         binding.llAppearance.setOnClickListener {
-            //TODO open dialog
+            //TODO move this instance to DI
             val appearanceDialogFragment = AppearanceDialogFragment()
             appearanceDialogFragment.show(parentFragmentManager, "AppearanceDialog")
         }
