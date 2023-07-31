@@ -9,4 +9,8 @@
     <string name="preview_image">preview image</string>
     <string name="settings_title">Settings</string>
     <string name="appearance">Appearance</string>
+    <string name="ok">OK</string>
+    <string name="light">Light</string>
+    <string name="dark">Dark</string>
+    <string name="system">System</string>
 </resources>

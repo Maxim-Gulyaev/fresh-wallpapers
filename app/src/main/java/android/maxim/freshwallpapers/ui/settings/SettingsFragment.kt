@@ -22,6 +22,8 @@ class SettingsFragment: Fragment(R.layout.fragment_settings) {
 
         binding.llAppearance.setOnClickListener {
             //TODO open dialog
+            val appearanceDialogFragment = AppearanceDialogFragment()
+            appearanceDialogFragment.show(parentFragmentManager, "AppearanceDialog")
         }
         return binding.root
     }

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_appearance_dialog"
+        android:layout_width="240dp"
+        android:layout_height="300dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:id="@+id/tv_appearance_dialog_title"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:text="@string/appearance"
+            android:gravity="center_vertical"
+            android:paddingStart="16dp"
+            tools:ignore="RtlSymmetry"
+            app:layout_constraintVertical_weight="1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/rg_appearance_dialog"
+            />
+
+        <RadioGroup
+            android:id="@+id/rg_appearance_dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:paddingStart="16dp"
+            app:layout_constraintBottom_toTopOf="@id/btn_appearance_dialog_ok"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_appearance_dialog_title"
+            app:layout_constraintVertical_weight="3"
+            tools:ignore="RtlSymmetry">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/tv_appearance_dialog_light"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="@string/light"
+            android:gravity="center_vertical"
+            android:textSize="16sp"
+            app:layout_constraintTop_toTopOf="@id/rg_appearance_dialog"
+            app:layout_constraintBottom_toTopOf="@id/tv_appearance_dialog_dark"
+            app:layout_constraintStart_toEndOf="@id/rg_appearance_dialog"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/tv_appearance_dialog_dark"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="@string/dark"
+            android:gravity="center_vertical"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/tv_appearance_dialog_light"
+            app:layout_constraintBottom_toTopOf="@id/tv_appearance_dialog_system"
+            app:layout_constraintStart_toEndOf="@id/rg_appearance_dialog"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/tv_appearance_dialog_system"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="@string/system"
+            android:gravity="center_vertical"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/tv_appearance_dialog_dark"
+            app:layout_constraintBottom_toBottomOf="@id/rg_appearance_dialog"
+            app:layout_constraintStart_toEndOf="@id/rg_appearance_dialog"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <Button
+            android:id="@+id/btn_appearance_dialog_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            app:layout_constraintVertical_weight="1"
+            android:backgroundTint="@color/white"
+            android:text="@string/ok"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rg_appearance_dialog" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
