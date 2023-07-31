@@ -5,12 +5,12 @@ import android.maxim.freshwallpapers.databinding.FragmentDialogAppearanceBinding
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.OnClickListener
 import android.view.ViewGroup
+import android.widget.RadioButton
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 
-class AppearanceDialogFragment: DialogFragment(R.layout.fragment_dialog_appearance), OnClickListener {
+class AppearanceDialogFragment: DialogFragment(R.layout.fragment_dialog_appearance) {
 
     private var _binding: FragmentDialogAppearanceBinding? = null
     private val binding get() = _binding!!
@@ -21,17 +21,18 @@ class AppearanceDialogFragment: DialogFragment(R.layout.fragment_dialog_appearan
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentDialogAppearanceBinding.inflate(layoutInflater, container, false)
-        binding.rbLight.setOnClickListener(this)
-        binding.rbDark.setOnClickListener(this)
-        binding.rbSystem.setOnClickListener(this)
-        return binding.root
-    }
 
-    override fun onClick(v: View?) {
-        when(v) {
-            binding.rbLight -> Toast.makeText(requireActivity(), "Light", Toast.LENGTH_SHORT).show()
-            binding.rbDark -> Toast.makeText(requireActivity(), "Dark", Toast.LENGTH_SHORT).show()
-            binding.rbSystem -> Toast.makeText(requireActivity(), "System", Toast.LENGTH_SHORT).show()
+        binding.rgAppearanceDialog.setOnCheckedChangeListener { _, checkedId ->
+            val clickedButton = view?.findViewById<RadioButton>(checkedId)
+            binding.apply {
+                when (clickedButton) {
+                    rbLight -> Toast.makeText(requireActivity(), "Light", Toast.LENGTH_SHORT).show()
+                    rbDark -> Toast.makeText(requireActivity(), "Dark", Toast.LENGTH_SHORT).show()
+                    rbSystem -> Toast.makeText(requireActivity(), "System", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
+
+        return binding.root
     }
 }
