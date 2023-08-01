@@ -3,4 +3,8 @@
     <style name="button_ok_style">
         <item name="android:textColor">@color/teal_200</item>
     </style>
+
+    <style name="radio_button">
+        <item name="android:textColor">@color/very_light_grey</item>
+    </style>
 </resources>
