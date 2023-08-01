@@ -32,6 +32,7 @@ class AppearanceDialogFragment: DialogFragment(R.layout.fragment_dialog_appearan
         //transparent background to make visible rounded corners
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
+        //TODO move this instance to DI
         sharedPreferences = FreshWallpapersApp.sharedPreferences
 
         when (sharedPreferences.getInt(MODE_KEY, SYSTEM_MODE)) {
