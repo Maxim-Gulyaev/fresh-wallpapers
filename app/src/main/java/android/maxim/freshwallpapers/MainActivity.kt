@@ -24,8 +24,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val sharedPreferences = FreshWallpapersApp.sharedPreferences
-        val mode = sharedPreferences.getInt(MODE_KEY, 100)
-        when (mode) {
+        val darkMode = sharedPreferences.getInt(MODE_KEY, SYSTEM_MODE)
+        when (darkMode) {
             LIGHT_MODE -> setDefaultNightMode(MODE_NIGHT_NO)
             DARK_MODE -> setDefaultNightMode(MODE_NIGHT_YES)
             SYSTEM_MODE ->
