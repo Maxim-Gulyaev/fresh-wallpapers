@@ -9,6 +9,7 @@
         android:id="@+id/layout_appearance_dialog"
         android:layout_width="240dp"
         android:layout_height="300dp"
+        android:background="@drawable/dialog_shape"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -64,7 +65,7 @@
                 />
 
         </RadioGroup>
-        
+
         <Button
             android:id="@+id/btn_appearance_dialog_ok"
             android:layout_width="wrap_content"

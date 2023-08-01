@@ -1,6 +1,8 @@
 package android.maxim.freshwallpapers.ui.settings
 
 import android.content.SharedPreferences
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.maxim.freshwallpapers.R
 import android.maxim.freshwallpapers.app.FreshWallpapersApp
 import android.maxim.freshwallpapers.databinding.FragmentDialogAppearanceBinding
@@ -26,6 +28,9 @@ class AppearanceDialogFragment: DialogFragment(R.layout.fragment_dialog_appearan
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentDialogAppearanceBinding.inflate(layoutInflater, container, false)
+
+        //transparent background to make visible rounded corners
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         sharedPreferences = FreshWallpapersApp.sharedPreferences
 
