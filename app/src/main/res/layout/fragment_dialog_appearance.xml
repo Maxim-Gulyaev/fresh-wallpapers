@@ -73,7 +73,8 @@
             app:layout_constraintVertical_weight="1"
             android:backgroundTint="@color/white"
             android:text="@string/ok"
-            android:textColor="@color/black"
+            android:background="@drawable/button_ok_shape"
+            style="@style/button_ok_style"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/rg_appearance_dialog" />
