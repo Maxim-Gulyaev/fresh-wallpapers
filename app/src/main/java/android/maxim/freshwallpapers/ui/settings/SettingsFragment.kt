@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,9 +32,7 @@ class SettingsFragment: Fragment(R.layout.fragment_settings) {
         settingsViewModel.getCurrentMode()
 
         binding.llAppearance.setOnClickListener {
-            //TODO move this instance to DI
-            val appearanceDialogFragment = AppearanceDialogFragment()
-            appearanceDialogFragment.show(parentFragmentManager, "AppearanceDialog")
+            findNavController().navigate(R.id.action_settingsFragment_to_appearanceDialogFragment)
         }
         return binding.root
     }
