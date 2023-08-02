@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -69,6 +70,6 @@ class AppearanceDialogFragment: DialogFragment(R.layout.fragment_dialog_appearan
                 appearanceDialogFragmentViewModel.saveNewMode(SYSTEM_MODE)
             }
         }
-        this.dismiss()
+        findNavController().navigate(R.id.action_appearanceDialogFragment_to_settingsFragment)
     }
 }
