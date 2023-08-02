@@ -6,6 +6,8 @@ const val LIGHT_MODE = 0
 const val DARK_MODE = 1
 const val SYSTEM_MODE = 2
 
+const val COLLECTION_KEY = "collection"
+
 object Constants {
 
     const val TAG = "mylog"

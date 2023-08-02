@@ -3,6 +3,7 @@ package android.maxim.freshwallpapers.ui.imagelist
 import android.maxim.freshwallpapers.R
 import android.maxim.freshwallpapers.data.models.Image
 import android.maxim.freshwallpapers.databinding.FragmentImageListBinding
+import android.maxim.freshwallpapers.utils.COLLECTION_KEY
 import android.maxim.freshwallpapers.utils.Constants.KEY_RECYCLER_STATE
 import android.os.Bundle
 import android.os.Parcelable
@@ -36,7 +37,7 @@ class ImageListFragment: Fragment(R.layout.fragment_image_list) {
     ): View {
         _binding = FragmentImageListBinding.inflate(layoutInflater, container, false)
 
-        collection = arguments?.getString("category")
+        collection = arguments?.getString(COLLECTION_KEY)
         imageListViewModel.getImageList(collection!!)
 
         imageListViewModel.imageList.observe(viewLifecycleOwner, Observer { imageList ->

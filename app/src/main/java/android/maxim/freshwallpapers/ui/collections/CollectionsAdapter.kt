@@ -3,6 +3,7 @@ package android.maxim.freshwallpapers.ui.collections
 import android.maxim.freshwallpapers.R
 import android.maxim.freshwallpapers.data.models.WallpapersCollection
 import android.maxim.freshwallpapers.databinding.ItemCollectionsBinding
+import android.maxim.freshwallpapers.utils.COLLECTION_KEY
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -41,7 +42,7 @@ class CollectionsAdapter(private val collectionsList: List<WallpapersCollection>
         holder.bind(title, previewUrl)
         holder.itemView.setOnClickListener {
             val bundle = Bundle()
-            bundle.putString("category", title)
+            bundle.putString(COLLECTION_KEY, title)
             Navigation
                 .createNavigateOnClickListener(
                     R.id.action_collectionsFragment_to_imagesListFragment,
