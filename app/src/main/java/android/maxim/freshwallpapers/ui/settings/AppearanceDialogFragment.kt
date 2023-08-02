@@ -17,7 +17,9 @@ import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AppearanceDialogFragment: DialogFragment(R.layout.fragment_dialog_appearance), OnClickListener {
 
     private var _binding: FragmentDialogAppearanceBinding? = null
