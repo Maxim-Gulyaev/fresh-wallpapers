@@ -45,6 +45,8 @@
         android:name="android.maxim.freshwallpapers.ui.settings.AppearanceDialogFragment">
         <action
             android:id="@+id/action_appearanceDialogFragment_to_settingsFragment"
-            app:destination="@+id/settingsFragment"/>
+            app:destination="@+id/settingsFragment"
+            app:popUpTo="@id/settingsFragment"
+            app:popUpToInclusive="true"/>
     </dialog>
 </navigation>
