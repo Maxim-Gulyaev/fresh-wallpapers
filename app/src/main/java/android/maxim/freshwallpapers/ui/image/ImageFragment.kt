@@ -9,11 +9,12 @@ import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Toast
+import androidx.core.view.WindowCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -37,12 +38,22 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentImageBinding.inflate(layoutInflater, container, false)
+
         largeImageURL = arguments?.getString("largeImageURL")
         Glide
             .with(requireActivity())
             .load(largeImageURL)
             .into(binding.ivImage)
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        WindowCompat.setDecorFitsSystemWindows(requireActivity().window, false)
+        requireActivity().window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -60,6 +71,12 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
                 false
             }
         }
+    }
+
+    override fun onStop() {
+        WindowCompat.setDecorFitsSystemWindows(requireActivity().window, true)
+        requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+        super.onStop()
     }
 
     override fun onDestroyView() {
