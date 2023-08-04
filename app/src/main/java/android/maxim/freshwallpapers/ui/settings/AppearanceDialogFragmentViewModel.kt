@@ -12,12 +12,11 @@ import javax.inject.Inject
 @HiltViewModel
 class AppearanceDialogFragmentViewModel @Inject constructor(): ViewModel() {
 
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
     private val _currentMode = MutableLiveData<Int>()
     val currentMode: LiveData<Int>
         get() = _currentMode
-
-    @Inject
-    lateinit var sharedPreferences: SharedPreferences
 
     fun getCurrentMode() {
         _currentMode.value = sharedPreferences.getInt(MODE_KEY, SYSTEM_MODE)
