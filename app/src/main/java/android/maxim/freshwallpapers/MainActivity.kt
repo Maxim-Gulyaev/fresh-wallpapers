@@ -26,15 +26,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val darkMode = sharedPreferences.getInt(MODE_KEY, SYSTEM_MODE)
-        when (darkMode) {
+        when (sharedPreferences.getInt(MODE_KEY, SYSTEM_MODE)) {
             LIGHT_MODE -> setDefaultNightMode(MODE_NIGHT_NO)
             DARK_MODE -> setDefaultNightMode(MODE_NIGHT_YES)
             SYSTEM_MODE ->
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    setDefaultNightMode(MODE_NIGHT_FOLLOW_SYSTEM);
+                    setDefaultNightMode(MODE_NIGHT_FOLLOW_SYSTEM)
                 } else {
-                    setDefaultNightMode(MODE_NIGHT_AUTO_BATTERY);
+                    setDefaultNightMode(MODE_NIGHT_AUTO_BATTERY)
                 }
         }
 
