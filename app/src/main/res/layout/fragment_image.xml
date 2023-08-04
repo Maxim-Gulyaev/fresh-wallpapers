@@ -10,11 +10,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/image_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize" />
-
+        android:layout_height="?android:attr/actionBarSize"
+        android:layout_marginTop="24dp"
+        />
 </FrameLayout>
