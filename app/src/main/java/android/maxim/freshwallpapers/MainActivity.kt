@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var sharedPreferences: SharedPreferences
     private lateinit var analytics: FirebaseAnalytics
-    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
