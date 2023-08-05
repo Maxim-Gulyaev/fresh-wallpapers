@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.Rect
 import android.maxim.freshwallpapers.R
 import android.maxim.freshwallpapers.databinding.FragmentImageBinding
+import android.maxim.freshwallpapers.utils.LARGE_IMAGE_URL_KEY
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
@@ -42,7 +43,7 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
 
         setToolbarTopMargin()
 
-        largeImageURL = arguments?.getString("largeImageURL")
+        largeImageURL = arguments?.getString(LARGE_IMAGE_URL_KEY)
         Glide
             .with(requireActivity())
             .load(largeImageURL)

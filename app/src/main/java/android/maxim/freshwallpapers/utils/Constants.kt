@@ -1,11 +1,13 @@
 package android.maxim.freshwallpapers.utils
 
 const val DARK_MODE_SHARE_PREFS = "darkModeSharedPrefs"
-const val MODE_KEY = "modeKey"
+
 const val LIGHT_MODE = 0
 const val DARK_MODE = 1
 const val SYSTEM_MODE = 2
 
+const val LARGE_IMAGE_URL_KEY = "largeImageUrl"
+const val MODE_KEY = "modeKey"
 const val COLLECTION_KEY = "collection"
 
 object Constants {

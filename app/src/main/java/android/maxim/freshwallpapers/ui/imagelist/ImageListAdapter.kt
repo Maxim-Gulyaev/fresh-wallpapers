@@ -3,6 +3,7 @@ package android.maxim.freshwallpapers.ui.imagelist
 import android.maxim.freshwallpapers.R
 import android.maxim.freshwallpapers.data.models.Image
 import android.maxim.freshwallpapers.databinding.ItemImageListBinding
+import android.maxim.freshwallpapers.utils.LARGE_IMAGE_URL_KEY
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -39,7 +40,7 @@ class ImageListAdapter(private val imageList: List<Image>)
         holder.bind(previewURL)
         holder.itemView.setOnClickListener {
             val bundle = Bundle()
-            bundle.putString("largeImageURL", largeImageURL)
+            bundle.putString(LARGE_IMAGE_URL_KEY, largeImageURL)
             Navigation
                 .createNavigateOnClickListener(
                     R.id.action_imagesListFragment_to_imageFragment,
