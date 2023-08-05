@@ -2,6 +2,7 @@ package android.maxim.freshwallpapers.ui.image
 
 import android.app.WallpaperManager
 import android.graphics.Bitmap
+import android.graphics.Rect
 import android.maxim.freshwallpapers.R
 import android.maxim.freshwallpapers.databinding.FragmentImageBinding
 import android.os.Bundle
@@ -38,6 +39,8 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentImageBinding.inflate(layoutInflater, container, false)
+
+        setToolbarTopMargin()
 
         largeImageURL = arguments?.getString("largeImageURL")
         Glide
@@ -143,5 +146,14 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
             activity?.windowManager?.defaultDisplay?.getMetrics(outMetrics)
         }
         return outMetrics
+    }
+
+    private fun setToolbarTopMargin() {
+        val rect = Rect()
+        requireActivity().window.decorView.getWindowVisibleDisplayFrame(rect)
+        val statusBarHeight = rect.top
+        val params = binding.imageToolbar.layoutParams as ViewGroup.MarginLayoutParams
+        params.topMargin = statusBarHeight
+        binding.imageToolbar.layoutParams = params
     }
 }
