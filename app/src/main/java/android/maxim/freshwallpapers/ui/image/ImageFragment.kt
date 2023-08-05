@@ -44,6 +44,19 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
         setToolbarTopMargin(getStatusBatHeight())
         setTopGradientViewHeight(getStatusBatHeight(), getToolbarHeight())
 
+        binding.imageBottomAppBar.apply {
+            inflateMenu(R.menu.image_bottom_app_bar_menu)
+            setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.apply -> {
+                        setWallpaper(getDisplayMetrics())
+                        true
+                    }
+                    else -> false
+                }
+            }
+        }
+
         largeImageURL = arguments?.getString(LARGE_IMAGE_URL_KEY)
         Glide
             .with(requireActivity())
