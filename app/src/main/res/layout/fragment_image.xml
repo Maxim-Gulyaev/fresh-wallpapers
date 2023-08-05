@@ -13,6 +13,13 @@
         android:scaleType="centerCrop"
         />
 
+    <View
+        android:id="@+id/view_toolbar_gradient"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/toolbar_shape"
+        />
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/image_toolbar"
         android:layout_width="match_parent"

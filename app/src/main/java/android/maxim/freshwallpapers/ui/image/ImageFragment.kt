@@ -41,7 +41,8 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
     ): View {
         _binding = FragmentImageBinding.inflate(layoutInflater, container, false)
 
-        setToolbarTopMargin()
+        setToolbarTopMargin(getStatusBatHeight())
+        setTopGradientViewHeight(getStatusBatHeight(), getToolbarHeight())
 
         largeImageURL = arguments?.getString(LARGE_IMAGE_URL_KEY)
         Glide
@@ -149,12 +150,24 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
         return outMetrics
     }
 
-    private fun setToolbarTopMargin() {
+    private fun getStatusBatHeight(): Int {
         val rect = Rect()
         requireActivity().window.decorView.getWindowVisibleDisplayFrame(rect)
-        val statusBarHeight = rect.top
+        return rect.top
+    }
+
+    private fun getToolbarHeight(): Int = binding.imageToolbar.layoutParams.height
+
+    private fun setToolbarTopMargin(statusBarHeight: Int) {
         val params = binding.imageToolbar.layoutParams as ViewGroup.MarginLayoutParams
         params.topMargin = statusBarHeight
         binding.imageToolbar.layoutParams = params
+    }
+
+    private fun setTopGradientViewHeight(statusBarHeight: Int, toolbarHeight: Int) {
+        val gradientViewHeight = statusBarHeight + toolbarHeight
+        val params = binding.viewToolbarGradient.layoutParams as ViewGroup.LayoutParams
+        params.height = gradientViewHeight
+        binding.viewToolbarGradient.layoutParams = params
     }
 }
