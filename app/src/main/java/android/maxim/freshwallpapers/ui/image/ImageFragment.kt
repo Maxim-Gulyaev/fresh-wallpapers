@@ -41,10 +41,23 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
     ): View {
         _binding = FragmentImageBinding.inflate(layoutInflater, container, false)
 
-        setToolbarTopMargin(getStatusBarHeight())
-        setTopGradientViewHeight(getStatusBarHeight(), getBarHeight(binding.imageToolbar))
-        setBottomAppBarMargin(getNavigationBarHeight())
-        setBottomGradientViewHeight(getNavigationBarHeight(), getBarHeight(binding.imageBottomAppBar))
+        //set margins to prevent Toolbar and BottomAppBar overlapping with system bars
+        setBarMargin(
+            binding.imageToolbar,
+            getStatusBarHeight())
+        setBarMargin(
+            binding.imageBottomAppBar,
+            getNavigationBarHeight())
+
+        //gradient views to ensure action icons visibility when background is light
+        setGradientViewHeight(
+            binding.viewToolbarGradient,
+            getStatusBarHeight(),
+            getBarHeight(binding.imageToolbar))
+        setGradientViewHeight(
+            binding.viewBottomAppBarGradient,
+            getNavigationBarHeight(),
+            getBarHeight(binding.imageBottomAppBar))
 
         binding.btnApply.setOnClickListener {
             setWallpaper(getDisplayMetrics())
@@ -179,29 +192,20 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
         } else 0
     }
 
-    private fun setBottomAppBarMargin(navigationBarHeight: Int) {
-        val params = binding.imageBottomAppBar.layoutParams as ViewGroup.MarginLayoutParams
-        params.bottomMargin = navigationBarHeight
-        binding.imageBottomAppBar.layoutParams = params
+    private fun setBarMargin(bar: View, systemBarHeight: Int) {
+        val params = bar.layoutParams as ViewGroup.MarginLayoutParams
+        if (bar == binding.imageToolbar) {
+            params.topMargin = systemBarHeight
+        } else {
+            params.bottomMargin = systemBarHeight
+        }
+        bar.layoutParams = params
     }
 
-    private fun setToolbarTopMargin(statusBarHeight: Int) {
-        val params = binding.imageToolbar.layoutParams as ViewGroup.MarginLayoutParams
-        params.topMargin = statusBarHeight
-        binding.imageToolbar.layoutParams = params
-    }
-
-    private fun setTopGradientViewHeight(statusBarHeight: Int, toolbarHeight: Int) {
-        val gradientViewHeight = statusBarHeight + toolbarHeight
-        val params = binding.viewToolbarGradient.layoutParams as ViewGroup.LayoutParams
-        params.height = gradientViewHeight
-        binding.viewToolbarGradient.layoutParams = params
-    }
-
-    private fun setBottomGradientViewHeight(navigationBarHeight: Int, bottomAppBarHeight: Int) {
+    private fun setGradientViewHeight(view: View, navigationBarHeight: Int, bottomAppBarHeight: Int) {
         val gradientViewHeight = navigationBarHeight + bottomAppBarHeight
-        val params = binding.viewBottomAppBarGradient.layoutParams as ViewGroup.LayoutParams
+        val params = view.layoutParams as ViewGroup.LayoutParams
         params.height = gradientViewHeight
-        binding.viewBottomAppBarGradient.layoutParams = params
+        view.layoutParams = params
     }
 }
