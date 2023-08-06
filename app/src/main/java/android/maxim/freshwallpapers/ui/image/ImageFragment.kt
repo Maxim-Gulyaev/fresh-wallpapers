@@ -41,8 +41,8 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
     ): View {
         _binding = FragmentImageBinding.inflate(layoutInflater, container, false)
 
-        setToolbarTopMargin(getStatusBatHeight())
-        setTopGradientViewHeight(getStatusBatHeight(), getToolbarHeight())
+        setToolbarTopMargin(getStatusBarHeight())
+        setTopGradientViewHeight(getStatusBarHeight(), getToolbarHeight())
 
         binding.btnApply.setOnClickListener {
             setWallpaper(getDisplayMetrics())
@@ -154,7 +154,7 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
         return outMetrics
     }
 
-    private fun getStatusBatHeight(): Int {
+    private fun getStatusBarHeight(): Int {
         val rect = Rect()
         requireActivity().window.decorView.getWindowVisibleDisplayFrame(rect)
         return rect.top
