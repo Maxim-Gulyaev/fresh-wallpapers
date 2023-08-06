@@ -43,6 +43,7 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
 
         setToolbarTopMargin(getStatusBarHeight())
         setTopGradientViewHeight(getStatusBarHeight(), getToolbarHeight())
+        setBottomAppBarMargin(getNavigationBarHeight())
 
         binding.btnApply.setOnClickListener {
             setWallpaper(getDisplayMetrics())
@@ -161,6 +162,22 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
     }
 
     private fun getToolbarHeight(): Int = binding.imageToolbar.layoutParams.height
+
+    private fun getNavigationBarHeight(): Int {
+        val resourceId: Int = resources.getIdentifier(
+            "navigation_bar_height",
+            "dimen",
+            "android")
+        return if (resourceId > 0) {
+            resources.getDimensionPixelSize(resourceId)
+        } else 0
+    }
+
+    private fun setBottomAppBarMargin(navigationBarHeight: Int) {
+        val params = binding.imageBottomAppBar.layoutParams as ViewGroup.MarginLayoutParams
+        params.bottomMargin = navigationBarHeight
+        binding.imageBottomAppBar.layoutParams = params
+    }
 
     private fun setToolbarTopMargin(statusBarHeight: Int) {
         val params = binding.imageToolbar.layoutParams as ViewGroup.MarginLayoutParams
