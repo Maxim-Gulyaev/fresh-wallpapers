@@ -41,7 +41,7 @@
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/image_bottom_app_bar"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:backgroundTint="@android:color/transparent"
         app:elevation="0dp">
