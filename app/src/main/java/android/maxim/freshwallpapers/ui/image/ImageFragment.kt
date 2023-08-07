@@ -87,13 +87,6 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
             setNavigationOnClickListener {
                 requireActivity().onBackPressedDispatcher.onBackPressed()
             }
-            inflateMenu(R.menu.image_toolbar_menu)
-            setOnMenuItemClickListener {
-                if (it.itemId == R.id.action_set_wallpaper) {
-                    setWallpaper(getDisplayMetrics())
-                }
-                false
-            }
         }
     }
 
