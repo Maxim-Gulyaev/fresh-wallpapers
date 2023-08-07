@@ -72,7 +72,7 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
 
     override fun onStart() {
         super.onStart()
-        setStatusBarWhiteText()
+        setStatusBarTextColor()
         WindowCompat.setDecorFitsSystemWindows(requireActivity().window, false)
         requireActivity().window.setFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
@@ -210,20 +210,19 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
         view.layoutParams = params
     }
 
-    private fun setStatusBarWhiteText() {
-        if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-            == Configuration.UI_MODE_NIGHT_NO) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                requireActivity().window.insetsController?.setSystemBarsAppearance(
-                    0,
-                    WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS)
-            } else {
-                @Suppress("DEPRECATION")
-                requireActivity().window.decorView.systemUiVisibility = 0
+    private fun setStatusBarTextColor() {
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_NO -> {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    requireActivity().window.insetsController?.setSystemBarsAppearance(
+                        0,
+                        WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS)
+                } else {
+                    @Suppress("DEPRECATION")
+                    requireActivity().window.decorView.systemUiVisibility = 0
+                }
             }
-        } else {
-            if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-                == Configuration.UI_MODE_NIGHT_YES) {
+            Configuration.UI_MODE_NIGHT_YES -> {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                     requireActivity().window.insetsController?.setSystemBarsAppearance(
                         0,
