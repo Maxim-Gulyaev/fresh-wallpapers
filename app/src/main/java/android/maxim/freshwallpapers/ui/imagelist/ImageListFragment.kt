@@ -55,7 +55,7 @@ class ImageListFragment: Fragment(R.layout.fragment_image_list) {
         val toolbarTitle = collection?.replaceFirstChar(Char::titlecase)
         binding.imageListToolbar.apply {
             title = toolbarTitle
-            setNavigationIcon(R.drawable.baseline_arrow_back_ios_black_24)
+            setNavigationIcon(R.drawable.baseline_arrow_back_ios_24)
             setNavigationOnClickListener {
                 findNavController().navigate(R.id.collectionsFragment)
             }
