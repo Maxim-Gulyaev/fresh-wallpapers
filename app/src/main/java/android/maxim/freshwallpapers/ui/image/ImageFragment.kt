@@ -234,11 +234,7 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
                     WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS)
             } else {
                 @Suppress("DEPRECATION")
-                requireActivity().window.decorView.systemUiVisibility = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-                } else {
-                    View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-                }
+                requireActivity().window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
             }
         }
     }
