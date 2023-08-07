@@ -1,17 +1,16 @@
 package android.maxim.freshwallpapers.ui.image
 
 import android.app.WallpaperManager
+import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Rect
 import android.maxim.freshwallpapers.R
 import android.maxim.freshwallpapers.databinding.FragmentImageBinding
 import android.maxim.freshwallpapers.utils.LARGE_IMAGE_URL_KEY
+import android.os.Build
 import android.os.Bundle
 import android.util.DisplayMetrics
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
+import android.view.*
 import android.widget.Toast
 import androidx.core.view.WindowCompat
 import androidx.fragment.app.Fragment
@@ -40,6 +39,8 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentImageBinding.inflate(layoutInflater, container, false)
+
+        setStatusBarWhiteText()
 
         //set margins to prevent Toolbar and BottomAppBar overlapping with system bars
         setBarMargin(
@@ -100,6 +101,7 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
     override fun onStop() {
         WindowCompat.setDecorFitsSystemWindows(requireActivity().window, true)
         requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+        cancelStatusBarWhiteText()
         super.onStop()
     }
 
@@ -207,5 +209,37 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
         val params = view.layoutParams as ViewGroup.LayoutParams
         params.height = gradientViewHeight
         view.layoutParams = params
+    }
+
+    private fun setStatusBarWhiteText() {
+        if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+            == Configuration.UI_MODE_NIGHT_NO) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                requireActivity().window.insetsController?.setSystemBarsAppearance(
+                    0,
+                    WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS)
+            } else {
+                @Suppress("DEPRECATION")
+                requireActivity().window.decorView.systemUiVisibility = 0
+            }
+        }
+    }
+
+    private fun cancelStatusBarWhiteText() {
+        if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+            == Configuration.UI_MODE_NIGHT_NO) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                requireActivity().window.insetsController?.setSystemBarsAppearance(
+                    0,
+                    WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS)
+            } else {
+                @Suppress("DEPRECATION")
+                requireActivity().window.decorView.systemUiVisibility = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+                } else {
+                    View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                }
+            }
+        }
     }
 }
