@@ -83,7 +83,7 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.imageToolbar.apply {
-            setNavigationIcon(R.drawable.baseline_arrow_back_ios_black_24)
+            setNavigationIcon(R.drawable.baseline_arrow_back_ios_white_24)
             setNavigationOnClickListener {
                 requireActivity().onBackPressedDispatcher.onBackPressed()
             }
