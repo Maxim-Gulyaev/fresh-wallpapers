@@ -3,6 +3,7 @@
     <string name="some_text">some text</string>
     <string name="collections">Collections</string>
     <string name="settings">Settings</string>
+    <string name="search">Search</string>
     <string name="collection_error">Error: collection is null</string>
     <string name="setWallpaper_error">Error: image has not been loaded</string>
     <string name="setWallpaper_done">Done!</string>
