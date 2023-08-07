@@ -40,8 +40,6 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
     ): View {
         _binding = FragmentImageBinding.inflate(layoutInflater, container, false)
 
-        setStatusBarWhiteText()
-
         //set margins to prevent Toolbar and BottomAppBar overlapping with system bars
         setBarMargin(
             binding.imageToolbar,
@@ -74,6 +72,7 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
 
     override fun onStart() {
         super.onStart()
+        setStatusBarWhiteText()
         WindowCompat.setDecorFitsSystemWindows(requireActivity().window, false)
         requireActivity().window.setFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
@@ -221,6 +220,15 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
             } else {
                 @Suppress("DEPRECATION")
                 requireActivity().window.decorView.systemUiVisibility = 0
+            }
+        } else {
+            if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+                == Configuration.UI_MODE_NIGHT_YES) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    requireActivity().window.insetsController?.setSystemBarsAppearance(
+                        0,
+                        WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS)
+                }
             }
         }
     }

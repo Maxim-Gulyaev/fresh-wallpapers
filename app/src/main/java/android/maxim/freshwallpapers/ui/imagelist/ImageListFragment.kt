@@ -1,15 +1,18 @@
 package android.maxim.freshwallpapers.ui.imagelist
 
+import android.content.res.Configuration
 import android.maxim.freshwallpapers.R
 import android.maxim.freshwallpapers.data.models.Image
 import android.maxim.freshwallpapers.databinding.FragmentImageListBinding
 import android.maxim.freshwallpapers.utils.COLLECTION_KEY
 import android.maxim.freshwallpapers.utils.Constants.KEY_RECYCLER_STATE
+import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowInsetsController
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -59,12 +62,36 @@ class ImageListFragment: Fragment(R.layout.fragment_image_list) {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+            == Configuration.UI_MODE_NIGHT_YES) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                requireActivity().window.insetsController?.setSystemBarsAppearance(
+                    0,
+                    WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS)
+            }
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         recyclerStateBundle = Bundle()
         val mListState = binding.recyclerImageList.layoutManager?.onSaveInstanceState()
         recyclerStateBundle!!.putParcelable(KEY_RECYCLER_STATE, mListState)
         _binding = null
+    }
+
+    override fun onStop() {
+        if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+            == Configuration.UI_MODE_NIGHT_YES) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                requireActivity().window.insetsController?.setSystemBarsAppearance(
+                    WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+                    WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS)
+            }
+        }
+        super.onStop()
     }
 
     private fun initRecycler(imageList:  List<Image>) {

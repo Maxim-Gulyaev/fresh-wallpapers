@@ -1,11 +1,14 @@
 package android.maxim.freshwallpapers.ui.collections
 
+import android.content.res.Configuration
 import android.maxim.freshwallpapers.R
 import android.maxim.freshwallpapers.databinding.FragmentCollectionsBinding
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowInsetsController
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -54,6 +57,30 @@ class CollectionsFragment: Fragment(R.layout.fragment_collections) {
                 }
             }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+            == Configuration.UI_MODE_NIGHT_YES) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                requireActivity().window.insetsController?.setSystemBarsAppearance(
+                    0,
+                    WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS)
+            }
+        }
+    }
+
+    override fun onStop() {
+        if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+            == Configuration.UI_MODE_NIGHT_YES) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                requireActivity().window.insetsController?.setSystemBarsAppearance(
+                    WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+                    WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS)
+            }
+        }
+        super.onStop()
     }
 
     override fun onDestroyView() {
