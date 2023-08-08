@@ -61,6 +61,9 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
         binding.btnApply.setOnClickListener {
             setWallpaper(getDisplayMetrics())
         }
+        binding.btnFavorite.setOnClickListener {
+            binding.btnFavorite.setImageResource(R.drawable.outline_favorite_white_24)
+        }
 
         largeImageURL = arguments?.getString(LARGE_IMAGE_URL_KEY)
         Glide
