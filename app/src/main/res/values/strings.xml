@@ -15,4 +15,7 @@
     <string name="dark">Dark</string>
     <string name="system">System</string>
     <string name="apply">Apply</string>
+    <string name="info">Info</string>
+    <string name="like">Like</string>
+    <string name="save">Save</string>
 </resources>

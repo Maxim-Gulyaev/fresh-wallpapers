@@ -36,8 +36,6 @@
         android:layout_height="?android:attr/actionBarSize"
         />
 
-    <!-- TODO fix the height-->
-    <!-- TODO change the icons-->
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/image_bottom_app_bar"
         android:layout_width="match_parent"
@@ -51,44 +49,64 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <ImageButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_info"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="72dp"
                 android:layout_weight="1"
-                android:src="@drawable/outline_info_white_20"
+                app:icon="@drawable/outline_info_white_24"
+                app:iconGravity="textTop"
+                app:iconTint="@color/white"
                 android:background="@android:color/transparent"
                 android:layout_gravity="center_vertical"
+                android:text="@string/info"
+                android:textColor="@color/white"
+                android:textAllCaps="false"
                 />
 
-            <ImageButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_save"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="72dp"
                 android:layout_weight="1"
-                android:src="@drawable/outline_file_download_white_24"
+                app:icon="@drawable/outline_file_download_white_24"
+                app:iconGravity="textTop"
+                app:iconTint="@color/white"
                 android:background="@android:color/transparent"
                 android:layout_gravity="center_vertical"
+                android:text="@string/save"
+                android:textColor="@color/white"
+                android:textAllCaps="false"
                 />
 
-            <ImageButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_apply"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="72dp"
                 android:layout_weight="1"
-                android:src="@drawable/baseline_mobile_friendly_white_20"
+                app:icon="@drawable/baseline_mobile_friendly_white_20"
+                app:iconGravity="textTop"
+                app:iconTint="@color/white"
                 android:background="@android:color/transparent"
                 android:layout_gravity="center_vertical"
+                android:text="@string/apply"
+                android:textColor="@color/white"
+                android:textAllCaps="false"
                 />
 
-            <ImageButton
-                android:id="@+id/btn_favorite"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_like"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="72dp"
                 android:layout_weight="1"
-                android:src="@drawable/outline_favorite_border_white_20"
+                app:icon="@drawable/outline_favorite_border_white_24"
+                app:iconGravity="textTop"
+                app:iconTint="@color/white"
                 android:background="@android:color/transparent"
                 android:layout_gravity="center_vertical"
+                android:text="@string/like"
+                android:textColor="@color/white"
+                android:textAllCaps="false"
                 />
 
         </LinearLayout>
