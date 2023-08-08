@@ -34,6 +34,13 @@ class SettingsFragment: Fragment(R.layout.fragment_settings) {
 
         settingsViewModel.getCurrentMode()
 
+        binding.settingsToolbar.apply {
+            setNavigationIcon(R.drawable.baseline_arrow_back_ios_24)
+            setNavigationOnClickListener {
+                findNavController().navigate(R.id.collectionsFragment)
+            }
+        }
+
         binding.llAppearance.setOnClickListener {
             findNavController().navigate(R.id.action_settingsFragment_to_appearanceDialogFragment)
         }
