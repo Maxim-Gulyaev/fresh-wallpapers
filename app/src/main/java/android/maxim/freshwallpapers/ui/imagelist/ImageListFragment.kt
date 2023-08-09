@@ -13,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsetsController
+import androidx.core.view.WindowCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -64,6 +65,24 @@ class ImageListFragment: Fragment(R.layout.fragment_image_list) {
 
     override fun onStart() {
         super.onStart()
+
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.P ||
+            Build.VERSION.SDK_INT == Build.VERSION_CODES.Q ||
+            Build.VERSION.SDK_INT == Build.VERSION_CODES.R) {
+            if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+                == Configuration.UI_MODE_NIGHT_YES) {
+                view?.let {
+                    WindowCompat
+                        .getInsetsController(requireActivity().window, it)
+                        .isAppearanceLightNavigationBars = false }
+            } else {
+                view?.let {
+                    WindowCompat
+                        .getInsetsController(requireActivity().window, it)
+                        .isAppearanceLightNavigationBars = true }
+            }
+        }
+
         if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
             == Configuration.UI_MODE_NIGHT_YES) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {

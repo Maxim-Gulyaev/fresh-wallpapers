@@ -3,16 +3,19 @@ package android.maxim.freshwallpapers.ui.image
 import android.app.WallpaperManager
 import android.content.res.Configuration
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.graphics.Rect
 import android.maxim.freshwallpapers.R
 import android.maxim.freshwallpapers.databinding.FragmentImageBinding
+import android.maxim.freshwallpapers.utils.Constants.TAG
 import android.maxim.freshwallpapers.utils.LARGE_IMAGE_URL_KEY
 import android.os.Build
 import android.os.Bundle
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.*
 import android.widget.Toast
-import androidx.core.view.WindowCompat
+import androidx.core.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -44,9 +47,12 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
         setBarMargin(
             binding.imageToolbar,
             getStatusBarHeight())
-        setBarMargin(
-            binding.imageBottomAppBar,
-            getNavigationBarHeight())
+        if (Build.VERSION.SDK_INT != Build.VERSION_CODES.R) {
+            setBarMargin(
+                binding.imageBottomAppBar,
+                getNavigationBarHeight())
+        }
+
 
         //gradient views to ensure action icons visibility when background is light
         setGradientViewHeight(
@@ -75,6 +81,14 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
 
     override fun onStart() {
         super.onStart()
+        view?.let {
+            WindowCompat
+                .getInsetsController(requireActivity().window, it)
+                .isAppearanceLightNavigationBars = false }
+
+
+        setUiForApi30()
+
         setStatusBarTextColor()
         WindowCompat.setDecorFitsSystemWindows(requireActivity().window, false)
         requireActivity().window.setFlags(
@@ -94,6 +108,10 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
     }
 
     override fun onStop() {
+        view?.let {
+            WindowCompat
+                .getInsetsController(requireActivity().window, it)
+                .isAppearanceLightNavigationBars = true }
         WindowCompat.setDecorFitsSystemWindows(requireActivity().window, true)
         requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
         cancelStatusBarWhiteText()
@@ -239,6 +257,20 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
                 @Suppress("DEPRECATION")
                 requireActivity().window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
             }
+        }
+    }
+
+    private fun setUiForApi30() {
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.R) {
+            requireActivity().window.navigationBarColor = Color.TRANSPARENT
+            requireActivity().window.statusBarColor = Color.TRANSPARENT
+            WindowCompat
+                .getInsetsController(requireActivity().window, requireActivity().window.decorView)
+                .isAppearanceLightStatusBars = false
+            requireActivity().window.isNavigationBarContrastEnforced = false
+            setBarMargin(
+                binding.imageBottomAppBar,
+                0)
         }
     }
 }
