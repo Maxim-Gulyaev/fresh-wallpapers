@@ -162,10 +162,10 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
             .submit()
     }
 
-    private fun showToast(resId: Int) {
+    private fun showToast(messageResId: Int) {
         Toast.makeText(
             requireActivity(),
-            requireActivity().getString(resId),
+            requireActivity().getString(messageResId),
             Toast.LENGTH_LONG).show()
     }
 
