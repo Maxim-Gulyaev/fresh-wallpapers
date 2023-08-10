@@ -10,7 +10,6 @@ import android.maxim.freshwallpapers.databinding.FragmentImageBinding
 import android.maxim.freshwallpapers.utils.LARGE_IMAGE_URL_KEY
 import android.os.Build
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.view.*
 import android.widget.Toast
 import androidx.core.view.*
@@ -62,7 +61,7 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
             getBarHeight(binding.imageBottomAppBar))
 
         binding.btnApply.setOnClickListener {
-            setWallpaper(getDisplayMetrics())
+            setWallpaper()
         }
         binding.btnLike.setOnClickListener {
             binding.btnLike.setIconResource(R.drawable.outline_favorite_white_24)
@@ -85,7 +84,7 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
 
         setUiForApi30()
         setStatusBarTextColor()
-        
+
         WindowCompat.setDecorFitsSystemWindows(requireActivity().window, false)
         requireActivity().window.setFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
@@ -119,12 +118,14 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
         _binding = null
     }
 
-    private fun setWallpaper(displayMetrics: DisplayMetrics) {
+    private fun setWallpaper() {
         Glide
             .with(requireActivity())
             .asBitmap()
             .load(largeImageURL)
-            .override(displayMetrics.widthPixels, displayMetrics.heightPixels)
+            .override(
+                resources.displayMetrics.widthPixels,
+                resources.displayMetrics.heightPixels)
             .centerCrop()
             .listener(object : RequestListener<Bitmap> {
                 override fun onLoadFailed(
@@ -166,18 +167,6 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
             requireActivity(),
             requireActivity().getString(resId),
             Toast.LENGTH_LONG).show()
-    }
-
-    @Suppress("DEPRECATION")
-    private fun getDisplayMetrics(): DisplayMetrics {
-        val outMetrics = DisplayMetrics()
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
-            val display = activity?.display
-            display?.getRealMetrics(outMetrics)
-        } else {
-            activity?.windowManager?.defaultDisplay?.getMetrics(outMetrics)
-        }
-        return outMetrics
     }
 
     private fun getStatusBarHeight(): Int {
