@@ -65,10 +65,8 @@ class ImageListFragment: Fragment(R.layout.fragment_image_list) {
 
     override fun onStart() {
         super.onStart()
-
-        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.P ||
-            Build.VERSION.SDK_INT == Build.VERSION_CODES.Q ||
-            Build.VERSION.SDK_INT == Build.VERSION_CODES.R) {
+        if (Build.VERSION.SDK_INT
+            in Build.VERSION_CODES.O_MR1..Build.VERSION_CODES.R) {
             if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
                 == Configuration.UI_MODE_NIGHT_YES) {
                 view?.let {
@@ -82,7 +80,15 @@ class ImageListFragment: Fragment(R.layout.fragment_image_list) {
                         .isAppearanceLightNavigationBars = true }
             }
         }
-
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.O) {
+            if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+                == Configuration.UI_MODE_NIGHT_YES) {
+                view?.let {
+                    WindowCompat
+                        .getInsetsController(requireActivity().window, it)
+                        .isAppearanceLightNavigationBars = false }
+            }
+        }
         if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
             == Configuration.UI_MODE_NIGHT_YES) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
