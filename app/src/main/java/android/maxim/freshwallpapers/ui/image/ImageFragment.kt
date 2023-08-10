@@ -187,7 +187,8 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
     private fun getStatusBarHeight(): Int {
         val rect = Rect()
         requireActivity().window.decorView.getWindowVisibleDisplayFrame(rect)
-        return rect.top
+        val accidentValue = (24 * (resources.displayMetrics.density)).toInt()
+        return if (rect.top != 0) rect.top else accidentValue
     }
 
     private fun getBarHeight(bar: View): Int {
