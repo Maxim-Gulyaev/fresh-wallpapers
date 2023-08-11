@@ -1,7 +1,7 @@
 package android.maxim.freshwallpapers.data.models
 
 data class Image(
-    var id: String,
-    var largeImageURL: String,
-    var previewURL: String
+    val id: String,
+    val largeImageURL: String,
+    val previewURL: String
 )
