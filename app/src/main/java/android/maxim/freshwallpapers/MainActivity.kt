@@ -1,6 +1,7 @@
 package android.maxim.freshwallpapers
 
 import android.content.SharedPreferences
+import android.maxim.freshwallpapers.di.DarkModePrefs
 import android.maxim.freshwallpapers.utils.DARK_MODE
 import android.maxim.freshwallpapers.utils.LIGHT_MODE
 import android.maxim.freshwallpapers.utils.MODE_KEY
@@ -19,6 +20,7 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
 
     @Inject
+    @DarkModePrefs
     lateinit var sharedPreferences: SharedPreferences
     private lateinit var analytics: FirebaseAnalytics
 

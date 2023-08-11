@@ -1,6 +1,7 @@
 package android.maxim.freshwallpapers.utils
 
 const val DARK_MODE_SHARE_PREFS = "darkModeSharedPrefs"
+const val LIKED_IMAGES_PREFS = "likedImagesPrefs"
 
 const val LIGHT_MODE = 0
 const val DARK_MODE = 1

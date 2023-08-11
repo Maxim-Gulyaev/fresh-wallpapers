@@ -1,6 +1,7 @@
 package android.maxim.freshwallpapers.ui.settings
 
 import android.content.SharedPreferences
+import android.maxim.freshwallpapers.di.DarkModePrefs
 import android.maxim.freshwallpapers.utils.MODE_KEY
 import android.maxim.freshwallpapers.utils.SYSTEM_MODE
 import androidx.lifecycle.LiveData
@@ -17,6 +18,7 @@ class SettingsViewModel @Inject constructor(): ViewModel() {
         get() = _currentMode
 
     @Inject
+    @DarkModePrefs
     lateinit var sharedPreferences: SharedPreferences
 
     fun getCurrentMode() {

@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import android.maxim.freshwallpapers.data.network.WallpapersApi
 import android.maxim.freshwallpapers.utils.Constants
 import android.maxim.freshwallpapers.utils.DARK_MODE_SHARE_PREFS
+import android.maxim.freshwallpapers.utils.LIKED_IMAGES_PREFS
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -51,9 +52,20 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideSharedPrefs(@ApplicationContext appContext: Context): SharedPreferences {
+    @DarkModePrefs
+    fun provideDarkModePrefs(@ApplicationContext appContext: Context): SharedPreferences {
         return appContext.getSharedPreferences(
             DARK_MODE_SHARE_PREFS,
+            Application.MODE_PRIVATE
+        )
+    }
+
+    @Provides
+    @Singleton
+    @LikedImagesPrefs
+    fun provideLikedImagesPrefs(@ApplicationContext appContext: Context): SharedPreferences {
+        return appContext.getSharedPreferences(
+            LIKED_IMAGES_PREFS,
             Application.MODE_PRIVATE
         )
     }

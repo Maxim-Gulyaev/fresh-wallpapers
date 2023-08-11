@@ -1,6 +1,7 @@
 package android.maxim.freshwallpapers.ui.image
 
 import android.app.WallpaperManager
+import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Color
@@ -8,6 +9,8 @@ import android.graphics.Rect
 import android.maxim.freshwallpapers.R
 import android.maxim.freshwallpapers.data.models.Image
 import android.maxim.freshwallpapers.databinding.FragmentImageBinding
+import android.maxim.freshwallpapers.di.DarkModePrefs
+import android.maxim.freshwallpapers.di.LikedImagesPrefs
 import android.maxim.freshwallpapers.utils.IMAGE_KEY
 import android.os.Build
 import android.os.Bundle
@@ -24,10 +27,14 @@ import com.bumptech.glide.request.RequestListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ImageFragment: Fragment(R.layout.fragment_image) {
 
+    @Inject
+    @LikedImagesPrefs
+    lateinit var sharedPreferences: SharedPreferences
     private lateinit var image: Image
     private var largeImageURL: String? = null
     private val imageViewModel: ImageViewModel by viewModels()

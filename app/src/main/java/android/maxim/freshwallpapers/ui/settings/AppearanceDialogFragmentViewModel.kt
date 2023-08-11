@@ -1,6 +1,7 @@
 package android.maxim.freshwallpapers.ui.settings
 
 import android.content.SharedPreferences
+import android.maxim.freshwallpapers.di.DarkModePrefs
 import android.maxim.freshwallpapers.utils.MODE_KEY
 import android.maxim.freshwallpapers.utils.SYSTEM_MODE
 import androidx.lifecycle.LiveData
@@ -13,6 +14,7 @@ import javax.inject.Inject
 class AppearanceDialogFragmentViewModel @Inject constructor(): ViewModel() {
 
     @Inject
+    @DarkModePrefs
     lateinit var sharedPreferences: SharedPreferences
     private val _currentMode = MutableLiveData<Int>()
     val currentMode: LiveData<Int>
