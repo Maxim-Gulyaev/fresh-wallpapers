@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.graphics.Rect
 import android.maxim.freshwallpapers.R
 import android.maxim.freshwallpapers.databinding.FragmentImageBinding
+import android.maxim.freshwallpapers.utils.IMAGE_ID_KEY
 import android.maxim.freshwallpapers.utils.LARGE_IMAGE_URL_KEY
 import android.os.Build
 import android.os.Bundle
@@ -27,6 +28,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class ImageFragment: Fragment(R.layout.fragment_image) {
 
+    private var imageId: String? = null
     private var largeImageURL: String? = null
     private val imageViewModel: ImageViewModel by viewModels()
     private var _binding: FragmentImageBinding? = null
@@ -67,7 +69,10 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
             binding.btnLike.setIconResource(R.drawable.outline_favorite_white_24)
         }
 
+        imageId = arguments?.getString(IMAGE_ID_KEY)
         largeImageURL = arguments?.getString(LARGE_IMAGE_URL_KEY)
+
+        Toast.makeText(requireActivity(), imageId, Toast.LENGTH_LONG).show()
         Glide
             .with(requireActivity())
             .load(largeImageURL)
