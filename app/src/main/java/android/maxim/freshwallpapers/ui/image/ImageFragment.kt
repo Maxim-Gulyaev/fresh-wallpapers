@@ -71,8 +71,7 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
 
         imageId = arguments?.getString(IMAGE_ID_KEY)
         largeImageURL = arguments?.getString(LARGE_IMAGE_URL_KEY)
-
-        Toast.makeText(requireActivity(), imageId, Toast.LENGTH_LONG).show()
+        
         Glide
             .with(requireActivity())
             .load(largeImageURL)
