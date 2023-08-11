@@ -59,7 +59,7 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
                 getNavigationBarHeight())
         }
 
-        //gradient views to ensure action icons visibility when background is light
+        //gradient views are to ensure action icons visibility when background is light
         setGradientViewHeight(
             binding.viewToolbarGradient,
             getStatusBarHeight(),
