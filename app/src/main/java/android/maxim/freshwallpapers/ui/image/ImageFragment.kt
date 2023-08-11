@@ -6,9 +6,9 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.Rect
 import android.maxim.freshwallpapers.R
+import android.maxim.freshwallpapers.data.models.Image
 import android.maxim.freshwallpapers.databinding.FragmentImageBinding
-import android.maxim.freshwallpapers.utils.IMAGE_ID_KEY
-import android.maxim.freshwallpapers.utils.LARGE_IMAGE_URL_KEY
+import android.maxim.freshwallpapers.utils.IMAGE_KEY
 import android.os.Build
 import android.os.Bundle
 import android.view.*
@@ -28,7 +28,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class ImageFragment: Fragment(R.layout.fragment_image) {
 
-    private var imageId: String? = null
+    private lateinit var image: Image
     private var largeImageURL: String? = null
     private val imageViewModel: ImageViewModel by viewModels()
     private var _binding: FragmentImageBinding? = null
@@ -69,12 +69,14 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
             binding.btnLike.setIconResource(R.drawable.outline_favorite_white_24)
         }
 
-        imageId = arguments?.getString(IMAGE_ID_KEY)
-        largeImageURL = arguments?.getString(LARGE_IMAGE_URL_KEY)
-        
+        image = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            arguments?.getParcelable(IMAGE_KEY, Image::class.java)!!
+        } else {
+            arguments?.getParcelable(IMAGE_KEY)!!
+        }
         Glide
             .with(requireActivity())
-            .load(largeImageURL)
+            .load(image.largeImageURL)
             .into(binding.ivImage)
         return binding.root
     }

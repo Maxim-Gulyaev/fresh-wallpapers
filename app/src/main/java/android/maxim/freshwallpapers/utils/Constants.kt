@@ -6,8 +6,7 @@ const val LIGHT_MODE = 0
 const val DARK_MODE = 1
 const val SYSTEM_MODE = 2
 
-const val IMAGE_ID_KEY = "imageId"
-const val LARGE_IMAGE_URL_KEY = "largeImageUrl"
+const val IMAGE_KEY = "image"
 const val MODE_KEY = "modeKey"
 const val COLLECTION_KEY = "collection"
 
