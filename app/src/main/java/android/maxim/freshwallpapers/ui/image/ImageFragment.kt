@@ -28,11 +28,9 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.lang.reflect.Type
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -43,7 +41,6 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
     lateinit var sharedPreferences: SharedPreferences
     @Inject
     lateinit var gson: Gson
-    // TODO move gson to DI
     private lateinit var image: Image
     private lateinit var retrievedImageMap: LikedImageMap
     private var largeImageURL: String? = null
@@ -74,15 +71,19 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
                 .apply()
         }
 
-       //set initial icon fot "like" button
+        //get liked images from shared prefs
         val serializedImageMap = sharedPreferences.getString(LIKED_IMAGE_MAP, null)
         if (serializedImageMap != null) {
             retrievedImageMap = gson.fromJson(serializedImageMap, LikedImageMap::class.java)
-            if (retrievedImageMap.likedImageMap.containsKey(image.id)) {
-                binding.btnLike.setIconResource(R.drawable.outline_favorite_white_24)
-            } else {
-                binding.btnLike.setIconResource(R.drawable.outline_favorite_border_white_24)
-            }
+        } else {
+            showSharedPrefsError()
+        }
+
+        //set initial icon for "like" button
+        if (retrievedImageMap.likedImageMap.containsKey(image.id)) {
+            binding.btnLike.setIconResource(R.drawable.outline_favorite_white_24)
+        } else {
+            binding.btnLike.setIconResource(R.drawable.outline_favorite_border_white_24)
         }
 
         //set margins to prevent Toolbar and BottomAppBar overlapping with system bars
@@ -130,6 +131,8 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
                     binding.btnLike.setIconResource(R.drawable.outline_favorite_border_white_24)
                     Log.i(TAG, retrievedImageMap.likedImageMap.size.toString())
                 }
+            } else {
+                showSharedPrefsError()
             }
         }
 
@@ -323,5 +326,12 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
                 binding.imageBottomAppBar,
                 0)
         }
+    }
+
+    private fun showSharedPrefsError() {
+        Toast.makeText(
+            requireActivity(),
+            resources.getString(R.string.shared_prefs_error),
+            Toast.LENGTH_LONG).show()
     }
 }
