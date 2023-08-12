@@ -8,12 +8,15 @@ import android.graphics.Color
 import android.graphics.Rect
 import android.maxim.freshwallpapers.R
 import android.maxim.freshwallpapers.data.models.Image
+import android.maxim.freshwallpapers.data.models.LikedImageMap
 import android.maxim.freshwallpapers.databinding.FragmentImageBinding
-import android.maxim.freshwallpapers.di.DarkModePrefs
 import android.maxim.freshwallpapers.di.LikedImagesPrefs
+import android.maxim.freshwallpapers.utils.Constants.TAG
 import android.maxim.freshwallpapers.utils.IMAGE_KEY
+import android.maxim.freshwallpapers.utils.LIKED_IMAGE_MAP
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.core.view.*
@@ -24,9 +27,12 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.lang.reflect.Type
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -35,7 +41,10 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
     @Inject
     @LikedImagesPrefs
     lateinit var sharedPreferences: SharedPreferences
+    private val gson = Gson()
+    // TODO move gson to DI
     private lateinit var image: Image
+    private lateinit var retrievedImageMap: LikedImageMap
     private var largeImageURL: String? = null
     private val imageViewModel: ImageViewModel by viewModels()
     private var _binding: FragmentImageBinding? = null
@@ -48,6 +57,32 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentImageBinding.inflate(layoutInflater, container, false)
+
+        image = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            arguments?.getParcelable(IMAGE_KEY, Image::class.java)!!
+        } else {
+            arguments?.getParcelable(IMAGE_KEY)!!
+        }
+
+        if (!sharedPreferences.contains(LIKED_IMAGE_MAP)) {
+            val likedImageMap = LikedImageMap(mutableMapOf())
+            val likedImageMapGson = gson.toJson(likedImageMap)
+            sharedPreferences
+                .edit()
+                .putString(LIKED_IMAGE_MAP, likedImageMapGson)
+                .apply()
+        }
+
+       //set initial icon fot "like" button
+        val serializedImageMap = sharedPreferences.getString(LIKED_IMAGE_MAP, null)
+        if (serializedImageMap != null) {
+            retrievedImageMap = gson.fromJson(serializedImageMap, LikedImageMap::class.java)
+            if (retrievedImageMap.likedImageMap.containsKey(image.id)) {
+                binding.btnLike.setIconResource(R.drawable.outline_favorite_white_24)
+            } else {
+                binding.btnLike.setIconResource(R.drawable.outline_favorite_border_white_24)
+            }
+        }
 
         //set margins to prevent Toolbar and BottomAppBar overlapping with system bars
         setBarMargin(
@@ -73,14 +108,30 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
             setWallpaper()
         }
         binding.btnLike.setOnClickListener {
-            binding.btnLike.setIconResource(R.drawable.outline_favorite_white_24)
+            if (serializedImageMap != null) {
+                Log.i(TAG, retrievedImageMap.likedImageMap.size.toString())
+                if (!retrievedImageMap.likedImageMap.containsKey(image.id)) {
+                    retrievedImageMap.likedImageMap.put(image.id, image)
+                    val imageListGson = gson.toJson(retrievedImageMap)
+                    sharedPreferences
+                        .edit()
+                        .putString(LIKED_IMAGE_MAP, imageListGson)
+                        .apply()
+                    binding.btnLike.setIconResource(R.drawable.outline_favorite_white_24)
+                    Log.i(TAG, retrievedImageMap.likedImageMap.size.toString())
+                } else {
+                    retrievedImageMap.likedImageMap.remove(image.id)
+                    val imageListGson = gson.toJson(retrievedImageMap)
+                    sharedPreferences
+                        .edit()
+                        .putString(LIKED_IMAGE_MAP, imageListGson)
+                        .apply()
+                    binding.btnLike.setIconResource(R.drawable.outline_favorite_border_white_24)
+                    Log.i(TAG, retrievedImageMap.likedImageMap.size.toString())
+                }
+            }
         }
 
-        image = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            arguments?.getParcelable(IMAGE_KEY, Image::class.java)!!
-        } else {
-            arguments?.getParcelable(IMAGE_KEY)!!
-        }
         Glide
             .with(requireActivity())
             .load(image.largeImageURL)
