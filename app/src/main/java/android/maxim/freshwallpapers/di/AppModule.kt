@@ -10,6 +10,7 @@ import android.maxim.freshwallpapers.utils.LIKED_IMAGE_PREFS
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -68,5 +69,11 @@ class AppModule {
             LIKED_IMAGE_PREFS,
             Application.MODE_PRIVATE
         )
+    }
+
+    @Provides
+    @Singleton
+    fun provideGson(): Gson{
+        return Gson()
     }
 }

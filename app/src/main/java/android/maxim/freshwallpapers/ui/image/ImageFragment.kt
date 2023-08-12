@@ -41,7 +41,8 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
     @Inject
     @LikedImagesPrefs
     lateinit var sharedPreferences: SharedPreferences
-    private val gson = Gson()
+    @Inject
+    lateinit var gson: Gson
     // TODO move gson to DI
     private lateinit var image: Image
     private lateinit var retrievedImageMap: LikedImageMap
