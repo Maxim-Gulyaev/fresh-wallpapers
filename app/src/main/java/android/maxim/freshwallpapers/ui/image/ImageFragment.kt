@@ -43,7 +43,6 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
     lateinit var gson: Gson
     private lateinit var image: Image
     private lateinit var retrievedImageMap: LikedImageMap
-    private var largeImageURL: String? = null
     private val imageViewModel: ImageViewModel by viewModels()
     private var _binding: FragmentImageBinding? = null
     private val binding get() = _binding!!
