@@ -140,6 +140,7 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
             .with(requireActivity())
             .load(image.largeImageURL)
             .into(binding.ivImage)
+
         return binding.root
     }
 
@@ -190,7 +191,7 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
         Glide
             .with(requireActivity())
             .asBitmap()
-            .load(largeImageURL)
+            .load(image.largeImageURL)
             .override(
                 resources.displayMetrics.widthPixels,
                 resources.displayMetrics.heightPixels)
@@ -202,6 +203,11 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
                     target: com.bumptech.glide.request.target.Target<Bitmap>?,
                     isFirstResource: Boolean
                 ): Boolean {
+                    Toast.makeText(
+                        requireActivity(),
+                        resources.getString(R.string.loading_error),
+                        Toast.LENGTH_LONG
+                    ).show()
                     return false
                 }
                 override fun onResourceReady(

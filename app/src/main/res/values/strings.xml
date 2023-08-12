@@ -20,4 +20,5 @@
     <string name="save">Save</string>
     <string name="liked_images">Liked images</string>
     <string name="shared_prefs_error">Error: SharedPrefs is null.</string>
+    <string name="loading_error">Loading error.</string>
 </resources>
