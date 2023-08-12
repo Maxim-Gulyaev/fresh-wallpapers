@@ -3,6 +3,8 @@ package android.maxim.freshwallpapers.ui.collections
 import android.content.res.Configuration
 import android.maxim.freshwallpapers.R
 import android.maxim.freshwallpapers.databinding.FragmentCollectionsBinding
+import android.maxim.freshwallpapers.utils.COLLECTION_KEY
+import android.maxim.freshwallpapers.utils.LIKED
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,6 +14,7 @@ import android.view.WindowInsetsController
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,8 +41,14 @@ class CollectionsFragment: Fragment(R.layout.fragment_collections) {
         binding.collectionsToolbar.apply {
             inflateMenu(R.menu.collections_toolbar_menu)
             setOnMenuItemClickListener {
-                if (it.itemId == R.id.action_settings) {
-                    findNavController().navigate(R.id.action_collectionsFragment_to_settingsFragment)
+                when (it.itemId) {
+                    R.id.action_settings -> {
+                        findNavController()
+                            .navigate(R.id.action_collectionsFragment_to_settingsFragment)
+                    }
+                    R.id.action_liked_images -> {
+                        showLikedImages()
+                    }
                 }
                 false
             }
@@ -86,5 +95,15 @@ class CollectionsFragment: Fragment(R.layout.fragment_collections) {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun showLikedImages() {
+        val bundle = Bundle()
+        bundle.putString(COLLECTION_KEY, LIKED)
+        Navigation
+            .createNavigateOnClickListener(
+                R.id.action_collectionsFragment_to_imagesListFragment,
+                bundle)
+            .onClick(binding.collectionsToolbar)
     }
 }

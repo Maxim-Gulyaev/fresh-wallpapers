@@ -6,6 +6,7 @@ const val DARK_MODE = 1
 const val SYSTEM_MODE = 2
 const val LIKED_IMAGE_PREFS = "likedImagePrefs"
 const val LIKED_IMAGE_MAP = "likedImageList"
+const val LIKED = "liked wallpapers"
 
 const val IMAGE_KEY = "image"
 const val MODE_KEY = "modeKey"
