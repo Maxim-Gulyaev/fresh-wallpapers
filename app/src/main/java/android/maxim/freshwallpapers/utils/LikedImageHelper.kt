@@ -7,7 +7,7 @@ import android.maxim.freshwallpapers.data.models.Image
 import android.maxim.freshwallpapers.data.models.LikedImageMap
 import com.google.gson.Gson
 
-class LikedSharedPrefsHelper(appContext: Context) {
+class LikedImageHelper(appContext: Context) {
 
     val sharedPreferences: SharedPreferences = appContext.getSharedPreferences(
         LIKED_IMAGE_PREFS,
@@ -36,7 +36,7 @@ class LikedSharedPrefsHelper(appContext: Context) {
     }
 
     fun addImageToLiked(image: Image) {
-        retrievedImageMap.likedImageMap.put(image.id, image)
+        getLikedImageMap().likedImageMap.put(image.id, image)
         val imageListGson = gson.toJson(retrievedImageMap)
         sharedPreferences
             .edit()
@@ -45,7 +45,7 @@ class LikedSharedPrefsHelper(appContext: Context) {
     }
 
     fun removeImageFromLiked(image: Image) {
-        retrievedImageMap.likedImageMap.remove(image.id)
+        getLikedImageMap().likedImageMap.remove(image.id)
         val imageListGson = gson.toJson(retrievedImageMap)
         sharedPreferences
             .edit()

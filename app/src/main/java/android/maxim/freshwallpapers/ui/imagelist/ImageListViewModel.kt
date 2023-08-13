@@ -6,7 +6,7 @@ import android.maxim.freshwallpapers.data.models.Image
 import android.maxim.freshwallpapers.data.repository.WallpapersRepository
 import android.maxim.freshwallpapers.di.LikedImagesPrefs
 import android.maxim.freshwallpapers.utils.LIKED
-import android.maxim.freshwallpapers.utils.LikedSharedPrefsHelper
+import android.maxim.freshwallpapers.utils.LikedImageHelper
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -29,7 +29,7 @@ class ImageListViewModel @Inject constructor(application: Application)
     lateinit var sharedPreferences: SharedPreferences
     @Inject
     lateinit var gson: Gson
-    private val likedSharedPrefsHelper = LikedSharedPrefsHelper(application)
+    private val likedImageHelper = LikedImageHelper(application)
     private val _imageList = MutableLiveData<List<Image>>()
     val imageList: LiveData<List<Image>>
         get() = _imageList
@@ -48,7 +48,7 @@ class ImageListViewModel @Inject constructor(application: Application)
     }
 
     private fun getLikedImageList(): List<Image> {
-        return likedSharedPrefsHelper
+        return likedImageHelper
             .getLikedImageMap()
             .likedImageMap
             .values

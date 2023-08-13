@@ -11,7 +11,7 @@ import android.maxim.freshwallpapers.data.models.LikedImageMap
 import android.maxim.freshwallpapers.databinding.FragmentImageBinding
 import android.maxim.freshwallpapers.utils.Constants.TAG
 import android.maxim.freshwallpapers.utils.IMAGE_KEY
-import android.maxim.freshwallpapers.utils.LikedSharedPrefsHelper
+import android.maxim.freshwallpapers.utils.LikedImageHelper
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -33,7 +33,7 @@ import kotlinx.coroutines.launch
 class ImageFragment: Fragment(R.layout.fragment_image) {
 
     //TODO move it to DI
-    private lateinit var  likedSharedPrefsHelper: LikedSharedPrefsHelper
+    private lateinit var  likedImageHelper: LikedImageHelper
     private lateinit var image: Image
     private lateinit var retrievedImageMap: LikedImageMap
     private val imageViewModel: ImageViewModel by viewModels()
@@ -55,8 +55,8 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
         }
 
         //TODO move instantiation to DI
-        likedSharedPrefsHelper = LikedSharedPrefsHelper(requireActivity().applicationContext)
-        retrievedImageMap = likedSharedPrefsHelper.getLikedImageMap()
+        likedImageHelper = LikedImageHelper(requireActivity().applicationContext)
+        retrievedImageMap = imageViewModel.getLikedImageMap()
 
         //set initial icon for "like" button
         if (retrievedImageMap.likedImageMap.containsKey(image.id)) {
@@ -90,10 +90,10 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
         }
         binding.btnLike.setOnClickListener {
             if (!retrievedImageMap.likedImageMap.containsKey(image.id)) {
-                likedSharedPrefsHelper.addImageToLiked(image)
+                likedImageHelper.addImageToLiked(image)
                 binding.btnLike.setIconResource(R.drawable.outline_favorite_white_24)
             } else {
-                likedSharedPrefsHelper.removeImageFromLiked(image)
+                likedImageHelper.removeImageFromLiked(image)
                 binding.btnLike.setIconResource(R.drawable.outline_favorite_border_white_24)
                 Log.i(TAG, retrievedImageMap.likedImageMap.size.toString())
             }
