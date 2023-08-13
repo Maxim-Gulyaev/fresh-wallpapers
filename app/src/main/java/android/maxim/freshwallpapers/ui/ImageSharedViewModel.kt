@@ -32,6 +32,8 @@ class ImageSharedViewModel @Inject constructor(application: Application): Androi
     private lateinit var retrievedImageMap: LikedImageMap
     private val _imageList = MutableLiveData<List<Image>>()
     val imageList: LiveData<List<Image>> = _imageList
+    private val _imageMap = MutableLiveData<LikedImageMap>()
+    val imageMap: LiveData<LikedImageMap> = _imageMap
 
     suspend fun getCategoriesList() = liveData {
         repository.getCollectionsList().collect { value ->
@@ -92,6 +94,7 @@ class ImageSharedViewModel @Inject constructor(application: Application): Androi
         } else {
             //TODO handle the error
         }
+        _imageMap.value = retrievedImageMap
         return retrievedImageMap
     }
 }

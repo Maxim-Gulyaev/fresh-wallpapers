@@ -12,7 +12,6 @@ import android.maxim.freshwallpapers.databinding.FragmentImageBinding
 import android.maxim.freshwallpapers.ui.ImageSharedViewModel
 import android.maxim.freshwallpapers.utils.Constants.TAG
 import android.maxim.freshwallpapers.utils.IMAGE_KEY
-import android.maxim.freshwallpapers.utils.LikedImageHelper
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -29,16 +28,12 @@ import com.bumptech.glide.request.RequestListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class ImageFragment: Fragment(R.layout.fragment_image) {
 
-    /*@Inject
-    lateinit var likedImageHelper: LikedImageHelper*/
     private lateinit var image: Image
     private lateinit var retrievedImageMap: LikedImageMap
-    //private val imageViewModel: ImageViewModel by viewModels()
     private val imageSharedViewModel: ImageSharedViewModel by viewModels()
     private var _binding: FragmentImageBinding? = null
     private val binding get() = _binding!!
@@ -56,13 +51,15 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
             arguments?.getParcelable(IMAGE_KEY)!!
         }
 
-        retrievedImageMap = imageSharedViewModel.getLikedImageMap()
-
         //set initial icon for "like" button
-        if (retrievedImageMap.likedImageMap.containsKey(image.id)) {
-            binding.btnLike.setIconResource(R.drawable.outline_favorite_white_24)
-        } else {
-            binding.btnLike.setIconResource(R.drawable.outline_favorite_border_white_24)
+        imageSharedViewModel.getLikedImageMap()
+        imageSharedViewModel.imageMap.observe(viewLifecycleOwner) { imageMap ->
+            retrievedImageMap = imageMap
+            if (retrievedImageMap.likedImageMap.containsKey(image.id)) {
+                binding.btnLike.setIconResource(R.drawable.outline_favorite_white_24)
+            } else {
+                binding.btnLike.setIconResource(R.drawable.outline_favorite_border_white_24)
+            }
         }
 
         //set margins to prevent Toolbar and BottomAppBar overlapping with system bars
