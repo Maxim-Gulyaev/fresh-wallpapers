@@ -1,7 +1,6 @@
 package android.maxim.freshwallpapers.ui.image
 
 import android.app.WallpaperManager
-import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Color
@@ -10,10 +9,9 @@ import android.maxim.freshwallpapers.R
 import android.maxim.freshwallpapers.data.models.Image
 import android.maxim.freshwallpapers.data.models.LikedImageMap
 import android.maxim.freshwallpapers.databinding.FragmentImageBinding
-import android.maxim.freshwallpapers.di.LikedImagesPrefs
 import android.maxim.freshwallpapers.utils.Constants.TAG
 import android.maxim.freshwallpapers.utils.IMAGE_KEY
-import android.maxim.freshwallpapers.utils.LIKED_IMAGE_MAP
+import android.maxim.freshwallpapers.utils.LikedSharedPrefsHelper
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -27,20 +25,15 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
-import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class ImageFragment: Fragment(R.layout.fragment_image) {
 
-    @Inject
-    @LikedImagesPrefs
-    lateinit var sharedPreferences: SharedPreferences
-    @Inject
-    lateinit var gson: Gson
+    //TODO move it to DI
+    private lateinit var  likedSharedPrefsHelper: LikedSharedPrefsHelper
     private lateinit var image: Image
     private lateinit var retrievedImageMap: LikedImageMap
     private val imageViewModel: ImageViewModel by viewModels()
@@ -61,22 +54,9 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
             arguments?.getParcelable(IMAGE_KEY)!!
         }
 
-        if (!sharedPreferences.contains(LIKED_IMAGE_MAP)) {
-            val likedImageMap = LikedImageMap(mutableMapOf())
-            val likedImageMapGson = gson.toJson(likedImageMap)
-            sharedPreferences
-                .edit()
-                .putString(LIKED_IMAGE_MAP, likedImageMapGson)
-                .apply()
-        }
-
-        //get liked images from shared prefs
-        val serializedImageMap = sharedPreferences.getString(LIKED_IMAGE_MAP, null)
-        if (serializedImageMap != null) {
-            retrievedImageMap = gson.fromJson(serializedImageMap, LikedImageMap::class.java)
-        } else {
-            showSharedPrefsError()
-        }
+        //TODO move instantiation to DI
+        likedSharedPrefsHelper = LikedSharedPrefsHelper(requireActivity().applicationContext)
+        retrievedImageMap = likedSharedPrefsHelper.getLikedImageMap()
 
         //set initial icon for "like" button
         if (retrievedImageMap.likedImageMap.containsKey(image.id)) {
@@ -109,29 +89,13 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
             setWallpaper()
         }
         binding.btnLike.setOnClickListener {
-            if (serializedImageMap != null) {
-                Log.i(TAG, retrievedImageMap.likedImageMap.size.toString())
-                if (!retrievedImageMap.likedImageMap.containsKey(image.id)) {
-                    retrievedImageMap.likedImageMap.put(image.id, image)
-                    val imageListGson = gson.toJson(retrievedImageMap)
-                    sharedPreferences
-                        .edit()
-                        .putString(LIKED_IMAGE_MAP, imageListGson)
-                        .apply()
-                    binding.btnLike.setIconResource(R.drawable.outline_favorite_white_24)
-                    Log.i(TAG, retrievedImageMap.likedImageMap.size.toString())
-                } else {
-                    retrievedImageMap.likedImageMap.remove(image.id)
-                    val imageListGson = gson.toJson(retrievedImageMap)
-                    sharedPreferences
-                        .edit()
-                        .putString(LIKED_IMAGE_MAP, imageListGson)
-                        .apply()
-                    binding.btnLike.setIconResource(R.drawable.outline_favorite_border_white_24)
-                    Log.i(TAG, retrievedImageMap.likedImageMap.size.toString())
-                }
+            if (!retrievedImageMap.likedImageMap.containsKey(image.id)) {
+                likedSharedPrefsHelper.addImageToLiked(image)
+                binding.btnLike.setIconResource(R.drawable.outline_favorite_white_24)
             } else {
-                showSharedPrefsError()
+                likedSharedPrefsHelper.removeImageFromLiked(image)
+                binding.btnLike.setIconResource(R.drawable.outline_favorite_border_white_24)
+                Log.i(TAG, retrievedImageMap.likedImageMap.size.toString())
             }
         }
 
@@ -331,12 +295,5 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
                 binding.imageBottomAppBar,
                 0)
         }
-    }
-
-    private fun showSharedPrefsError() {
-        Toast.makeText(
-            requireActivity(),
-            resources.getString(R.string.shared_prefs_error),
-            Toast.LENGTH_LONG).show()
     }
 }
