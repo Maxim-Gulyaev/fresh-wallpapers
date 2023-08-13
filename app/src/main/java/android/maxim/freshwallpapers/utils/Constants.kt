@@ -13,6 +13,10 @@ const val MODE_KEY = "modeKey"
 const val COLLECTION_KEY = "collection"
 
 const val IMAGE_PER_PAGE = 198
+const val VERTICAL_ORIENTATION = "vertical"
+const val BACKGROUND = "background"
+const val PHOTO = "photo"
+const val SAFE_SEARCH_TRUE = true
 
 object Constants {
 

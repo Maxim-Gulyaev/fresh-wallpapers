@@ -4,8 +4,8 @@ import android.content.Context
 import android.maxim.freshwallpapers.data.models.ImageList
 import android.maxim.freshwallpapers.data.models.WallpapersCollection
 import android.maxim.freshwallpapers.di.WallpapersRepositoryEntryPoint
-import android.maxim.freshwallpapers.utils.Constants
-import android.maxim.freshwallpapers.utils.IMAGE_PER_PAGE
+import android.maxim.freshwallpapers.utils.*
+import android.maxim.freshwallpapers.utils.Constants.PIXABAY_API_KEY
 import dagger.hilt.EntryPoints
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
@@ -52,12 +52,12 @@ class WallpapersRepository @Inject constructor(@ApplicationContext context: Cont
 
     suspend fun getImageList(collection: String): Response<ImageList> {
         val response = wallpapersApi.getImageList(
-            Constants.PIXABAY_API_KEY,
+            PIXABAY_API_KEY,
             IMAGE_PER_PAGE,
-            "background",
-            "vertical",
-            "photo",
-            true,
+            BACKGROUND,
+            VERTICAL_ORIENTATION,
+            PHOTO,
+            SAFE_SEARCH_TRUE,
             collection)
         if (!response.isSuccessful) {
             //TODO handle the exception
