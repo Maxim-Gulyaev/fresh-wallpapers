@@ -1,20 +1,21 @@
 package android.maxim.freshwallpapers.utils
 
-import android.app.Application
 import android.content.Context
-import android.content.SharedPreferences
 import android.maxim.freshwallpapers.data.models.Image
 import android.maxim.freshwallpapers.data.models.LikedImageMap
-import com.google.gson.Gson
+import android.maxim.freshwallpapers.di.LikedImageHelperEntryPoint
+import dagger.hilt.EntryPoints
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-class LikedImageHelper @Inject constructor(appContext: Context) {
+class LikedImageHelper @Inject constructor(@ApplicationContext appContext: Context) {
 
-    val sharedPreferences: SharedPreferences = appContext.getSharedPreferences(
-        LIKED_IMAGE_PREFS,
-        Application.MODE_PRIVATE
+    private val hiltEntryPoint = EntryPoints.get(
+        appContext.applicationContext,
+        LikedImageHelperEntryPoint::class.java
     )
-    private val gson = Gson()
+    private val sharedPreferences = hiltEntryPoint.sharedPreferences()
+    private val gson = hiltEntryPoint.gson()
     private lateinit var retrievedImageMap: LikedImageMap
     private var serializedImageMap: String? = null
 
