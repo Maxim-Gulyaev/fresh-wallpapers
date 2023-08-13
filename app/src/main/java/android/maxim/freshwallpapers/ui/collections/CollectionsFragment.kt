@@ -3,6 +3,7 @@ package android.maxim.freshwallpapers.ui.collections
 import android.content.res.Configuration
 import android.maxim.freshwallpapers.R
 import android.maxim.freshwallpapers.databinding.FragmentCollectionsBinding
+import android.maxim.freshwallpapers.ui.ImageSharedViewModel
 import android.maxim.freshwallpapers.utils.COLLECTION_KEY
 import android.maxim.freshwallpapers.utils.LIKED
 import android.os.Build
@@ -25,7 +26,8 @@ class CollectionsFragment: Fragment(R.layout.fragment_collections) {
 
     private var _binding: FragmentCollectionsBinding? = null
     private val binding get() = _binding!!
-    private val collectionsViewModel: CollectionsViewModel by viewModels()
+    //private val collectionsViewModel: CollectionsViewModel by viewModels()
+    private val imageSharedViewModel: ImageSharedViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,7 +57,7 @@ class CollectionsFragment: Fragment(R.layout.fragment_collections) {
         }
 
         lifecycleScope.launch {
-            collectionsViewModel.getCategoriesList().observe(viewLifecycleOwner) { collection ->
+            imageSharedViewModel.getCategoriesList().observe(viewLifecycleOwner) { collection ->
                 binding.recyclerCollections.apply {
                     layoutManager = GridLayoutManager(
                         activity,

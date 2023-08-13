@@ -9,6 +9,7 @@ import android.maxim.freshwallpapers.R
 import android.maxim.freshwallpapers.data.models.Image
 import android.maxim.freshwallpapers.data.models.LikedImageMap
 import android.maxim.freshwallpapers.databinding.FragmentImageBinding
+import android.maxim.freshwallpapers.ui.ImageSharedViewModel
 import android.maxim.freshwallpapers.utils.Constants.TAG
 import android.maxim.freshwallpapers.utils.IMAGE_KEY
 import android.maxim.freshwallpapers.utils.LikedImageHelper
@@ -37,7 +38,8 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
     lateinit var likedImageHelper: LikedImageHelper
     private lateinit var image: Image
     private lateinit var retrievedImageMap: LikedImageMap
-    private val imageViewModel: ImageViewModel by viewModels()
+    //private val imageViewModel: ImageViewModel by viewModels()
+    private val imageSharedViewModel: ImageSharedViewModel by viewModels()
     private var _binding: FragmentImageBinding? = null
     private val binding get() = _binding!!
 
@@ -54,7 +56,7 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
             arguments?.getParcelable(IMAGE_KEY)!!
         }
 
-        retrievedImageMap = imageViewModel.getLikedImageMap()
+        retrievedImageMap = imageSharedViewModel.getLikedImageMap()
 
         //set initial icon for "like" button
         if (retrievedImageMap.likedImageMap.containsKey(image.id)) {

@@ -4,6 +4,7 @@ import android.content.res.Configuration
 import android.maxim.freshwallpapers.R
 import android.maxim.freshwallpapers.data.models.Image
 import android.maxim.freshwallpapers.databinding.FragmentImageListBinding
+import android.maxim.freshwallpapers.ui.ImageSharedViewModel
 import android.maxim.freshwallpapers.utils.COLLECTION_KEY
 import android.maxim.freshwallpapers.utils.Constants.KEY_RECYCLER_STATE
 import android.os.Build
@@ -29,7 +30,8 @@ class ImageListFragment: Fragment(R.layout.fragment_image_list) {
 
     private var _binding: FragmentImageListBinding? = null
     private val binding get() = _binding!!
-    private val imageListViewModel: ImageListViewModel by viewModels()
+    //private val imageListViewModel: ImageListViewModel by viewModels()
+    private val imageSharedViewModel: ImageSharedViewModel by viewModels()
     private var collection: String? = null
     private var recyclerStateBundle: Bundle? = null
     private var recyclerState: Parcelable? = null
@@ -42,9 +44,9 @@ class ImageListFragment: Fragment(R.layout.fragment_image_list) {
         _binding = FragmentImageListBinding.inflate(layoutInflater, container, false)
 
         collection = arguments?.getString(COLLECTION_KEY)
-        imageListViewModel.getImageList(collection!!)
+        imageSharedViewModel.getImageList(collection!!)
 
-        imageListViewModel.imageList.observe(viewLifecycleOwner, Observer { imageList ->
+        imageSharedViewModel.imageList.observe(viewLifecycleOwner, Observer { imageList ->
             if (recyclerStateBundle != null) restoreRecyclerState()
             initRecycler(imageList)
         })
