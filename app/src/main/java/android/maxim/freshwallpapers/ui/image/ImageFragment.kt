@@ -34,8 +34,8 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class ImageFragment: Fragment(R.layout.fragment_image) {
 
-    @Inject
-    lateinit var likedImageHelper: LikedImageHelper
+    /*@Inject
+    lateinit var likedImageHelper: LikedImageHelper*/
     private lateinit var image: Image
     private lateinit var retrievedImageMap: LikedImageMap
     //private val imageViewModel: ImageViewModel by viewModels()
@@ -90,10 +90,10 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
         }
         binding.btnLike.setOnClickListener {
             if (!retrievedImageMap.likedImageMap.containsKey(image.id)) {
-                likedImageHelper.addImageToLiked(image)
+                imageSharedViewModel.addImageToLiked(image)
                 binding.btnLike.setIconResource(R.drawable.outline_favorite_white_24)
             } else {
-                likedImageHelper.removeImageFromLiked(image)
+                imageSharedViewModel.removeImageFromLiked(image)
                 binding.btnLike.setIconResource(R.drawable.outline_favorite_border_white_24)
                 Log.i(TAG, retrievedImageMap.likedImageMap.size.toString())
             }
