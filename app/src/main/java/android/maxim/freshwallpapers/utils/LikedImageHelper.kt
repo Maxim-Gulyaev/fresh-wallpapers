@@ -6,8 +6,9 @@ import android.content.SharedPreferences
 import android.maxim.freshwallpapers.data.models.Image
 import android.maxim.freshwallpapers.data.models.LikedImageMap
 import com.google.gson.Gson
+import javax.inject.Inject
 
-class LikedImageHelper(appContext: Context) {
+class LikedImageHelper @Inject constructor(appContext: Context) {
 
     val sharedPreferences: SharedPreferences = appContext.getSharedPreferences(
         LIKED_IMAGE_PREFS,

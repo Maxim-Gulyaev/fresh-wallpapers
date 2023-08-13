@@ -7,6 +7,7 @@ import android.maxim.freshwallpapers.data.network.WallpapersApi
 import android.maxim.freshwallpapers.utils.Constants
 import android.maxim.freshwallpapers.utils.DARK_MODE_SHARE_PREFS
 import android.maxim.freshwallpapers.utils.LIKED_IMAGE_PREFS
+import android.maxim.freshwallpapers.utils.LikedImageHelper
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -75,5 +76,11 @@ class AppModule {
     @Singleton
     fun provideGson(): Gson{
         return Gson()
+    }
+
+    @Provides
+    @Singleton
+    fun provideLikedImageHelper(@ApplicationContext appContext: Context): LikedImageHelper{
+        return LikedImageHelper(appContext)
     }
 }

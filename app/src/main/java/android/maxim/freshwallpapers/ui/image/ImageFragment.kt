@@ -28,18 +28,18 @@ import com.bumptech.glide.request.RequestListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ImageFragment: Fragment(R.layout.fragment_image) {
 
-    //TODO move it to DI
-    private lateinit var  likedImageHelper: LikedImageHelper
+    @Inject
+    lateinit var likedImageHelper: LikedImageHelper
     private lateinit var image: Image
     private lateinit var retrievedImageMap: LikedImageMap
     private val imageViewModel: ImageViewModel by viewModels()
     private var _binding: FragmentImageBinding? = null
     private val binding get() = _binding!!
-    //TODO Delete imageViewModel if will not use
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,8 +54,6 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
             arguments?.getParcelable(IMAGE_KEY)!!
         }
 
-        //TODO move instantiation to DI
-        likedImageHelper = LikedImageHelper(requireActivity().applicationContext)
         retrievedImageMap = imageViewModel.getLikedImageMap()
 
         //set initial icon for "like" button

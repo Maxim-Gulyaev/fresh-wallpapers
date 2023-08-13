@@ -1,21 +1,19 @@
 package android.maxim.freshwallpapers.ui.image
 
-import android.app.Application
 import android.maxim.freshwallpapers.data.models.LikedImageMap
 import android.maxim.freshwallpapers.data.repository.WallpapersRepository
 import android.maxim.freshwallpapers.utils.LikedImageHelper
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class ImageViewModel @Inject constructor(application: Application)
-    : AndroidViewModel(application) {
+class ImageViewModel @Inject constructor(): ViewModel() {
 
     @Inject
     lateinit var repository: WallpapersRepository
-    //TODO move it to DI
-    private val likedImageHelper = LikedImageHelper(application)
+    @Inject
+    lateinit var likedImageHelper: LikedImageHelper
 
     fun getLikedImageMap(): LikedImageMap {
         return likedImageHelper
