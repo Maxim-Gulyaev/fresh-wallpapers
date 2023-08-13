@@ -5,6 +5,7 @@ import android.maxim.freshwallpapers.data.models.ImageList
 import android.maxim.freshwallpapers.data.models.WallpapersCollection
 import android.maxim.freshwallpapers.di.WallpapersRepositoryEntryPoint
 import android.maxim.freshwallpapers.utils.Constants
+import android.maxim.freshwallpapers.utils.IMAGE_PER_PAGE
 import dagger.hilt.EntryPoints
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
@@ -52,7 +53,7 @@ class WallpapersRepository @Inject constructor(@ApplicationContext context: Cont
     suspend fun getImageList(collection: String): Response<ImageList> {
         val response = wallpapersApi.getImageList(
             Constants.PIXABAY_API_KEY,
-            200,
+            IMAGE_PER_PAGE,
             "background",
             "vertical",
             "photo",

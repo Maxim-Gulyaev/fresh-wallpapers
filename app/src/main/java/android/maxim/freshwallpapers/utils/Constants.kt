@@ -12,6 +12,8 @@ const val IMAGE_KEY = "image"
 const val MODE_KEY = "modeKey"
 const val COLLECTION_KEY = "collection"
 
+const val IMAGE_PER_PAGE = 198
+
 object Constants {
 
     const val TAG = "mylog"
