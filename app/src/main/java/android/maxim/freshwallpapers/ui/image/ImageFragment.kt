@@ -5,6 +5,7 @@ import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.Rect
+import android.graphics.drawable.Drawable
 import android.maxim.freshwallpapers.R
 import android.maxim.freshwallpapers.data.models.Image
 import android.maxim.freshwallpapers.data.models.LikedImageMap
@@ -25,6 +26,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -82,6 +85,7 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
             getNavigationBarHeight(),
             getBarHeight(binding.imageBottomAppBar))
 
+        //todo: refactor with apply function
         binding.btnApply.setOnClickListener {
             setWallpaper()
         }
@@ -93,6 +97,26 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
                 imageSharedViewModel.removeImageFromLiked(image)
                 binding.btnLike.setIconResource(R.drawable.outline_favorite_border_white_24)
                 Log.i(TAG, retrievedImageMap.likedImageMap.size.toString())
+            }
+        }
+        binding.btnSave.setOnClickListener {
+            val imageUrl = image.largeImageURL
+            val imageName = image.id
+
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
+                Glide.with(this)
+                    .asBitmap()
+                    .load(imageUrl)
+                    .into(object : CustomTarget<Bitmap>() {
+                        override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                            imageSharedViewModel.saveBitmapToExternalStorage(resource, imageName)
+                        }
+
+                        override fun onLoadCleared(placeholder: Drawable?) {
+                            // Очистка ресурсов, если необходимо
+                        }
+                    })
+
             }
         }
 

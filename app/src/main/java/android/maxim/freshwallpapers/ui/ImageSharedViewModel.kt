@@ -2,19 +2,26 @@ package android.maxim.freshwallpapers.ui
 
 import android.app.Application
 import android.content.SharedPreferences
+import android.graphics.Bitmap
 import android.maxim.freshwallpapers.data.models.Image
 import android.maxim.freshwallpapers.data.models.LikedImageMap
 import android.maxim.freshwallpapers.data.repository.WallpapersRepository
 import android.maxim.freshwallpapers.di.LikedImagesPrefs
+import android.maxim.freshwallpapers.utils.Constants.TAG
 import android.maxim.freshwallpapers.utils.LIKED
 import android.maxim.freshwallpapers.utils.LIKED_IMAGE_MAP
 import android.maxim.freshwallpapers.utils.LikedImageHelper
+import android.os.Environment
+import android.util.Log
 import androidx.lifecycle.*
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -96,5 +103,21 @@ class ImageSharedViewModel @Inject constructor(application: Application): Androi
         }
         _imageMap.value = retrievedImageMap
         return retrievedImageMap
+    }
+
+    fun saveBitmapToExternalStorage(bitmap: Bitmap, imageName: String) {
+        val imageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+        val imageFile = File(imageDir, "$imageName.jpg")
+
+        try {
+            val outputStream = FileOutputStream(imageFile)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+            outputStream.flush()
+            outputStream.close()
+            // Теперь изображение сохранено во внешнем хранилище
+        } catch (e: IOException) {
+            e.printStackTrace()
+            Log.d(TAG, e.toString())
+        }
     }
 }
