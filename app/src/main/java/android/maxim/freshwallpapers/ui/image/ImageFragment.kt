@@ -343,7 +343,7 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
 
                 }
             } else {
-                Toast.makeText(requireActivity(), "Fuck you.", Toast.LENGTH_LONG).show()
+                //todo: do something
             }
         }
     }
