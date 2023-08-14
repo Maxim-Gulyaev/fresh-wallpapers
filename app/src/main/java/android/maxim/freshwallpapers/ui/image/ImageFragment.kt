@@ -1,6 +1,8 @@
 package android.maxim.freshwallpapers.ui.image
 
+import android.Manifest
 import android.app.WallpaperManager
+import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Color
@@ -18,6 +20,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -40,6 +44,7 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
     private val imageSharedViewModel: ImageSharedViewModel by viewModels()
     private var _binding: FragmentImageBinding? = null
     private val binding get() = _binding!!
+    private val WRITE_EXTERNAL_STORAGE_REQUEST = 1
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -100,23 +105,20 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
             }
         }
         binding.btnSave.setOnClickListener {
-            val imageUrl = image.largeImageURL
-            val imageName = image.id
-
-            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
-                Glide.with(this)
-                    .asBitmap()
-                    .load(imageUrl)
-                    .into(object : CustomTarget<Bitmap>() {
-                        override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                            imageSharedViewModel.saveBitmapToExternalStorage(resource, imageName)
-                        }
-
-                        override fun onLoadCleared(placeholder: Drawable?) {
-                            // Очистка ресурсов, если необходимо
-                        }
-                    })
-
+            if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), WRITE_EXTERNAL_STORAGE_REQUEST)
+            } else {
+                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
+                    Glide.with(this)
+                        .asBitmap()
+                        .load(image.largeImageURL)
+                        .into(object : CustomTarget<Bitmap>() {
+                            override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                                imageSharedViewModel.saveBitmapToExternalStorage(resource, image.id)
+                            }
+                            override fun onLoadCleared(placeholder: Drawable?) {}
+                        })
+                }
             }
         }
 
@@ -317,4 +319,33 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
                 0)
         }
     }
+
+    @Deprecated("Deprecated in Java")
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if (requestCode == WRITE_EXTERNAL_STORAGE_REQUEST) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Разрешение получено, продолжите сохранение
+                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
+                    Glide.with(this)
+                        .asBitmap()
+                        .load(image.largeImageURL)
+                        .into(object : CustomTarget<Bitmap>() {
+                            override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                                imageSharedViewModel.saveBitmapToExternalStorage(resource, image.id)
+                            }
+
+                            override fun onLoadCleared(placeholder: Drawable?) {
+                                // Очистка ресурсов, если необходимо
+                            }
+                        })
+
+                }
+            } else {
+                Toast.makeText(requireActivity(), "Fuck you.", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
 }

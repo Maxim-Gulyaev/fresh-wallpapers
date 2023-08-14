@@ -114,7 +114,6 @@ class ImageSharedViewModel @Inject constructor(application: Application): Androi
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
             outputStream.flush()
             outputStream.close()
-            // Теперь изображение сохранено во внешнем хранилище
         } catch (e: IOException) {
             e.printStackTrace()
             Log.d(TAG, e.toString())
