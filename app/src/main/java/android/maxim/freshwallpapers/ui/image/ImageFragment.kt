@@ -13,14 +13,13 @@ import android.maxim.freshwallpapers.data.models.Image
 import android.maxim.freshwallpapers.data.models.LikedImageMap
 import android.maxim.freshwallpapers.databinding.FragmentImageBinding
 import android.maxim.freshwallpapers.ui.ImageSharedViewModel
-import android.maxim.freshwallpapers.utils.Constants.TAG
 import android.maxim.freshwallpapers.utils.IMAGE_KEY
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.view.*
 import androidx.fragment.app.Fragment
@@ -44,7 +43,20 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
     private val imageSharedViewModel: ImageSharedViewModel by viewModels()
     private var _binding: FragmentImageBinding? = null
     private val binding get() = _binding!!
-    private val WRITE_EXTERNAL_STORAGE_REQUEST = 1
+    private lateinit var permissionRequestLauncher: ActivityResultLauncher<String>
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        permissionRequestLauncher = registerForActivityResult(
+            ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+                saveImage()
+            } else {
+                showToast(R.string.image_not_saved)
+            }
+        }
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -101,24 +113,14 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
             } else {
                 imageSharedViewModel.removeImageFromLiked(image)
                 binding.btnLike.setIconResource(R.drawable.outline_favorite_border_white_24)
-                Log.i(TAG, retrievedImageMap.likedImageMap.size.toString())
             }
         }
         binding.btnSave.setOnClickListener {
-            if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), WRITE_EXTERNAL_STORAGE_REQUEST)
+            if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
+                PackageManager.PERMISSION_GRANTED) {
+                saveImage()
             } else {
-                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
-                    Glide.with(this)
-                        .asBitmap()
-                        .load(image.largeImageURL)
-                        .into(object : CustomTarget<Bitmap>() {
-                            override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                                imageSharedViewModel.saveBitmapToExternalStorage(resource, image.id)
-                            }
-                            override fun onLoadCleared(placeholder: Drawable?) {}
-                        })
-                }
+                permissionRequestLauncher.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
             }
         }
 
@@ -320,32 +322,17 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
         }
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
-        if (requestCode == WRITE_EXTERNAL_STORAGE_REQUEST) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Разрешение получено, продолжите сохранение
-                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
-                    Glide.with(this)
-                        .asBitmap()
-                        .load(image.largeImageURL)
-                        .into(object : CustomTarget<Bitmap>() {
-                            override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                                imageSharedViewModel.saveBitmapToExternalStorage(resource, image.id)
-                            }
-
-                            override fun onLoadCleared(placeholder: Drawable?) {
-                                // Очистка ресурсов, если необходимо
-                            }
-                        })
-
-                }
-            } else {
-                //todo: do something
-            }
+    private fun saveImage() {
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
+            Glide.with(this)
+                .asBitmap()
+                .load(image.largeImageURL)
+                .into(object : CustomTarget<Bitmap>() {
+                    override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                        imageSharedViewModel.saveBitmapToExternalStorage(resource, image.id)
+                    }
+                    override fun onLoadCleared(placeholder: Drawable?) {}
+                })
         }
     }
-
 }

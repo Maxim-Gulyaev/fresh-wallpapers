@@ -116,7 +116,6 @@ class ImageSharedViewModel @Inject constructor(application: Application): Androi
             outputStream.close()
         } catch (e: IOException) {
             e.printStackTrace()
-            Log.d(TAG, e.toString())
         }
     }
 }
