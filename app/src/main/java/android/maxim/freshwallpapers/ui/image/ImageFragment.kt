@@ -322,21 +322,23 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
     }
 
     private fun saveImage() {
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
-            Glide.with(this)
-                .asBitmap()
-                .load(image.largeImageURL)
-                .into(object : CustomTarget<Bitmap>() {
-                    override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+        Glide.with(this)
+            .asBitmap()
+            .load(image.largeImageURL)
+            .into(object : CustomTarget<Bitmap>() {
+                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                    if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
                         imageSharedViewModel.saveBitmapToExternalStorage(resource, image.id)
-                        showToast(R.string.image_saved)
+                    } else {
+                        imageSharedViewModel.saveBitmapToMediaStore(requireActivity(), resource, image.id)
                     }
-                    override fun onLoadFailed(errorDrawable: Drawable?) {
-                        super.onLoadFailed(errorDrawable)
-                        showToast(R.string.loading_error)
-                    }
-                    override fun onLoadCleared(placeholder: Drawable?) {}
-                })
-        }
+                    showToast(R.string.image_saved)
+                }
+                override fun onLoadFailed(errorDrawable: Drawable?) {
+                    super.onLoadFailed(errorDrawable)
+                    showToast(R.string.loading_error)
+                }
+                override fun onLoadCleared(placeholder: Drawable?) {}
+            })
     }
 }

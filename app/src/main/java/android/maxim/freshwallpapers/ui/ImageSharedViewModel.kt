@@ -1,18 +1,21 @@
 package android.maxim.freshwallpapers.ui
 
 import android.app.Application
+import android.content.ContentValues
+import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.maxim.freshwallpapers.data.models.Image
 import android.maxim.freshwallpapers.data.models.LikedImageMap
 import android.maxim.freshwallpapers.data.repository.WallpapersRepository
 import android.maxim.freshwallpapers.di.LikedImagesPrefs
-import android.maxim.freshwallpapers.utils.Constants.TAG
 import android.maxim.freshwallpapers.utils.LIKED
 import android.maxim.freshwallpapers.utils.LIKED_IMAGE_MAP
 import android.maxim.freshwallpapers.utils.LikedImageHelper
+import android.os.Build
 import android.os.Environment
-import android.util.Log
+import android.provider.MediaStore
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.*
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -107,7 +110,7 @@ class ImageSharedViewModel @Inject constructor(application: Application): Androi
 
     fun saveBitmapToExternalStorage(bitmap: Bitmap, imageName: String) {
         val imageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-        val imageFile = File(imageDir, "$imageName.jpg")
+        val imageFile = File(imageDir, "JPEG_$imageName.jpg")
 
         try {
             val outputStream = FileOutputStream(imageFile)
@@ -116,6 +119,25 @@ class ImageSharedViewModel @Inject constructor(application: Application): Androi
             outputStream.close()
         } catch (e: IOException) {
             e.printStackTrace()
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.Q)
+    fun saveBitmapToMediaStore(context: Context, image: Bitmap, fileName: String) {
+        val collection = MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
+        val imageFileName = "JPEG_$fileName.jpg"
+        val values = ContentValues().apply {
+            put(MediaStore.Images.Media.DISPLAY_NAME, imageFileName)
+            put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+        }
+
+        val contentResolver = context.contentResolver
+        val imageUri = contentResolver.insert(collection, values)
+
+        imageUri?.let { uri ->
+            contentResolver.openOutputStream(uri)?.use { outputStream ->
+                image.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+            }
         }
     }
 }
