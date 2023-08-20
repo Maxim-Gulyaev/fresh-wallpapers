@@ -325,6 +325,10 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
         Glide.with(this)
             .asBitmap()
             .load(image.largeImageURL)
+            .override(
+                resources.displayMetrics.widthPixels,
+                resources.displayMetrics.heightPixels)
+            .centerCrop()
             .into(object : CustomTarget<Bitmap>() {
                 override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
                     if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
