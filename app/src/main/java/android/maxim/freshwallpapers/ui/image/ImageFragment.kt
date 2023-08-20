@@ -52,10 +52,9 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
             if (isGranted) {
                 saveImage()
             } else {
-                showToast(R.string.image_not_saved)
+                showToast(R.string.no_permission)
             }
         }
-
     }
 
     override fun onCreateView(
@@ -330,6 +329,11 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
                 .into(object : CustomTarget<Bitmap>() {
                     override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
                         imageSharedViewModel.saveBitmapToExternalStorage(resource, image.id)
+                        showToast(R.string.image_saved)
+                    }
+                    override fun onLoadFailed(errorDrawable: Drawable?) {
+                        super.onLoadFailed(errorDrawable)
+                        showToast(R.string.loading_error)
                     }
                     override fun onLoadCleared(placeholder: Drawable?) {}
                 })
