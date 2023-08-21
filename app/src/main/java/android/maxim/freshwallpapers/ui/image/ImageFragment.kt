@@ -131,6 +131,7 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
         Glide
             .with(requireActivity())
             .load(image.largeImageURL)
+            .format(DecodeFormat.PREFER_ARGB_8888)
             .into(binding.ivImage)
 
         return binding.root
@@ -183,6 +184,7 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
         Glide
             .with(requireActivity())
             .asBitmap()
+            .format(DecodeFormat.PREFER_ARGB_8888)
             .load(image.largeImageURL)
             .override(
                 resources.displayMetrics.widthPixels,
