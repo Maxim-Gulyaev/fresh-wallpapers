@@ -115,11 +115,15 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
             }
         }
         binding.btnSave.setOnClickListener {
-            if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
-                PackageManager.PERMISSION_GRANTED) {
-                saveImage()
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
+                if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
+                    PackageManager.PERMISSION_GRANTED) {
+                    saveImage()
+                } else {
+                    permissionRequestLauncher.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                }
             } else {
-                permissionRequestLauncher.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                saveImage()
             }
         }
 
