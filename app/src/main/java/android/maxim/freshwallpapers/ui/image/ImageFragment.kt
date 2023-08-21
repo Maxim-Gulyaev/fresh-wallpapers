@@ -27,6 +27,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.CustomTarget
@@ -328,6 +329,7 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
     private fun saveImage() {
         Glide.with(this)
             .asBitmap()
+            .format(DecodeFormat.PREFER_ARGB_8888)
             .load(image.largeImageURL)
             .override(
                 resources.displayMetrics.widthPixels,
