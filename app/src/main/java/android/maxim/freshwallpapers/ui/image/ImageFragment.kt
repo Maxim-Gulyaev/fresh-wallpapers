@@ -104,7 +104,9 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
 
         //todo: refactor with apply function
         binding.btnApply.setOnClickListener {
-            setWallpaper()
+            lifecycleScope.launch(Dispatchers.IO) {
+                setWallpaper()
+            }
         }
         binding.btnLike.setOnClickListener {
             if (!retrievedImageMap.likedImageMap.containsKey(image.id)) {
@@ -116,15 +118,17 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
             }
         }
         binding.btnSave.setOnClickListener {
-            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
-                if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
-                    PackageManager.PERMISSION_GRANTED) {
-                    saveImage()
+            lifecycleScope.launch(Dispatchers.IO) {
+                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
+                    if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
+                        PackageManager.PERMISSION_GRANTED) {
+                        saveImage()
+                    } else {
+                        permissionRequestLauncher.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    }
                 } else {
-                    permissionRequestLauncher.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    saveImage()
                 }
-            } else {
-                saveImage()
             }
         }
 
