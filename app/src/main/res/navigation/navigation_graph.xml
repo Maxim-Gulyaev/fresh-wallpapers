@@ -37,7 +37,7 @@
     </fragment>
     <dialog
         android:id="@+id/infoDialogFragment"
-        android:name="android.maxim.freshwallpapers.ui.image.InfoFragment">
+        android:name="android.maxim.freshwallpapers.ui.image.InfoDialogFragment">
         <action
             android:id="@+id/action_infoDialogFragment_to_imageFragment"
             app:destination="@+id/imageFragment"
