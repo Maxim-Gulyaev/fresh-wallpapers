@@ -30,7 +30,20 @@
         android:id="@+id/imageFragment"
         android:name="android.maxim.freshwallpapers.ui.image.ImageFragment"
         android:label="ImageFragment"
-        tools:layout="@layout/fragment_image"/>
+        tools:layout="@layout/fragment_image">
+        <action
+            android:id="@+id/action_imageFragment_to_infoDialogFragment"
+            app:destination="@+id/infoDialogFragment"/>
+    </fragment>
+    <dialog
+        android:id="@+id/infoDialogFragment"
+        android:name="android.maxim.freshwallpapers.ui.image.InfoFragment">
+        <action
+            android:id="@+id/action_infoDialogFragment_to_imageFragment"
+            app:destination="@+id/imageFragment"
+            app:popUpTo="@+id/imageFragment"
+            app:popUpToInclusive="true" />
+    </dialog>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="android.maxim.freshwallpapers.ui.settings.SettingsFragment"

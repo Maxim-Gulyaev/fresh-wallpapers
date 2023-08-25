@@ -1,4 +1,7 @@
 package android.maxim.freshwallpapers.ui.image
 
-class InfoFragment {
+import android.maxim.freshwallpapers.R
+import androidx.fragment.app.DialogFragment
+
+class InfoFragment: DialogFragment(R.layout.fragment_info) {
 }

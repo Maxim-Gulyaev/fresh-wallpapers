@@ -25,6 +25,7 @@ import androidx.core.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.DecodeFormat
@@ -130,6 +131,9 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
                     saveImage()
                 }
             }
+        }
+        binding.btnInfo.setOnClickListener {
+            findNavController().navigate(R.id.action_imageFragment_to_infoDialogFragment)
         }
 
         Glide
