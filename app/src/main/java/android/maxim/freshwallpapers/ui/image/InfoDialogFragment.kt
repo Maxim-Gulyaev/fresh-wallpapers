@@ -14,6 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import androidx.navigation.fragment.findNavController
 
 class InfoDialogFragment: DialogFragment(R.layout.fragment_info) {
 
@@ -36,21 +37,25 @@ class InfoDialogFragment: DialogFragment(R.layout.fragment_info) {
         } else {
             arguments?.getParcelable(IMAGE_KEY)!!
         }
-
-        binding.apply {
-            tvSource.text = resources.getString(R.string.source, SOURCE)
-            tvId.text = resources.getString(R.string.id, image.id)
-            tvAuthor.text = resources.getString(R.string.author, image.user)
-            tvSourceReference.text = resources.getString(R.string.source_reference, image.pageURL)
+        fillTextViews()
+        binding.btnInfoDialogBack.setOnClickListener {
+            this.dismiss()
         }
-
-        Linkify.addLinks(binding.tvSourceReference, Linkify.WEB_URLS)
-
         return binding.root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun fillTextViews() {
+        binding.apply {
+            tvSource.text = resources.getString(R.string.source, SOURCE)
+            tvId.text = resources.getString(R.string.id, image.id)
+            tvAuthor.text = resources.getString(R.string.author, image.user)
+            tvSourceReference.text = resources.getString(R.string.source_reference, image.pageURL)
+        }
+        Linkify.addLinks(binding.tvSourceReference, Linkify.WEB_URLS)
     }
 }
