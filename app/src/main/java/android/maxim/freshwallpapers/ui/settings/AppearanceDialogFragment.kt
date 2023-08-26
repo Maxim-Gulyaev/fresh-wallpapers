@@ -72,4 +72,6 @@ class AppearanceDialogFragment: DialogFragment(R.layout.fragment_dialog_appearan
         }
         findNavController().navigate(R.id.action_appearanceDialogFragment_to_settingsFragment)
     }
+
+    // todo make binding null
 }
