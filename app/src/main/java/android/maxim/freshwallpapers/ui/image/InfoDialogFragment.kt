@@ -14,7 +14,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import androidx.navigation.fragment.findNavController
 
 class InfoDialogFragment: DialogFragment(R.layout.fragment_info) {
 
@@ -55,7 +54,7 @@ class InfoDialogFragment: DialogFragment(R.layout.fragment_info) {
             tvId.text = resources.getString(R.string.id, image.id)
             tvAuthor.text = resources.getString(R.string.author, image.user)
             tvSourceReference.text = resources.getString(R.string.source_reference, image.pageURL)
+            Linkify.addLinks(tvSourceReference, Linkify.WEB_URLS)
         }
-        Linkify.addLinks(binding.tvSourceReference, Linkify.WEB_URLS)
     }
 }
