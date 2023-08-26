@@ -103,43 +103,44 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
             getNavigationBarHeight(),
             getBarHeight(binding.imageBottomAppBar))
 
-        //todo: refactor with apply function
-        binding.btnApply.setOnClickListener {
-            lifecycleScope.launch(Dispatchers.IO) {
-                setWallpaper()
-            }
-        }
-        binding.btnLike.setOnClickListener {
-            if (!retrievedImageMap.likedImageMap.containsKey(image.id)) {
-                imageSharedViewModel.addImageToLiked(image)
-                binding.btnLike.setIconResource(R.drawable.outline_favorite_white_24)
-            } else {
-                imageSharedViewModel.removeImageFromLiked(image)
-                binding.btnLike.setIconResource(R.drawable.outline_favorite_border_white_24)
-            }
-        }
-        binding.btnSave.setOnClickListener {
-            lifecycleScope.launch(Dispatchers.IO) {
-                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
-                    if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
-                        PackageManager.PERMISSION_GRANTED) {
-                        saveImage()
-                    } else {
-                        permissionRequestLauncher.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    }
-                } else {
-                    saveImage()
+        binding.apply {
+            btnApply.setOnClickListener {
+                lifecycleScope.launch(Dispatchers.IO) {
+                    setWallpaper()
                 }
             }
-        }
-        binding.btnInfo.setOnClickListener {
-            val bundle = Bundle()
-            bundle.putParcelable(IMAGE_KEY, image)
-            Navigation
-                .createNavigateOnClickListener(
-                    R.id.action_imageFragment_to_infoDialogFragment,
-                    bundle)
-                .onClick(view)
+            btnLike.setOnClickListener {
+                if (!retrievedImageMap.likedImageMap.containsKey(image.id)) {
+                    imageSharedViewModel.addImageToLiked(image)
+                    btnLike.setIconResource(R.drawable.outline_favorite_white_24)
+                } else {
+                    imageSharedViewModel.removeImageFromLiked(image)
+                    btnLike.setIconResource(R.drawable.outline_favorite_border_white_24)
+                }
+            }
+            btnSave.setOnClickListener {
+                lifecycleScope.launch(Dispatchers.IO) {
+                    if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
+                        if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
+                            PackageManager.PERMISSION_GRANTED) {
+                            saveImage()
+                        } else {
+                            permissionRequestLauncher.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        }
+                    } else {
+                        saveImage()
+                    }
+                }
+            }
+            btnInfo.setOnClickListener {
+                val bundle = Bundle()
+                bundle.putParcelable(IMAGE_KEY, image)
+                Navigation
+                    .createNavigateOnClickListener(
+                        R.id.action_imageFragment_to_infoDialogFragment,
+                        bundle)
+                    .onClick(view)
+            }
         }
 
         Glide
