@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
+
+    <!--todo: consider to rid the FrameLayout and make this layout flat -->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_info_dialog"
@@ -12,10 +14,7 @@
         android:background="@drawable/dialog_shape"
         android:paddingVertical="16dp"
         android:paddingHorizontal="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        android:layout_gravity="center">
 
         <TextView
             android:id="@+id/tv_info_dialog_title"
@@ -87,4 +86,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
