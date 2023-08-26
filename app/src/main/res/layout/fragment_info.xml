@@ -11,7 +11,7 @@
         android:layout_height="440dp"
         android:background="@drawable/dialog_shape"
         android:paddingVertical="16dp"
-        android:paddingHorizontal="8dp"
+        android:paddingHorizontal="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -19,16 +19,17 @@
 
         <TextView
             android:id="@+id/tv_info_dialog_title"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/info"
-            android:textSize="20sp"
+            android:textSize="22sp"
             android:gravity="center_vertical"
-            android:paddingStart="16dp"
             tools:ignore="RtlSymmetry"
+            android:layout_marginTop="8dp"
             app:layout_constraintVertical_chainStyle="spread_inside"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/tv_source"
+            app:layout_constraintStart_toStartOf="parent"
             />
 
         <TextView
