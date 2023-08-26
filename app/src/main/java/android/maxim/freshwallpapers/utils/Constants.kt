@@ -18,6 +18,8 @@ const val BACKGROUND = "background"
 const val PHOTO = "photo"
 const val SAFE_SEARCH_TRUE = true
 
+const val SOURCE = "www.pixabay.com"
+
 object Constants {
 
     const val TAG = "mylog"

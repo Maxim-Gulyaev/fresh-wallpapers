@@ -25,7 +25,7 @@ import androidx.core.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.DecodeFormat
@@ -133,7 +133,13 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
             }
         }
         binding.btnInfo.setOnClickListener {
-            findNavController().navigate(R.id.action_imageFragment_to_infoDialogFragment)
+            val bundle = Bundle()
+            bundle.putParcelable(IMAGE_KEY, image)
+            Navigation
+                .createNavigateOnClickListener(
+                    R.id.action_imageFragment_to_infoDialogFragment,
+                    bundle)
+                .onClick(view)
         }
 
         Glide

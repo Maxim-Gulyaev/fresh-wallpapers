@@ -23,8 +23,8 @@
     <string name="loading_error">Loading error.</string>
     <string name="no_permission">No permission to access photo and media.</string>
     <string name="image_saved">Image saved.</string>
-    <string name="source">Source:</string>
-    <string name="id">ID:</string>
-    <string name="author">Author:</string>
-    <string name="source_reference">Source reference:</string>
+    <string name="source">Source:\n%s</string>
+    <string name="id">Id:\n%s</string>
+    <string name="author">Author:\n%s</string>
+    <string name="source_reference">Source reference:\n%s</string>
 </resources>
