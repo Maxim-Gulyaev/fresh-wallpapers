@@ -12,5 +12,6 @@
 
     <style name="radio_button">
         <item name="android:textColor">@color/light_grey</item>
+        <item name="android:textSize">16sp</item>
     </style>
 </resources>
