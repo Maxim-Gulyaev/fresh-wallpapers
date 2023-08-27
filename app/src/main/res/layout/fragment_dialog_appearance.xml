@@ -9,8 +9,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_appearance_dialog"
-        android:layout_width="240dp"
-        android:layout_height="300dp"
+        android:layout_width="280dp"
+        android:layout_height="360dp"
         android:background="@drawable/dialog_shape"
         android:layout_gravity="center">
 
