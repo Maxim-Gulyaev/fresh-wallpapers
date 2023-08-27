@@ -16,7 +16,7 @@
 
         <TextView
             android:id="@+id/tv_appearance_dialog_title"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="0dp"
             android:text="@string/appearance"
             android:textSize="20sp"
@@ -26,6 +26,8 @@
             app:layout_constraintVertical_weight="1"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/rg_appearance_dialog"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             />
 
         <RadioGroup
