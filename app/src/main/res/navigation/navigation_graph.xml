@@ -17,6 +17,7 @@
             android:id="@+id/action_collectionsFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/imageListFragment"
         android:name="android.maxim.freshwallpapers.ui.imagelist.ImageListFragment"
@@ -26,6 +27,7 @@
             android:id="@+id/action_imagesListFragment_to_imageFragment"
             app:destination="@id/imageFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/imageFragment"
         android:name="android.maxim.freshwallpapers.ui.image.ImageFragment"
@@ -34,6 +36,9 @@
         <action
             android:id="@+id/action_imageFragment_to_infoDialogFragment"
             app:destination="@+id/infoDialogFragment"/>
+        <action
+            android:id="@+id/action_imageFragment_to_applyDialogFragment"
+            app:destination="@+id/applyDialogFragment"/>
     </fragment>
     <dialog
         android:id="@+id/infoDialogFragment"
@@ -44,6 +49,17 @@
             app:popUpTo="@+id/imageFragment"
             app:popUpToInclusive="true" />
     </dialog>
+    <dialog
+        android:id="@+id/applyDialogFragment"
+        android:name="android.maxim.freshwallpapers.ui.image.ApplyDialogFragment">
+        <action
+            android:id="@+id/action_applyDialogFragment_to_imageFragment"
+            app:destination="@id/imageFragment"
+            app:popUpTo="@id/imageFragment"
+            app:popUpToInclusive="true"
+            />
+    </dialog>
+
     <fragment
         android:id="@+id/settingsFragment"
         android:name="android.maxim.freshwallpapers.ui.settings.SettingsFragment"
