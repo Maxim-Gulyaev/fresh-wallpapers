@@ -86,4 +86,18 @@
         app:layout_constraintTop_toBottomOf="@id/rg_apply_dialog"
         />
 
+    <Button
+        android:id="@+id/btn_apply_dialog_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:backgroundTint="@color/white"
+        android:text="@string/cancel"
+        android:background="@drawable/button_ok_shape"
+        style="@style/button_ok_style"
+        app:layout_constraintTop_toTopOf="@id/btn_apply_dialog_ok"
+        app:layout_constraintBottom_toBottomOf="@id/btn_apply_dialog_ok"
+        app:layout_constraintEnd_toStartOf="@id/btn_apply_dialog_ok"
+        />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
