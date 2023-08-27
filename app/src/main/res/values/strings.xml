@@ -28,4 +28,7 @@
     <string name="id">Id:\n%s</string>
     <string name="author">Author:\n%s</string>
     <string name="source_reference">Source reference:\n%s</string>
+    <string name="set_home_screen">Set home screen</string>
+    <string name="set_lock_screen">Set lock screen</string>
+    <string name="set_both">Set both</string>
 </resources>

@@ -17,17 +17,73 @@
 
     <TextView
         android:id="@+id/tv_apply_title"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="@string/apply"
         android:gravity="center_vertical"
         android:textSize="20sp"
         android:paddingStart="16dp"
         tools:ignore="RtlSymmetry"
+        app:layout_constraintVertical_chainStyle="spread_inside"
         app:layout_constraintVertical_weight="1"
         app:layout_constraintStart_toStartOf="@id/view_apply_background"
         app:layout_constraintEnd_toEndOf="@id/view_apply_background"
         app:layout_constraintTop_toTopOf="@id/view_apply_background"
+        app:layout_constraintBottom_toTopOf="@id/rg_apply_dialog"
+        />
+
+    <RadioGroup
+        android:id="@+id/rg_apply_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:paddingStart="16dp"
+        tools:ignore="RtlSymmetry"
+        app:layout_constraintVertical_weight="3"
+        app:layout_constraintStart_toStartOf="@id/view_apply_background"
+        app:layout_constraintTop_toBottomOf="@id/tv_apply_title"
+        app:layout_constraintBottom_toTopOf="@id/btn_apply_dialog_ok">
+
+        <RadioButton
+            android:id="@+id/rb_home_screen"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="@string/set_home_screen"
+            style="@style/radio_button"
+            />
+
+        <RadioButton
+            android:id="@+id/rb_lock_screen"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="@string/set_lock_screen"
+            style="@style/radio_button"
+            />
+
+        <RadioButton
+            android:id="@+id/rb_both_screens"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="@string/set_both"
+            style="@style/radio_button"
+            />
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btn_apply_dialog_ok"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintVertical_weight="1"
+        android:backgroundTint="@color/white"
+        android:text="@string/ok"
+        android:background="@drawable/button_ok_shape"
+        style="@style/button_ok_style"
+        app:layout_constraintBottom_toBottomOf="@id/view_apply_background"
+        app:layout_constraintEnd_toEndOf="@id/view_apply_background"
+        app:layout_constraintTop_toBottomOf="@id/rg_apply_dialog"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
