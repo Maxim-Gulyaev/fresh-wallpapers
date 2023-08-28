@@ -11,7 +11,6 @@ import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.OnClickListener
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.fragment.app.DialogFragment
@@ -21,7 +20,7 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AppearanceDialogFragment: DialogFragment(R.layout.fragment_dialog_appearance), OnClickListener {
+class AppearanceDialogFragment: DialogFragment(R.layout.fragment_dialog_appearance) {
 
     private var _binding: FragmentDialogAppearanceBinding? = null
     private val binding get() = _binding!!
@@ -45,33 +44,34 @@ class AppearanceDialogFragment: DialogFragment(R.layout.fragment_dialog_appearan
                 SYSTEM_MODE -> binding.rbSystem.isChecked = true
             }
         })
-
-        binding.btnAppearanceDialogOk.setOnClickListener(this)
+        
+        binding.btnAppearanceDialogOk.setOnClickListener {
+            when {
+                binding.rbLight.isChecked -> {
+                    setDefaultNightMode(MODE_NIGHT_NO)
+                    appearanceDialogFragmentViewModel.saveNewMode(LIGHT_MODE)
+                }
+                binding.rbDark.isChecked -> {
+                    setDefaultNightMode(MODE_NIGHT_YES)
+                    appearanceDialogFragmentViewModel.saveNewMode(DARK_MODE)
+                }
+                binding.rbSystem.isChecked -> {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                        setDefaultNightMode(MODE_NIGHT_FOLLOW_SYSTEM);
+                    } else {
+                        setDefaultNightMode(MODE_NIGHT_AUTO_BATTERY);
+                    }
+                    appearanceDialogFragmentViewModel.saveNewMode(SYSTEM_MODE)
+                }
+            }
+            findNavController().navigate(R.id.action_appearanceDialogFragment_to_settingsFragment)
+        }
 
         return binding.root
     }
 
-    override fun onClick(v: View?) {
-        when {
-            binding.rbLight.isChecked -> {
-                setDefaultNightMode(MODE_NIGHT_NO)
-                appearanceDialogFragmentViewModel.saveNewMode(LIGHT_MODE)
-            }
-            binding.rbDark.isChecked -> {
-                setDefaultNightMode(MODE_NIGHT_YES)
-                appearanceDialogFragmentViewModel.saveNewMode(DARK_MODE)
-            }
-            binding.rbSystem.isChecked -> {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    setDefaultNightMode(MODE_NIGHT_FOLLOW_SYSTEM);
-                } else {
-                    setDefaultNightMode(MODE_NIGHT_AUTO_BATTERY);
-                }
-                appearanceDialogFragmentViewModel.saveNewMode(SYSTEM_MODE)
-            }
-        }
-        findNavController().navigate(R.id.action_appearanceDialogFragment_to_settingsFragment)
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
-
-    // todo make binding null
 }
