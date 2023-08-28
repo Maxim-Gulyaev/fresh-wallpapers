@@ -51,6 +51,13 @@ class ApplyDialogFragment: DialogFragment(R.layout.fragment_dialog_apply) {
             arguments?.getParcelable(IMAGE_KEY)!!
         }
 
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) {
+            binding.apply {
+                rbHomeScreen.isEnabled = false
+                rbLockScreen.isEnabled = false
+            }
+        }
+
         binding.btnApplyDialogCancel.setOnClickListener {
             this.dismiss()
         }
@@ -85,6 +92,7 @@ class ApplyDialogFragment: DialogFragment(R.layout.fragment_dialog_apply) {
                     showToast(R.string.loading_error)
                     return false
                 }
+                @RequiresApi(Build.VERSION_CODES.N)
                 override fun onResourceReady(
                     resource: Bitmap?,
                     model: Any?,
@@ -95,18 +103,10 @@ class ApplyDialogFragment: DialogFragment(R.layout.fragment_dialog_apply) {
                     try {
                         when {
                             binding.rbHomeScreen.isChecked -> {
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                                    applyBitmapToSingleScreen(resource, WallpaperManager.FLAG_SYSTEM)
-                                } else {
-                                    applyBitmapToBothScreens(resource)
-                                }
+                                applyBitmapToSingleScreen(resource, WallpaperManager.FLAG_SYSTEM)
                             }
                             binding.rbLockScreen.isChecked -> {
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                                    applyBitmapToSingleScreen(resource, WallpaperManager.FLAG_LOCK)
-                                } else {
-                                    applyBitmapToBothScreens(resource)
-                                }
+                                applyBitmapToSingleScreen(resource, WallpaperManager.FLAG_LOCK)
                             }
                             binding.rbBothScreens.isChecked -> {
                                 applyBitmapToBothScreens(resource)
