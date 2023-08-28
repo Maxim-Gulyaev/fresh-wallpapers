@@ -53,15 +53,9 @@ class ApplyDialogFragment: DialogFragment(R.layout.fragment_dialog_apply) {
             this.dismiss()
         }
         binding.btnApplyDialogOk.setOnClickListener {
-            when {
-                binding.rbHomeScreen.isChecked -> {
-                    showProgressBar()
-                    lifecycleScope.launch(Dispatchers.IO) {
-                        setWallpaper()
-                    }
-                }
-                binding.rbHomeScreen.isChecked -> {}
-                binding.rbBothScreens.isChecked -> {}
+            showProgressBar()
+            lifecycleScope.launch(Dispatchers.IO) {
+                setWallpaper()
             }
         }
 
@@ -100,9 +94,35 @@ class ApplyDialogFragment: DialogFragment(R.layout.fragment_dialog_apply) {
                     isFirstResource: Boolean
                 ): Boolean {
                     try {
-                        WallpaperManager
-                            .getInstance(context)
-                            .setBitmap(resource)
+                        when {
+                            binding.rbHomeScreen.isChecked -> {
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                    WallpaperManager
+                                        .getInstance(context)
+                                        .setBitmap(resource, null, true, WallpaperManager.FLAG_SYSTEM)
+                                } else {
+                                    WallpaperManager
+                                        .getInstance(context)
+                                        .setBitmap(resource)
+                                }
+                            }
+                            binding.rbLockScreen.isChecked -> {
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                    WallpaperManager
+                                        .getInstance(context)
+                                        .setBitmap(resource, null, true, WallpaperManager.FLAG_LOCK)
+                                } else {
+                                    WallpaperManager
+                                        .getInstance(context)
+                                        .setBitmap(resource)
+                                }
+                            }
+                            binding.rbBothScreens.isChecked -> {
+                                WallpaperManager
+                                    .getInstance(context)
+                                    .setBitmap(resource)
+                            }
+                        }
                         lifecycleScope.launch(Dispatchers.Main) {
                             showToast(R.string.setWallpaper_done)
                         }
