@@ -13,6 +13,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
@@ -54,7 +55,7 @@ class ApplyDialogFragment: DialogFragment(R.layout.fragment_dialog_apply) {
         binding.btnApplyDialogOk.setOnClickListener {
             when {
                 binding.rbHomeScreen.isChecked -> {
-                    binding.applyLayout.visibility = INVISIBLE
+                    showProgressBar()
                     lifecycleScope.launch(Dispatchers.IO) {
                         setWallpaper()
                     }
@@ -125,5 +126,16 @@ class ApplyDialogFragment: DialogFragment(R.layout.fragment_dialog_apply) {
             requireActivity(),
             requireActivity().getString(messageResId),
             Toast.LENGTH_LONG).show()
+    }
+
+    private fun showProgressBar() {
+        binding.apply {
+            rgApplyDialog.visibility = INVISIBLE
+            viewApplyBackground.visibility = INVISIBLE
+            btnApplyDialogOk.visibility = INVISIBLE
+            btnApplyDialogCancel.visibility = INVISIBLE
+            tvApplyTitle.visibility = INVISIBLE
+            progressBarApply.visibility = VISIBLE
+        }
     }
 }
