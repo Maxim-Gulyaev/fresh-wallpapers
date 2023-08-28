@@ -106,10 +106,13 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
 
         binding.apply {
             btnApply.setOnClickListener {
-                /*lifecycleScope.launch(Dispatchers.IO) {
-                    setWallpaper()
-                }*/
-                findNavController().navigate(R.id.action_imageFragment_to_applyDialogFragment)
+                val bundle = Bundle()
+                bundle.putParcelable(IMAGE_KEY, image)
+                Navigation
+                    .createNavigateOnClickListener(
+                        R.id.action_imageFragment_to_applyDialogFragment,
+                        bundle)
+                    .onClick(view)
             }
             btnLike.setOnClickListener {
                 if (!retrievedImageMap.likedImageMap.containsKey(image.id)) {
@@ -197,7 +200,7 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
         _binding = null
     }
 
-    private fun setWallpaper() {
+    /*private fun setWallpaper() {
         Glide
             .with(requireActivity())
             .asBitmap()
@@ -245,8 +248,9 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
                 }
             })
             .submit()
-    }
+    }*/
 
+    //todo: consider to delete this method if it has single usage
     private fun showToast(messageResId: Int) {
         Toast.makeText(
             requireActivity(),
@@ -361,11 +365,15 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
                     } else {
                         imageSharedViewModel.saveBitmapToMediaStore(requireActivity(), resource, image.id)
                     }
-                    showToast(R.string.image_saved)
+                    lifecycleScope.launch(Dispatchers.Main) {
+                        showToast(R.string.image_saved)
+                    }
                 }
                 override fun onLoadFailed(errorDrawable: Drawable?) {
                     super.onLoadFailed(errorDrawable)
-                    showToast(R.string.loading_error)
+                    lifecycleScope.launch(Dispatchers.Main) {
+                        showToast(R.string.loading_error)
+                    }
                 }
                 override fun onLoadCleared(placeholder: Drawable?) {}
             })
