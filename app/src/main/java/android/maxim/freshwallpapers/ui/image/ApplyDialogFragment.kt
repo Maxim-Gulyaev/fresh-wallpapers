@@ -16,6 +16,7 @@ import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
@@ -94,30 +95,20 @@ class ApplyDialogFragment: DialogFragment(R.layout.fragment_dialog_apply) {
                         when {
                             binding.rbHomeScreen.isChecked -> {
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                                    WallpaperManager
-                                        .getInstance(context)
-                                        .setBitmap(resource, null, true, WallpaperManager.FLAG_SYSTEM)
+                                    applyBitmapToSingleScreen(resource, WallpaperManager.FLAG_SYSTEM)
                                 } else {
-                                    WallpaperManager
-                                        .getInstance(context)
-                                        .setBitmap(resource)
+                                    applyBitmapToBothScreens(resource)
                                 }
                             }
                             binding.rbLockScreen.isChecked -> {
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                                    WallpaperManager
-                                        .getInstance(context)
-                                        .setBitmap(resource, null, true, WallpaperManager.FLAG_LOCK)
+                                    applyBitmapToSingleScreen(resource, WallpaperManager.FLAG_LOCK)
                                 } else {
-                                    WallpaperManager
-                                        .getInstance(context)
-                                        .setBitmap(resource)
+                                    applyBitmapToBothScreens(resource)
                                 }
                             }
                             binding.rbBothScreens.isChecked -> {
-                                WallpaperManager
-                                    .getInstance(context)
-                                    .setBitmap(resource)
+                                applyBitmapToBothScreens(resource)
                             }
                         }
                         toastMessage = R.string.setWallpaper_done
@@ -154,5 +145,18 @@ class ApplyDialogFragment: DialogFragment(R.layout.fragment_dialog_apply) {
             tvApplyTitle.visibility = INVISIBLE
             progressBarApply.visibility = VISIBLE
         }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    private fun applyBitmapToSingleScreen(resource: Bitmap?, screenFlag: Int) {
+        WallpaperManager
+            .getInstance(context)
+            .setBitmap(resource, null, true, screenFlag)
+    }
+
+    private fun applyBitmapToBothScreens(resource: Bitmap?) {
+        WallpaperManager
+            .getInstance(context)
+            .setBitmap(resource)
     }
 }
