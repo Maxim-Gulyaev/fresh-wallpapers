@@ -109,7 +109,12 @@ class ApplyDialogFragment: DialogFragment(R.layout.fragment_dialog_apply) {
                                 applyBitmapToSingleScreen(resource, WallpaperManager.FLAG_LOCK)
                             }
                             binding.rbBothScreens.isChecked -> {
-                                applyBitmapToBothScreens(resource)
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                    applyBitmapToSingleScreen(resource, WallpaperManager.FLAG_SYSTEM)
+                                    applyBitmapToSingleScreen(resource, WallpaperManager.FLAG_LOCK)
+                                } else {
+                                    applyBitmapToBothScreens(resource)
+                                }
                             }
                         }
                         toastMessage = R.string.setWallpaper_done
