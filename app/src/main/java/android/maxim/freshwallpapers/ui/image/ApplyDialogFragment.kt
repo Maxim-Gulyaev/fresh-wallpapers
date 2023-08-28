@@ -31,6 +31,7 @@ class ApplyDialogFragment: DialogFragment(R.layout.fragment_dialog_apply) {
     private var _binding: FragmentDialogApplyBinding? = null
     private val binding get() = _binding!!
     private lateinit var image: Image
+    private var toastMessage: Int? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -79,11 +80,7 @@ class ApplyDialogFragment: DialogFragment(R.layout.fragment_dialog_apply) {
                     target: com.bumptech.glide.request.target.Target<Bitmap>?,
                     isFirstResource: Boolean
                 ): Boolean {
-                    Toast.makeText(
-                        requireActivity(),
-                        resources.getString(R.string.loading_error),
-                        Toast.LENGTH_LONG
-                    ).show()
+                    showToast(R.string.loading_error)
                     return false
                 }
                 override fun onResourceReady(
@@ -123,14 +120,10 @@ class ApplyDialogFragment: DialogFragment(R.layout.fragment_dialog_apply) {
                                     .setBitmap(resource)
                             }
                         }
-                        lifecycleScope.launch(Dispatchers.Main) {
-                            showToast(R.string.setWallpaper_done)
-                        }
+                        toastMessage = R.string.setWallpaper_done
                     } catch (e: Exception) {
                         e.printStackTrace()
-                        lifecycleScope.launch(Dispatchers.Main) {
-                            showToast(R.string.setWallpaper_error)
-                        }
+                        toastMessage = R.string.setWallpaper_error
                     } finally {
                         this@ApplyDialogFragment.dismiss()
                     }
@@ -140,7 +133,11 @@ class ApplyDialogFragment: DialogFragment(R.layout.fragment_dialog_apply) {
             .submit()
     }
 
-    //todo: consider to delete this method if it has single usage(or move it to activity)
+    override fun onStop() {
+        super.onStop()
+        toastMessage?.let { showToast(it) }
+    }
+
     private fun showToast(messageResId: Int) {
         Toast.makeText(
             requireActivity(),
