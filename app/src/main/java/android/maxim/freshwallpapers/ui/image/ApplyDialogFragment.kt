@@ -13,7 +13,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.INVISIBLE
-import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
@@ -26,7 +25,7 @@ import com.bumptech.glide.request.RequestListener
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ApplyDialogFragment: DialogFragment(R.layout.fragment_dialog_apply), OnClickListener {
+class ApplyDialogFragment: DialogFragment(R.layout.fragment_dialog_apply) {
 
     private var _binding: FragmentDialogApplyBinding? = null
     private val binding get() = _binding!!
@@ -52,22 +51,20 @@ class ApplyDialogFragment: DialogFragment(R.layout.fragment_dialog_apply), OnCli
         binding.btnApplyDialogCancel.setOnClickListener {
             this.dismiss()
         }
-        binding.btnApplyDialogOk.setOnClickListener(this)
+        binding.btnApplyDialogOk.setOnClickListener {
+            when {
+                binding.rbHomeScreen.isChecked -> {
+                    binding.applyLayout.visibility = INVISIBLE
+                    lifecycleScope.launch(Dispatchers.IO) {
+                        setWallpaper()
+                    }
+                }
+                binding.rbHomeScreen.isChecked -> {}
+                binding.rbBothScreens.isChecked -> {}
+            }
+        }
 
         return binding.root
-    }
-
-    override fun onClick(v: View?) {
-        when {
-            binding.rbHomeScreen.isChecked -> {
-                binding.applyLayout.visibility = INVISIBLE
-                lifecycleScope.launch(Dispatchers.IO) {
-                    setWallpaper()
-                }
-            }
-            binding.rbHomeScreen.isChecked -> {}
-            binding.rbBothScreens.isChecked -> {}
-        }
     }
 
     private fun setWallpaper() {
