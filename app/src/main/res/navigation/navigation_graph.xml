@@ -12,10 +12,14 @@
         tools:layout="@layout/fragment_collections">
         <action
             android:id="@+id/action_collectionsFragment_to_imagesListFragment"
-            app:destination="@id/imageListFragment" />
+            app:destination="@id/imageListFragment"
+            app:enterAnim="@anim/slide_in_up"
+            app:popEnterAnim="@anim/slide_in_up" />
         <action
             android:id="@+id/action_collectionsFragment_to_settingsFragment"
-            app:destination="@id/settingsFragment" />
+            app:destination="@id/settingsFragment"
+            app:enterAnim="@anim/slide_in_up"
+            app:popEnterAnim="@anim/slide_in_up"/>
     </fragment>
 
     <fragment
@@ -25,7 +29,9 @@
         tools:layout="@layout/fragment_image_list">
         <action
             android:id="@+id/action_imagesListFragment_to_imageFragment"
-            app:destination="@id/imageFragment" />
+            app:destination="@id/imageFragment"
+            app:enterAnim="@anim/slide_in_up"
+            app:popEnterAnim="@anim/slide_in_up" />
     </fragment>
 
     <fragment
