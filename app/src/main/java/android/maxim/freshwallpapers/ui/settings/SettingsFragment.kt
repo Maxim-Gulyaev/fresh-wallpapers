@@ -37,7 +37,7 @@ class SettingsFragment: Fragment(R.layout.fragment_settings) {
         binding.settingsToolbar.apply {
             setNavigationIcon(R.drawable.baseline_arrow_back_ios_24)
             setNavigationOnClickListener {
-                findNavController().navigate(R.id.collectionsFragment)
+                requireActivity().onBackPressedDispatcher.onBackPressed()
             }
         }
 

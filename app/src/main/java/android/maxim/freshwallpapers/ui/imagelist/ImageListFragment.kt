@@ -19,7 +19,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -30,7 +29,6 @@ class ImageListFragment: Fragment(R.layout.fragment_image_list) {
 
     private var _binding: FragmentImageListBinding? = null
     private val binding get() = _binding!!
-    //private val imageListViewModel: ImageListViewModel by viewModels()
     private val imageSharedViewModel: ImageSharedViewModel by viewModels()
     private var collection: String? = null
     private var recyclerStateBundle: Bundle? = null
@@ -60,7 +58,7 @@ class ImageListFragment: Fragment(R.layout.fragment_image_list) {
             title = toolbarTitle
             setNavigationIcon(R.drawable.baseline_arrow_back_ios_24)
             setNavigationOnClickListener {
-                findNavController().navigate(R.id.collectionsFragment)
+                requireActivity().onBackPressedDispatcher.onBackPressed()
             }
         }
     }
