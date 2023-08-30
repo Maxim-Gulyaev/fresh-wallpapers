@@ -8,6 +8,7 @@ import android.maxim.freshwallpapers.utils.MODE_KEY
 import android.maxim.freshwallpapers.utils.SYSTEM_MODE
 import android.os.Build
 import android.os.Bundle
+import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate.*
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -40,5 +41,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         analytics = Firebase.analytics
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.collections_toolbar_menu, menu)
+        return true
     }
 }
