@@ -1,5 +1,6 @@
 package android.maxim.freshwallpapers.ui.collections
 
+import android.content.Context
 import android.content.res.Configuration
 import android.maxim.freshwallpapers.R
 import android.maxim.freshwallpapers.databinding.FragmentCollectionsBinding
@@ -12,6 +13,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsetsController
+import android.view.inputmethod.InputMethodManager
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -26,7 +29,6 @@ class CollectionsFragment: Fragment(R.layout.fragment_collections) {
 
     private var _binding: FragmentCollectionsBinding? = null
     private val binding get() = _binding!!
-    //private val collectionsViewModel: CollectionsViewModel by viewModels()
     private val imageSharedViewModel: ImageSharedViewModel by viewModels()
 
     override fun onCreateView(
@@ -42,14 +44,19 @@ class CollectionsFragment: Fragment(R.layout.fragment_collections) {
         super.onViewCreated(view, savedInstanceState)
         binding.collectionsToolbar.apply {
             inflateMenu(R.menu.collections_toolbar_menu)
-            setOnMenuItemClickListener {
-                when (it.itemId) {
+            setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
                     R.id.action_settings -> {
                         findNavController()
                             .navigate(R.id.action_collectionsFragment_to_settingsFragment)
                     }
                     R.id.action_liked_images -> {
                         showLikedImages()
+                    }
+                    R.id.action_search -> {
+                        menuItem.expandActionView()
+                        val searchView = menuItem.actionView as SearchView
+                        setupSearchView(searchView)
                     }
                 }
                 false
@@ -107,5 +114,34 @@ class CollectionsFragment: Fragment(R.layout.fragment_collections) {
                 R.id.action_collectionsFragment_to_imagesListFragment,
                 bundle)
             .onClick(binding.collectionsToolbar)
+    }
+
+    private fun setupSearchView(searchView: SearchView) {
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if (query != null) {
+                    val bundle = Bundle()
+                    bundle.putString(COLLECTION_KEY, query)
+                    Navigation
+                        .createNavigateOnClickListener(
+                            R.id.action_collectionsFragment_to_imagesListFragment,
+                            bundle)
+                        .onClick(view)
+                }
+                return true
+            }
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return true
+            }
+        })
+
+        searchView.setOnCloseListener {
+            searchView.setQuery("", false)
+            searchView.clearFocus()
+            val inputMethodManager =
+                requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(view?.windowToken, 0)
+            false
+        }
     }
 }
