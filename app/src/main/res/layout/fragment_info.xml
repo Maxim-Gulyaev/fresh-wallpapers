@@ -1,89 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!--todo: consider to rid the FrameLayout and make this layout flat -->
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_info_dialog"
+    <View
+        android:id="@+id/view_info_background"
         android:layout_width="320dp"
         android:layout_height="420dp"
         android:background="@drawable/dialog_shape"
-        android:paddingVertical="16dp"
-        android:paddingHorizontal="16dp"
-        android:layout_gravity="center">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
-        <TextView
-            android:id="@+id/tv_info_dialog_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/info"
-            android:textSize="22sp"
-            android:gravity="center_vertical"
-            tools:ignore="RtlSymmetry"
-            android:layout_marginTop="8dp"
-            app:layout_constraintVertical_chainStyle="spread_inside"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/tv_source"
-            app:layout_constraintStart_toStartOf="parent"
-            />
+    <TextView
+        android:id="@+id/tv_info_dialog_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/info"
+        android:textSize="22sp"
+        android:gravity="center_vertical"
+        tools:ignore="RtlSymmetry"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintVertical_chainStyle="spread_inside"
+        app:layout_constraintTop_toTopOf="@id/view_info_background"
+        app:layout_constraintBottom_toTopOf="@id/tv_source"
+        app:layout_constraintStart_toStartOf="@id/view_info_background"
+        />
 
-        <TextView
-            android:id="@+id/tv_source"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@+id/tv_info_dialog_title"
-            app:layout_constraintStart_toStartOf="@id/layout_info_dialog"
-            app:layout_constraintBottom_toTopOf="@id/tv_id"
-            />
+    <TextView
+        android:id="@+id/tv_source"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_info_dialog_title"
+        app:layout_constraintStart_toStartOf="@id/view_info_background"
+        app:layout_constraintBottom_toTopOf="@id/tv_id"
+        app:layout_constraintEnd_toEndOf="@id/view_info_background"
+        />
 
-        <TextView
-            android:id="@+id/tv_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@+id/tv_source"
-            app:layout_constraintStart_toStartOf="@id/layout_info_dialog"
-            app:layout_constraintBottom_toTopOf="@id/tv_author"
-            />
+    <TextView
+        android:id="@+id/tv_id"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_source"
+        app:layout_constraintStart_toStartOf="@id/view_info_background"
+        app:layout_constraintBottom_toTopOf="@id/tv_author"
+        app:layout_constraintEnd_toEndOf="@id/view_info_background"
+        />
 
-        <TextView
-            android:id="@+id/tv_author"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@+id/tv_id"
-            app:layout_constraintStart_toStartOf="@id/layout_info_dialog"
-            app:layout_constraintBottom_toTopOf="@id/tv_source_reference"
-            />
+    <TextView
+        android:id="@+id/tv_author"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_id"
+        app:layout_constraintStart_toStartOf="@id/view_info_background"
+        app:layout_constraintBottom_toTopOf="@id/tv_source_reference"
+        app:layout_constraintEnd_toEndOf="@id/view_info_background"
+        />
 
-        <TextView
-            android:id="@+id/tv_source_reference"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@+id/tv_author"
-            app:layout_constraintStart_toStartOf="@id/layout_info_dialog"
-            app:layout_constraintBottom_toTopOf="@id/btn_info_dialog_back"
-            />
+    <TextView
+        android:id="@+id/tv_source_reference"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_author"
+        app:layout_constraintStart_toStartOf="@id/view_info_background"
+        app:layout_constraintBottom_toTopOf="@id/btn_info_dialog_back"
+        app:layout_constraintEnd_toEndOf="@id/view_info_background"
+        />
 
-        <Button
-            android:id="@+id/btn_info_dialog_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/white"
-            android:text="@string/back"
-            android:background="@drawable/button_ok_shape"
-            style="@style/button_ok_style"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_source_reference"
-            />
+    <Button
+        android:id="@+id/btn_info_dialog_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:text="@string/back"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/button_ok_shape"
+        style="@style/button_ok_style"
+        app:layout_constraintBottom_toBottomOf="@id/view_info_background"
+        app:layout_constraintEnd_toEndOf="@id/view_info_background"
+        app:layout_constraintTop_toBottomOf="@id/tv_source_reference"
+        />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
