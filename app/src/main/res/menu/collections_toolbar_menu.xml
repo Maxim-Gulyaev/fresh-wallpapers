@@ -12,13 +12,13 @@
     <item
         android:id="@+id/action_search"
         android:icon="@drawable/baseline_search_24"
-        android:title="@string/settings"
+        android:title="@string/search"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/action_settings"
         android:icon="@drawable/outline_settings_24"
-        android:title="@string/search"
+        android:title="@string/settings"
         app:showAsAction="ifRoom"/>
     
 </menu>
