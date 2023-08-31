@@ -11,6 +11,7 @@ The application offers images from professional and amateur photographers.
 
 ## Features
 - [x] Wallpapers for home and lock screen
+- [x] Saving images
 - [x] Favorites
 - [x] Search images on pixabay.com
 - [x] Light, dark or system appearance mode
