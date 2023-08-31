@@ -1,6 +1,5 @@
 package android.maxim.freshwallpapers.ui.collections
 
-import android.content.Context
 import android.content.res.Configuration
 import android.maxim.freshwallpapers.R
 import android.maxim.freshwallpapers.databinding.FragmentCollectionsBinding
@@ -13,8 +12,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsetsController
-import android.view.inputmethod.InputMethodManager
-import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -54,8 +51,7 @@ class CollectionsFragment: Fragment(R.layout.fragment_collections) {
                         showLikedImages()
                     }
                     R.id.action_search -> {
-                        menuItem.expandActionView()
-                        val searchView = menuItem.actionView as SearchView
+                        val searchView = menuItem.actionView as androidx.appcompat.widget.SearchView
                         setupSearchView(searchView)
                     }
                 }
@@ -116,8 +112,8 @@ class CollectionsFragment: Fragment(R.layout.fragment_collections) {
             .onClick(binding.collectionsToolbar)
     }
 
-    private fun setupSearchView(searchView: SearchView) {
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+    private fun setupSearchView(searchView: androidx.appcompat.widget.SearchView) {
+        searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query != null) {
                     val bundle = Bundle()
@@ -134,14 +130,5 @@ class CollectionsFragment: Fragment(R.layout.fragment_collections) {
                 return true
             }
         })
-
-        searchView.setOnCloseListener {
-            searchView.setQuery("", false)
-            searchView.clearFocus()
-            val inputMethodManager =
-                requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            inputMethodManager.hideSoftInputFromWindow(view?.windowToken, 0)
-            false
-        }
     }
 }
