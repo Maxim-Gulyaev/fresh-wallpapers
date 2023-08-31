@@ -50,13 +50,12 @@ class CollectionsFragment: Fragment(R.layout.fragment_collections) {
                     R.id.action_liked_images -> {
                         showLikedImages()
                     }
-                    R.id.action_search -> {
-                        val searchView = menuItem.actionView as androidx.appcompat.widget.SearchView
-                        setupSearchView(searchView)
-                    }
                 }
                 false
             }
+            val searchView = menu.findItem(R.id.action_search).actionView
+                    as androidx.appcompat.widget.SearchView
+            setupSearchView(searchView)
         }
 
         lifecycleScope.launch {
@@ -113,6 +112,7 @@ class CollectionsFragment: Fragment(R.layout.fragment_collections) {
     }
 
     private fun setupSearchView(searchView: androidx.appcompat.widget.SearchView) {
+        searchView.queryHint = resources.getString(R.string.search_images)
         searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query != null) {
