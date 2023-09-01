@@ -14,6 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsetsController
+import android.widget.Toast
 import androidx.core.view.WindowCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -46,7 +47,11 @@ class ImageListFragment: Fragment(R.layout.fragment_image_list) {
 
         imageSharedViewModel.imageList.observe(viewLifecycleOwner, Observer { imageList ->
             if (recyclerStateBundle != null) restoreRecyclerState()
-            initRecycler(imageList)
+            if (imageList.isNotEmpty()) {
+                initRecycler(imageList)
+            } else {
+                Toast.makeText(requireActivity(), "No results found.", Toast.LENGTH_LONG).show()
+            }
         })
         return binding.root
     }
