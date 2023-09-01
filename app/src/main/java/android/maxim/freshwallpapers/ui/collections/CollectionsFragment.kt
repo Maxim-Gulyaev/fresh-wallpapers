@@ -113,17 +113,16 @@ class CollectionsFragment: Fragment(R.layout.fragment_collections) {
 
     private fun setupSearchView(searchView: androidx.appcompat.widget.SearchView) {
         searchView.queryHint = resources.getString(R.string.search_images)
-        searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
+        searchView.setOnQueryTextListener(
+            object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                if (query != null) {
-                    val bundle = Bundle()
-                    bundle.putString(COLLECTION_KEY, query)
-                    Navigation
-                        .createNavigateOnClickListener(
-                            R.id.action_collectionsFragment_to_imagesListFragment,
-                            bundle)
-                        .onClick(view)
-                }
+                val bundle = Bundle()
+                bundle.putString(COLLECTION_KEY, query)
+                Navigation
+                    .createNavigateOnClickListener(
+                        R.id.action_collectionsFragment_to_imagesListFragment,
+                        bundle)
+                    .onClick(view)
                 return true
             }
             override fun onQueryTextChange(newText: String?): Boolean {
