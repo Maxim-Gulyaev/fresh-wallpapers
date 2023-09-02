@@ -5,9 +5,11 @@ import android.maxim.freshwallpapers.R
 import android.maxim.freshwallpapers.databinding.FragmentCollectionsBinding
 import android.maxim.freshwallpapers.ui.ImageSharedViewModel
 import android.maxim.freshwallpapers.utils.COLLECTION_KEY
+import android.maxim.freshwallpapers.utils.Constants
 import android.maxim.freshwallpapers.utils.LIKED
 import android.os.Build
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +21,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -27,6 +30,8 @@ class CollectionsFragment: Fragment(R.layout.fragment_collections) {
     private var _binding: FragmentCollectionsBinding? = null
     private val binding get() = _binding!!
     private val imageSharedViewModel: ImageSharedViewModel by viewModels()
+    private var recyclerStateBundle: Bundle? = null
+    private var recyclerState: Parcelable? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,6 +65,7 @@ class CollectionsFragment: Fragment(R.layout.fragment_collections) {
 
         lifecycleScope.launch {
             imageSharedViewModel.getCategoriesList().observe(viewLifecycleOwner) { collection ->
+                if (recyclerStateBundle != null) restoreRecyclerState()
                 binding.recyclerCollections.apply {
                     layoutManager = GridLayoutManager(
                         activity,
@@ -98,6 +104,9 @@ class CollectionsFragment: Fragment(R.layout.fragment_collections) {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        recyclerStateBundle = Bundle()
+        val mListState = binding.recyclerCollections.layoutManager?.onSaveInstanceState()
+        recyclerStateBundle!!.putParcelable(Constants.KEY_RECYCLER_STATE, mListState)
         _binding = null
     }
 
@@ -129,5 +138,13 @@ class CollectionsFragment: Fragment(R.layout.fragment_collections) {
                 return true
             }
         })
+    }
+
+    private fun restoreRecyclerState() {
+        lifecycleScope.launch(Dispatchers.Main) {
+            //TODO Replace getParcelable method
+            recyclerState = recyclerStateBundle!!.getParcelable(Constants.KEY_RECYCLER_STATE)
+            binding.recyclerCollections.layoutManager?.onRestoreInstanceState(recyclerState)
+        }
     }
 }
