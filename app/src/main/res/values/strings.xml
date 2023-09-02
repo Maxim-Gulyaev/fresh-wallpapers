@@ -33,4 +33,5 @@
     <string name="set_lock_screen">Set lock screen</string>
     <string name="set_both">Set both</string>
     <string name="search_images">Search images</string>
+    <string name="no_results_found">No results found.</string>
 </resources>

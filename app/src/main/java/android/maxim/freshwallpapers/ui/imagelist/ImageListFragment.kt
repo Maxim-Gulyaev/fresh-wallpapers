@@ -50,7 +50,11 @@ class ImageListFragment: Fragment(R.layout.fragment_image_list) {
             if (imageList.isNotEmpty()) {
                 initRecycler(imageList)
             } else {
-                Toast.makeText(requireActivity(), "No results found.", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    requireActivity(),
+                    resources.getString(R.string.no_results_found),
+                    Toast.LENGTH_LONG)
+                    .show()
             }
         })
         return binding.root
