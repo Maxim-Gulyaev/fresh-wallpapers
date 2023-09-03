@@ -1,6 +1,7 @@
 package android.maxim.freshwallpapers.data.repository
 
 import android.content.Context
+import android.maxim.freshwallpapers.BuildConfig
 import android.maxim.freshwallpapers.data.models.ImageList
 import android.maxim.freshwallpapers.data.models.WallpapersCollection
 import android.maxim.freshwallpapers.di.WallpapersRepositoryEntryPoint
@@ -52,7 +53,8 @@ class WallpapersRepository @Inject constructor(@ApplicationContext context: Cont
 
     suspend fun getImageList(collection: String): Response<ImageList> {
         val response = wallpapersApi.getImageList(
-            PIXABAY_API_KEY,
+            //PIXABAY_API_KEY,
+            BuildConfig.API_KEY,
             IMAGE_PER_PAGE,
             BACKGROUND,
             VERTICAL_ORIENTATION,
