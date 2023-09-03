@@ -6,7 +6,6 @@ import android.maxim.freshwallpapers.data.models.ImageList
 import android.maxim.freshwallpapers.data.models.WallpapersCollection
 import android.maxim.freshwallpapers.di.WallpapersRepositoryEntryPoint
 import android.maxim.freshwallpapers.utils.*
-import android.maxim.freshwallpapers.utils.Constants.PIXABAY_API_KEY
 import dagger.hilt.EntryPoints
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
@@ -26,8 +25,6 @@ class WallpapersRepository @Inject constructor(@ApplicationContext context: Cont
     private val wallpapersApi = hiltEntryPoint.wallpapersApi()
     private val firestoreDb = hiltEntryPoint.firestoreDb()
     private val firestoreReference = firestoreDb.collection("collections")
-
-    //TODO consider to cash requests
 
     fun getCollectionsList(): Flow<List<WallpapersCollection>> = flow {
        val collectionsList = suspendCoroutine<List<WallpapersCollection>> { continuation ->
@@ -53,7 +50,6 @@ class WallpapersRepository @Inject constructor(@ApplicationContext context: Cont
 
     suspend fun getImageList(collection: String): Response<ImageList> {
         val response = wallpapersApi.getImageList(
-            //PIXABAY_API_KEY,
             BuildConfig.API_KEY,
             IMAGE_PER_PAGE,
             BACKGROUND,
