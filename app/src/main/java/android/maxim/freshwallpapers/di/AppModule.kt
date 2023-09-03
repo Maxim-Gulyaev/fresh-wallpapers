@@ -3,6 +3,7 @@ package android.maxim.freshwallpapers.di
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import android.maxim.freshwallpapers.data.network.CacheInterceptor
 import android.maxim.freshwallpapers.data.network.WallpapersApi
 import android.maxim.freshwallpapers.utils.Constants
 import android.maxim.freshwallpapers.utils.DARK_MODE_SHARE_PREFS
@@ -17,10 +18,12 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.File
 import javax.inject.Singleton
 
 @Module
@@ -29,12 +32,14 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideWallpapersApi(): WallpapersApi {
-        val interceptor = HttpLoggingInterceptor()
-        interceptor.level = HttpLoggingInterceptor.Level.BODY
+    fun provideWallpapersApi(@ApplicationContext appContext: Context): WallpapersApi {
+        val loggingInterceptor = HttpLoggingInterceptor()
+        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
         val client = OkHttpClient.Builder()
-            .addInterceptor(interceptor)
+            .cache(Cache(File(appContext.cacheDir, "http-cache"), 15L * 1024L * 1024L))
+            .addNetworkInterceptor(CacheInterceptor())
+            .addInterceptor(loggingInterceptor)
             .build()
 
         val retrofit = Retrofit.Builder()
