@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 
 class ImageListAdapter(private val imageList: List<Image>)
     : RecyclerView.Adapter<ImageListAdapter.ImageListViewHolder>(){
@@ -21,6 +22,7 @@ class ImageListAdapter(private val imageList: List<Image>)
                 .with(itemView.context)
                 .load(previewURL)
                 .centerCrop()
+                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .into(itemBinding.ivPreviewImage)
         }
     }

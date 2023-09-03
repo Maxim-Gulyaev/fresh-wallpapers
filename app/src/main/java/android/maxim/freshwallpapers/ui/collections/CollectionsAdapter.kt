@@ -11,6 +11,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 
 class CollectionsAdapter(private val collectionsList: List<WallpapersCollection>)
     : RecyclerView.Adapter<CollectionsAdapter.CollectionsAdapterViewHolder>() {
@@ -23,6 +24,7 @@ class CollectionsAdapter(private val collectionsList: List<WallpapersCollection>
                 .with(itemView.context)
                 .load(previewUrl)
                 .centerCrop()
+                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .into(itemBinding.ivCollectionPreview)
         }
     }
