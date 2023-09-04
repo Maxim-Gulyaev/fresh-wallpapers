@@ -59,7 +59,7 @@ class AppModule {
     @DarkModePrefs
     fun provideDarkModePrefs(@ApplicationContext appContext: Context): SharedPreferences {
         return appContext.getSharedPreferences(
-            DARK_MODE_SHARE_PREFS,
+            DARK_MODE_PREFS,
             Application.MODE_PRIVATE
         )
     }

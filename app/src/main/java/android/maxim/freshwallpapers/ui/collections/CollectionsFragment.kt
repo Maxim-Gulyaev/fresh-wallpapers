@@ -5,8 +5,7 @@ import android.maxim.freshwallpapers.R
 import android.maxim.freshwallpapers.databinding.FragmentCollectionsBinding
 import android.maxim.freshwallpapers.ui.ImageSharedViewModel
 import android.maxim.freshwallpapers.utils.COLLECTION_KEY
-import android.maxim.freshwallpapers.utils.Constants
-import android.maxim.freshwallpapers.utils.KEY_RECYCLER_STATE
+import android.maxim.freshwallpapers.utils.RECYCLER_STATE_KEY
 import android.maxim.freshwallpapers.utils.LIKED
 import android.os.Build
 import android.os.Bundle
@@ -107,7 +106,7 @@ class CollectionsFragment: Fragment(R.layout.fragment_collections) {
         super.onDestroyView()
         recyclerStateBundle = Bundle()
         val mListState = binding.recyclerCollections.layoutManager?.onSaveInstanceState()
-        recyclerStateBundle!!.putParcelable(KEY_RECYCLER_STATE, mListState)
+        recyclerStateBundle!!.putParcelable(RECYCLER_STATE_KEY, mListState)
         _binding = null
     }
 
@@ -144,7 +143,7 @@ class CollectionsFragment: Fragment(R.layout.fragment_collections) {
     private fun restoreRecyclerState() {
         lifecycleScope.launch(Dispatchers.Main) {
             //TODO Replace getParcelable method
-            recyclerState = recyclerStateBundle!!.getParcelable(KEY_RECYCLER_STATE)
+            recyclerState = recyclerStateBundle!!.getParcelable(RECYCLER_STATE_KEY)
             binding.recyclerCollections.layoutManager?.onRestoreInstanceState(recyclerState)
         }
     }

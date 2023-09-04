@@ -55,7 +55,7 @@ class WallpapersRepository @Inject constructor(@ApplicationContext context: Cont
             BACKGROUND,
             VERTICAL_ORIENTATION,
             PHOTO,
-            SAFE_SEARCH_TRUE,
+            SAFE_SEARCH,
             collection)
         if (!response.isSuccessful) {
             //TODO handle the exception
