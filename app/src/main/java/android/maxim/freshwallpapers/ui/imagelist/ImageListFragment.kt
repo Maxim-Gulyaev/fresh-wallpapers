@@ -6,7 +6,7 @@ import android.maxim.freshwallpapers.data.models.Image
 import android.maxim.freshwallpapers.databinding.FragmentImageListBinding
 import android.maxim.freshwallpapers.ui.ImageSharedViewModel
 import android.maxim.freshwallpapers.utils.COLLECTION_KEY
-import android.maxim.freshwallpapers.utils.Constants.KEY_RECYCLER_STATE
+import android.maxim.freshwallpapers.utils.KEY_RECYCLER_STATE
 import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable

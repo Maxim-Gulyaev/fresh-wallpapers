@@ -19,13 +19,6 @@ const val PHOTO = "photo"
 const val SAFE_SEARCH_TRUE = true
 
 const val SOURCE = "www.pixabay.com"
+const val WALLPAPERSAPI_BASE_URL = "https://pixabay.com/"
 
-object Constants {
-
-    const val TAG = "mylog"
-
-    const val WALLPAPERSAPI_BASE_URL = "https://pixabay.com/"
-    const val KEY_RECYCLER_STATE = "keyRecyclerState"
-
-    //TODO refactor this class
-}
+const val KEY_RECYCLER_STATE = "keyRecyclerState"

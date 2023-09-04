@@ -5,10 +5,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.maxim.freshwallpapers.data.network.CacheInterceptor
 import android.maxim.freshwallpapers.data.network.WallpapersApi
-import android.maxim.freshwallpapers.utils.Constants
-import android.maxim.freshwallpapers.utils.DARK_MODE_SHARE_PREFS
-import android.maxim.freshwallpapers.utils.LIKED_IMAGE_PREFS
-import android.maxim.freshwallpapers.utils.LikedImageHelper
+import android.maxim.freshwallpapers.utils.*
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -43,7 +40,7 @@ class AppModule {
             .build()
 
         val retrofit = Retrofit.Builder()
-            .baseUrl(Constants.WALLPAPERSAPI_BASE_URL)
+            .baseUrl(WALLPAPERSAPI_BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
