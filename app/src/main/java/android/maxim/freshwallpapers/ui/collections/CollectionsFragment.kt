@@ -64,7 +64,7 @@ class CollectionsFragment: Fragment(R.layout.fragment_collections) {
         }
 
         lifecycleScope.launch {
-            imageSharedViewModel.getCategoriesList().observe(viewLifecycleOwner) { collection ->
+            imageSharedViewModel.getCollectionsList().observe(viewLifecycleOwner) { collection ->
                 if (recyclerStateBundle != null) restoreRecyclerState()
                 binding.recyclerCollections.apply {
                     layoutManager = GridLayoutManager(

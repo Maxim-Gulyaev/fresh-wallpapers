@@ -20,7 +20,6 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.*
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -47,7 +46,7 @@ class ImageSharedViewModel @Inject constructor(application: Application): Androi
     private val _imageMap = MutableLiveData<LikedImageMap>()
     val imageMap: LiveData<LikedImageMap> = _imageMap
 
-    suspend fun getCategoriesList() = liveData {
+    suspend fun getCollectionsList() = liveData {
         repository.getCollectionsList().collect { value ->
             emit(value)
         }
