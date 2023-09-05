@@ -5,6 +5,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Bitmap
+import android.maxim.freshwallpapers.MainActivity
 import android.maxim.freshwallpapers.data.models.Image
 import android.maxim.freshwallpapers.data.models.LikedImageMap
 import android.maxim.freshwallpapers.data.repository.WallpapersRepository
@@ -19,6 +20,7 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.*
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -51,12 +53,12 @@ class ImageSharedViewModel @Inject constructor(application: Application): Androi
         }
     }
 
-    fun getImageList(category: String) {
+    fun getImageList(category: String, context: MainActivity) {
         if (category == LIKED) {
             _imageList.value = getLikedImageList()
         } else {
             viewModelScope.launch(Dispatchers.IO) {
-                val response = repository.getImageList(category).body()?.imageList
+                val response = repository.getImageList(category, context).body()?.imageList
                 withContext(Dispatchers.Main) {
                     _imageList.value = response!!
                 }

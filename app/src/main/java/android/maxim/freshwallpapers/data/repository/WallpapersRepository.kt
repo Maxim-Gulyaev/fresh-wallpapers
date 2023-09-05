@@ -48,7 +48,7 @@ class WallpapersRepository @Inject constructor(@ApplicationContext context: Cont
         emit(collectionsList)
     }.flowOn(Dispatchers.IO)
 
-    suspend fun getImageList(collection: String): Response<ImageList> {
+    suspend fun getImageList(collection: String, errorCallback: ErrorCallback): Response<ImageList> {
         val response = wallpapersApi.getImageList(
             BuildConfig.API_KEY,
             IMAGE_PER_PAGE,
@@ -58,8 +58,13 @@ class WallpapersRepository @Inject constructor(@ApplicationContext context: Cont
             SAFE_SEARCH,
             collection)
         if (!response.isSuccessful) {
-            //TODO handle the exception
+            val errorMessage = response.code().toString()
+            errorCallback.onError(errorMessage)
         }
         return response
+    }
+
+    interface ErrorCallback {
+        fun onError(errorMessage: String)
     }
 }

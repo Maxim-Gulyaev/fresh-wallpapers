@@ -1,6 +1,7 @@
 package android.maxim.freshwallpapers
 
 import android.content.SharedPreferences
+import android.maxim.freshwallpapers.data.repository.WallpapersRepository
 import android.maxim.freshwallpapers.di.DarkModePrefs
 import android.maxim.freshwallpapers.utils.DARK_MODE
 import android.maxim.freshwallpapers.utils.LIGHT_MODE
@@ -8,6 +9,7 @@ import android.maxim.freshwallpapers.utils.MODE_KEY
 import android.maxim.freshwallpapers.utils.SYSTEM_MODE
 import android.os.Build
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate.*
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -17,7 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), WallpapersRepository.ErrorCallback {
 
     @Inject
     @DarkModePrefs
@@ -40,5 +42,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         analytics = Firebase.analytics
+    }
+
+    override fun onError(errorMessage: String) {
+        Toast.makeText(
+            this,
+            "Error: $errorMessage",
+            Toast.LENGTH_LONG)
+            .show()
     }
 }

@@ -1,6 +1,7 @@
 package android.maxim.freshwallpapers.ui.imagelist
 
 import android.content.res.Configuration
+import android.maxim.freshwallpapers.MainActivity
 import android.maxim.freshwallpapers.R
 import android.maxim.freshwallpapers.data.models.Image
 import android.maxim.freshwallpapers.databinding.FragmentImageListBinding
@@ -43,7 +44,7 @@ class ImageListFragment: Fragment(R.layout.fragment_image_list) {
         _binding = FragmentImageListBinding.inflate(layoutInflater, container, false)
 
         collection = arguments?.getString(COLLECTION_KEY)
-        imageSharedViewModel.getImageList(collection!!)
+        imageSharedViewModel.getImageList(collection!!, requireActivity() as MainActivity)
 
         imageSharedViewModel.imageList.observe(viewLifecycleOwner, Observer { imageList ->
             if (recyclerStateBundle != null) restoreRecyclerState()
