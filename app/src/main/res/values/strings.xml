@@ -34,4 +34,5 @@
     <string name="set_both">Set both</string>
     <string name="search_images">Search images</string>
     <string name="no_results_found">No results found.</string>
+    <string name="network_error_message">Network error.Check connection or use VPN.</string>
 </resources>

@@ -60,7 +60,9 @@ class ImageSharedViewModel @Inject constructor(application: Application): Androi
             viewModelScope.launch(Dispatchers.IO) {
                 val response = repository.getImageList(category, context).body()?.imageList
                 withContext(Dispatchers.Main) {
-                    _imageList.value = response!!
+                    if (response != null) {
+                        _imageList.value = response!!
+                    }
                 }
             }
         }

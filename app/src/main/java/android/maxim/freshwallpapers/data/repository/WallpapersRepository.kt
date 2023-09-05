@@ -2,16 +2,18 @@ package android.maxim.freshwallpapers.data.repository
 
 import android.content.Context
 import android.maxim.freshwallpapers.BuildConfig
+import android.maxim.freshwallpapers.R
 import android.maxim.freshwallpapers.data.models.ImageList
 import android.maxim.freshwallpapers.data.models.WallpapersCollection
 import android.maxim.freshwallpapers.di.WallpapersRepositoryEntryPoint
 import android.maxim.freshwallpapers.utils.*
 import dagger.hilt.EntryPoints
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import okhttp3.ResponseBody.Companion.toResponseBody
 import retrofit2.Response
 import javax.inject.Inject
 import kotlin.coroutines.resume
@@ -25,6 +27,7 @@ class WallpapersRepository @Inject constructor(@ApplicationContext context: Cont
     private val wallpapersApi = hiltEntryPoint.wallpapersApi()
     private val firestoreDb = hiltEntryPoint.firestoreDb()
     private val firestoreReference = firestoreDb.collection("collections")
+    private val errorMessage = context.resources.getString(R.string.network_error_message)
 
     fun getCollectionsList(): Flow<List<WallpapersCollection>> = flow {
        val collectionsList = suspendCoroutine<List<WallpapersCollection>> { continuation ->
@@ -49,19 +52,46 @@ class WallpapersRepository @Inject constructor(@ApplicationContext context: Cont
     }.flowOn(Dispatchers.IO)
 
     suspend fun getImageList(collection: String, errorCallback: ErrorCallback): Response<ImageList> {
-        val response = wallpapersApi.getImageList(
-            BuildConfig.API_KEY,
-            IMAGE_PER_PAGE,
-            BACKGROUND,
-            VERTICAL_ORIENTATION,
-            PHOTO,
-            SAFE_SEARCH,
-            collection)
-        if (!response.isSuccessful) {
-            val errorMessage = response.code().toString()
-            errorCallback.onError(errorMessage)
+        return try {
+            val deferred = CoroutineScope(Dispatchers.IO).async {
+                wallpapersApi.getImageList(
+                    BuildConfig.API_KEY,
+                    IMAGE_PER_PAGE,
+                    BACKGROUND,
+                    VERTICAL_ORIENTATION,
+                    PHOTO,
+                    SAFE_SEARCH,
+                    collection
+                )
+            }
+            val response = withTimeoutOrNull(5000) {
+                deferred.await()
+            }
+
+            when {
+                response != null && response.isSuccessful -> {
+                    response
+                }
+                response != null && !response.isSuccessful -> {
+                    val errorMessage = response.body().toString()
+                    errorCallback.onError(errorMessage)
+                    Response.error(400, errorMessage.toResponseBody(null))
+                }
+                else -> {
+                    errorCallback.onError(errorMessage)
+                    Response.error(400, errorMessage.toResponseBody(null))
+                }
+            }
+        } catch (e: Throwable) {
+            when (e) {
+                is CancellationException -> {}
+                else -> {
+                    errorCallback.onError(errorMessage)
+                }
+            }
+            e.printStackTrace()
+            Response.error(400, errorMessage.toResponseBody(null))
         }
-        return response
     }
 
     interface ErrorCallback {

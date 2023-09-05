@@ -45,10 +45,13 @@ class MainActivity : AppCompatActivity(), WallpapersRepository.ErrorCallback {
     }
 
     override fun onError(errorMessage: String) {
-        Toast.makeText(
-            this,
-            "Error: $errorMessage",
-            Toast.LENGTH_LONG)
-            .show()
+        runOnUiThread {
+            Toast.makeText(
+                this,
+                errorMessage,
+                Toast.LENGTH_LONG)
+                .show()
+        }
+
     }
 }
