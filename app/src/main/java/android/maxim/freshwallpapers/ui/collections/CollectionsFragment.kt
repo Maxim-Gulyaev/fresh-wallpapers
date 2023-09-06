@@ -1,6 +1,7 @@
 package android.maxim.freshwallpapers.ui.collections
 
 import android.content.res.Configuration
+import android.maxim.freshwallpapers.MainActivity
 import android.maxim.freshwallpapers.R
 import android.maxim.freshwallpapers.databinding.FragmentCollectionsBinding
 import android.maxim.freshwallpapers.ui.ImageSharedViewModel
@@ -64,7 +65,9 @@ class CollectionsFragment: Fragment(R.layout.fragment_collections) {
         }
 
         lifecycleScope.launch {
-            imageSharedViewModel.getCollectionsList().observe(viewLifecycleOwner) { collection ->
+            imageSharedViewModel
+                .getCollectionsList(requireActivity() as MainActivity)
+                .observe(viewLifecycleOwner) { collection ->
                 if (recyclerStateBundle != null) restoreRecyclerState()
                 binding.recyclerCollections.apply {
                     layoutManager = GridLayoutManager(
