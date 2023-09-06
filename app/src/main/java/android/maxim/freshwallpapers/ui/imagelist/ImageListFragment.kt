@@ -42,12 +42,15 @@ class ImageListFragment: Fragment(R.layout.fragment_image_list) {
     ): View {
         _binding = FragmentImageListBinding.inflate(layoutInflater, container, false)
 
+        binding.progressBarImageList.visibility = View.VISIBLE
+
         collection = arguments?.getString(COLLECTION_KEY)
         imageSharedViewModel.getImageList(collection!!)
 
         imageSharedViewModel.imageList.observe(viewLifecycleOwner, Observer { imageList ->
             if (recyclerStateBundle != null) restoreRecyclerState()
             if (imageList.isNotEmpty()) {
+                binding.progressBarImageList.visibility = View.GONE
                 initRecycler(imageList)
             } else {
                 Toast.makeText(
