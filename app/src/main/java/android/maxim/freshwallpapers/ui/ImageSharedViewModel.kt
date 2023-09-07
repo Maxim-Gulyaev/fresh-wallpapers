@@ -121,6 +121,7 @@ class ImageSharedViewModel @Inject constructor(application: Application): Androi
             outputStream.flush()
             outputStream.close()
         } catch (e: IOException) {
+            //TODO handle the error
             e.printStackTrace()
         }
     }
