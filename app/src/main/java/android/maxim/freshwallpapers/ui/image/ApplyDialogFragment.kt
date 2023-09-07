@@ -72,7 +72,7 @@ class ApplyDialogFragment: DialogFragment(R.layout.fragment_dialog_apply) {
     }
 
     private fun setWallpaper() {
-        // Use Glide to get bitmap from cash and to crop the image
+        // Use Glide to get bitmap from cache and to crop the image
         Glide
             .with(requireActivity())
             .asBitmap()
