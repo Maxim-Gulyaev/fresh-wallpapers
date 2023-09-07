@@ -46,12 +46,14 @@ class ImageSharedViewModel @Inject constructor(application: Application): Androi
     private val _imageMap = MutableLiveData<LikedImageMap>()
     val imageMap: LiveData<LikedImageMap> = _imageMap
 
+    //todo: do not like MainActivity here, consider to rid it
     suspend fun getCollectionsList(context: MainActivity) = liveData {
         repository.getCollectionsList(context).collect { value ->
             emit(value)
         }
     }
 
+    //todo: do not like MainActivity here, consider to rid it
     fun getImageList(category: String, context: MainActivity) {
         if (category == LIKED) {
             _imageList.value = getLikedImageList()
