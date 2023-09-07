@@ -29,6 +29,17 @@
         android:layout_gravity="bottom"
         />
 
+    <ProgressBar
+        android:id="@+id/progress_bar_image"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/image_toolbar"
         android:layout_width="match_parent"
@@ -112,7 +123,6 @@
                 />
 
         </LinearLayout>
-
 
     </com.google.android.material.bottomappbar.BottomAppBar>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

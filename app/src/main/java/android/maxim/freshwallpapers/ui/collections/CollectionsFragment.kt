@@ -6,8 +6,8 @@ import android.maxim.freshwallpapers.R
 import android.maxim.freshwallpapers.databinding.FragmentCollectionsBinding
 import android.maxim.freshwallpapers.ui.ImageSharedViewModel
 import android.maxim.freshwallpapers.utils.COLLECTION_KEY
-import android.maxim.freshwallpapers.utils.RECYCLER_STATE_KEY
 import android.maxim.freshwallpapers.utils.LIKED
+import android.maxim.freshwallpapers.utils.RECYCLER_STATE_KEY
 import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
@@ -64,6 +64,8 @@ class CollectionsFragment: Fragment(R.layout.fragment_collections) {
             setupSearchView(searchView)
         }
 
+        binding.progressBarCollections.visibility = View.VISIBLE
+
         lifecycleScope.launch {
             imageSharedViewModel
                 .getCollectionsList(requireActivity() as MainActivity)
@@ -76,6 +78,9 @@ class CollectionsFragment: Fragment(R.layout.fragment_collections) {
                         GridLayoutManager.VERTICAL,
                         false)
                     adapter = CollectionsAdapter(collection)
+                }
+                if (collection.isNotEmpty()) {
+                    binding.progressBarCollections.visibility = View.GONE
                 }
             }
         }
