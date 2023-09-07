@@ -26,9 +26,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -62,6 +66,8 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentImageBinding.inflate(layoutInflater, container, false)
+
+        binding.progressBarImage.visibility = View.VISIBLE
 
         image = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             arguments?.getParcelable(IMAGE_KEY, Image::class.java)!!
@@ -149,6 +155,26 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
             .load(image.largeImageURL)
             .format(DecodeFormat.PREFER_ARGB_8888)
             .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+            .listener(object : RequestListener<Drawable> {
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    return false
+                }
+                override fun onResourceReady(
+                    resource: Drawable?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    dataSource: DataSource?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    binding.progressBarImage.visibility = View.INVISIBLE
+                    return false
+                }
+            })
             .into(binding.ivImage)
 
         return binding.root
@@ -196,56 +222,6 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
         super.onDestroyView()
         _binding = null
     }
-
-    /*private fun setWallpaper() {
-        Glide
-            .with(requireActivity())
-            .asBitmap()
-            .format(DecodeFormat.PREFER_ARGB_8888)
-            .load(image.largeImageURL)
-            .override(
-                resources.displayMetrics.widthPixels,
-                resources.displayMetrics.heightPixels)
-            .centerCrop()
-            .listener(object : RequestListener<Bitmap> {
-                override fun onLoadFailed(
-                    e: GlideException?,
-                    model: Any?,
-                    target: com.bumptech.glide.request.target.Target<Bitmap>?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    Toast.makeText(
-                        requireActivity(),
-                        resources.getString(R.string.loading_error),
-                        Toast.LENGTH_LONG
-                    ).show()
-                    return false
-                }
-                override fun onResourceReady(
-                    resource: Bitmap?,
-                    model: Any?,
-                    target: com.bumptech.glide.request.target.Target<Bitmap>?,
-                    dataSource: DataSource?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    try {
-                        WallpaperManager
-                            .getInstance(context)
-                            .setBitmap(resource)
-                        lifecycleScope.launch(Dispatchers.Main) {
-                            showToast(R.string.setWallpaper_done)
-                        }
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                        lifecycleScope.launch(Dispatchers.Main) {
-                            showToast(R.string.setWallpaper_error)
-                        }
-                    }
-                    return false
-                }
-            })
-            .submit()
-    }*/
 
     //todo: consider to delete this method if it has single usage
     private fun showToast(messageResId: Int) {
