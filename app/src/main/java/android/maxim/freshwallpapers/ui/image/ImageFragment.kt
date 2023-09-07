@@ -14,6 +14,7 @@ import android.maxim.freshwallpapers.data.models.LikedImageMap
 import android.maxim.freshwallpapers.databinding.FragmentImageBinding
 import android.maxim.freshwallpapers.ui.ImageSharedViewModel
 import android.maxim.freshwallpapers.utils.IMAGE_KEY
+import android.maxim.freshwallpapers.utils.SnackbarUtils
 import android.os.Build
 import android.os.Bundle
 import android.view.*
@@ -35,6 +36,7 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -166,7 +168,11 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
                 ): Boolean {
                     lifecycleScope.launch {
                         delay(5000)
-                        showToast(R.string.network_error_message)
+                        SnackbarUtils().showSnackbar(
+                            binding.ivImage,
+                            resources.getString(R.string.network_error_message),
+                            resources.getString(R.string.got_it)
+                        )
                     }
                     return false
                 }
