@@ -7,7 +7,6 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
-import android.maxim.freshwallpapers.MainActivity
 import android.maxim.freshwallpapers.R
 import android.maxim.freshwallpapers.data.models.Image
 import android.maxim.freshwallpapers.data.models.LikedImageMap
@@ -36,15 +35,17 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ImageFragment: Fragment(R.layout.fragment_image) {
 
+    @Inject
+    lateinit var snackbarUtils: SnackbarUtils
     private lateinit var image: Image
     private lateinit var retrievedImageMap: LikedImageMap
     private val imageSharedViewModel: ImageSharedViewModel by viewModels()
@@ -168,7 +169,7 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
                 ): Boolean {
                     lifecycleScope.launch {
                         delay(5000)
-                        SnackbarUtils().showSnackbar(
+                        snackbarUtils.showSnackbar(
                             binding.ivImage,
                             resources.getString(R.string.network_error_message),
                             resources.getString(R.string.got_it)

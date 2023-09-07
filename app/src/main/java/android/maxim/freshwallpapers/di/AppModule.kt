@@ -85,4 +85,9 @@ class AppModule {
     fun provideLikedImageHelper(@ApplicationContext appContext: Context): LikedImageHelper{
         return LikedImageHelper(appContext)
     }
+
+    @Provides
+    fun provideSnackbarUtils(): SnackbarUtils {
+        return SnackbarUtils()
+    }
 }
