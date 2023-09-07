@@ -3,10 +3,7 @@ package android.maxim.freshwallpapers
 import android.content.SharedPreferences
 import android.maxim.freshwallpapers.data.repository.WallpapersRepository
 import android.maxim.freshwallpapers.di.DarkModePrefs
-import android.maxim.freshwallpapers.utils.DARK_MODE
-import android.maxim.freshwallpapers.utils.LIGHT_MODE
-import android.maxim.freshwallpapers.utils.MODE_KEY
-import android.maxim.freshwallpapers.utils.SYSTEM_MODE
+import android.maxim.freshwallpapers.utils.*
 import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
@@ -46,12 +43,11 @@ class MainActivity : AppCompatActivity(), WallpapersRepository.ErrorCallback {
 
     override fun onError(errorMessage: String) {
         runOnUiThread {
-            Toast.makeText(
-                this,
+            SnackbarUtils().showSnackbar(
+                findViewById(R.id.fragment_container),
                 errorMessage,
-                Toast.LENGTH_LONG)
-                .show()
+                resources.getString(R.string.got_it)
+            )
         }
-
     }
 }
