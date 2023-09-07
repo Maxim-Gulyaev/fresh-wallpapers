@@ -7,6 +7,7 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
+import android.maxim.freshwallpapers.MainActivity
 import android.maxim.freshwallpapers.R
 import android.maxim.freshwallpapers.data.models.Image
 import android.maxim.freshwallpapers.data.models.LikedImageMap
@@ -36,6 +37,7 @@ import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -162,6 +164,10 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
                     target: Target<Drawable>?,
                     isFirstResource: Boolean
                 ): Boolean {
+                    lifecycleScope.launch {
+                        delay(5000)
+                        showToast(R.string.network_error_message)
+                    }
                     return false
                 }
                 override fun onResourceReady(
