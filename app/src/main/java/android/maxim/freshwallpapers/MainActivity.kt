@@ -6,7 +6,6 @@ import android.maxim.freshwallpapers.di.DarkModePrefs
 import android.maxim.freshwallpapers.utils.*
 import android.os.Build
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate.*
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -43,7 +42,7 @@ class MainActivity : AppCompatActivity(), WallpapersRepository.ErrorCallback {
 
     override fun onError(errorMessage: String) {
         runOnUiThread {
-            SnackbarUtils().showSnackbar(
+            MessageUtils().showSnackbar(
                 findViewById(R.id.fragment_container),
                 errorMessage,
                 resources.getString(R.string.got_it)

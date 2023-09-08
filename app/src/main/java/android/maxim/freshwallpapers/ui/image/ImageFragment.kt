@@ -13,7 +13,7 @@ import android.maxim.freshwallpapers.data.models.LikedImageMap
 import android.maxim.freshwallpapers.databinding.FragmentImageBinding
 import android.maxim.freshwallpapers.ui.ImageSharedViewModel
 import android.maxim.freshwallpapers.utils.IMAGE_KEY
-import android.maxim.freshwallpapers.utils.SnackbarUtils
+import android.maxim.freshwallpapers.utils.MessageUtils
 import android.os.Build
 import android.os.Bundle
 import android.view.*
@@ -46,7 +46,7 @@ import javax.inject.Inject
 class ImageFragment: Fragment(R.layout.fragment_image) {
 
     @Inject
-    lateinit var snackbarUtils: SnackbarUtils
+    lateinit var messageUtils: MessageUtils
     private lateinit var image: Image
     private lateinit var retrievedImageMap: LikedImageMap
     private val imageSharedViewModel: ImageSharedViewModel by viewModels()
@@ -170,7 +170,7 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
                 ): Boolean {
                     lifecycleScope.launch {
                         delay(5000)
-                        snackbarUtils.showSnackbar(
+                        messageUtils.showSnackbar(
                             binding.ivImage,
                             resources.getString(R.string.network_error_message),
                             resources.getString(R.string.got_it)

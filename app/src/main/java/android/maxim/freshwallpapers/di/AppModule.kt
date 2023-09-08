@@ -87,7 +87,7 @@ class AppModule {
     }
 
     @Provides
-    fun provideSnackbarUtils(): SnackbarUtils {
-        return SnackbarUtils()
+    fun provideSnackbarUtils(): MessageUtils {
+        return MessageUtils()
     }
 }
