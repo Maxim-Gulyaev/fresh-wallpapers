@@ -39,6 +39,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.io.IOException
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -347,7 +348,12 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
             .into(object : CustomTarget<Bitmap>() {
                 override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
                     if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
-                        imageSharedViewModel.saveBitmapToExternalStorage(resource, image.id)
+                        try {
+                            imageSharedViewModel.saveBitmapToExternalStorage(resource, image.id)
+                        } catch (e: IOException) {
+                            showToast(R.string.loading_error)
+                            e.printStackTrace()
+                        }
                     } else {
                         imageSharedViewModel.saveBitmapToMediaStore(requireActivity(), resource, image.id)
                     }

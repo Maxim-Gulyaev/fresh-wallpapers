@@ -25,7 +25,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
-import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -104,10 +103,11 @@ class ImageSharedViewModel @Inject constructor(application: Application): Androi
                 .apply()
         }
         val serializedImageMap = sharedPreferences.getString(LIKED_IMAGE_MAP, null)
-        if (serializedImageMap != null) {
-            retrievedImageMap = gson.fromJson(serializedImageMap, LikedImageMap::class.java)
+        retrievedImageMap = if (serializedImageMap != null) {
+            gson.fromJson(serializedImageMap, LikedImageMap::class.java)
         } else {
-            //TODO handle the error
+            //emergency value, liked image list will be empty
+            LikedImageMap(mutableMapOf())
         }
         _imageMap.value = retrievedImageMap
         return retrievedImageMap
@@ -116,16 +116,10 @@ class ImageSharedViewModel @Inject constructor(application: Application): Androi
     fun saveBitmapToExternalStorage(bitmap: Bitmap, imageName: String) {
         val imageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
         val imageFile = File(imageDir, "JPEG_$imageName.jpg")
-
-        try {
-            val outputStream = FileOutputStream(imageFile)
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
-            outputStream.flush()
-            outputStream.close()
-        } catch (e: IOException) {
-            //TODO handle the error
-            e.printStackTrace()
-        }
+        val outputStream = FileOutputStream(imageFile)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+        outputStream.flush()
+        outputStream.close()
     }
 
     @RequiresApi(Build.VERSION_CODES.Q)
