@@ -29,7 +29,7 @@ class WallpapersRepository @Inject constructor(@ApplicationContext context: Cont
     private val firestoreReference = firestoreDb.collection("collections")
     private val errorMessage = context.resources.getString(R.string.network_error_message)
 
-    fun getCollectionsList(errorCallback: ErrorCallback): Flow<List<WallpapersCollection>> = flow {
+    fun getCollectionsList(): Flow<List<WallpapersCollection>> = flow {
        val collectionsList = suspendCoroutine<List<WallpapersCollection>> { continuation ->
            firestoreReference
                .get()
@@ -45,8 +45,7 @@ class WallpapersRepository @Inject constructor(@ApplicationContext context: Cont
                    continuation.resume(list)
                }
                .addOnFailureListener { exception ->
-                   val errorMessage = "Request failed: ${exception.message}"
-                   errorCallback.onError(errorMessage)
+                   throw exception
                }
        }
         emit(collectionsList)

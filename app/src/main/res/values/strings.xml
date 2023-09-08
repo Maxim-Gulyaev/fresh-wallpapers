@@ -36,5 +36,6 @@
     <string name="loading_error">Loading error.</string>
     <string name="no_permission">No permission to access photo and media.</string>
     <string name="no_results_found">No results found.</string>
+    <string name="remote_server_error">Remote server error.</string>
     <string name="network_error_message">Check connection. Use VPN if PIXABAY.COM is banned in your country.</string>
 </resources>

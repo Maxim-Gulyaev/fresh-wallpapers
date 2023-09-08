@@ -8,6 +8,7 @@ import android.maxim.freshwallpapers.ui.ImageSharedViewModel
 import android.maxim.freshwallpapers.utils.COLLECTION_KEY
 import android.maxim.freshwallpapers.utils.LIKED
 import android.maxim.freshwallpapers.utils.RECYCLER_STATE_KEY
+import android.maxim.freshwallpapers.utils.MessageUtils
 import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
@@ -67,22 +68,31 @@ class CollectionsFragment: Fragment(R.layout.fragment_collections) {
         binding.progressBarCollections.visibility = View.VISIBLE
 
         lifecycleScope.launch {
-            imageSharedViewModel
-                .getCollectionsList(requireActivity() as MainActivity)
-                .observe(viewLifecycleOwner) { collection ->
-                if (recyclerStateBundle != null) restoreRecyclerState()
-                binding.recyclerCollections.apply {
-                    layoutManager = GridLayoutManager(
-                        activity,
-                        2,
-                        GridLayoutManager.VERTICAL,
-                        false)
-                    adapter = CollectionsAdapter(collection)
-                }
-                if (collection.isNotEmpty()) {
-                    binding.progressBarCollections.visibility = View.GONE
-                }
+            try {
+                imageSharedViewModel
+                    .getCollectionsList()
+                    .observe(viewLifecycleOwner) { collection ->
+                        if (recyclerStateBundle != null) restoreRecyclerState()
+                        binding.recyclerCollections.apply {
+                            layoutManager = GridLayoutManager(
+                                activity,
+                                2,
+                                GridLayoutManager.VERTICAL,
+                                false)
+                            adapter = CollectionsAdapter(collection)
+                        }
+                        if (collection.isNotEmpty()) {
+                            binding.progressBarCollections.visibility = View.GONE
+                        }
+                    }
+            } catch (exception: Exception) {
+                MessageUtils().showToast(
+                    requireActivity(),
+                    resources.getString(R.string.remote_server_error)
+                )
+                exception.printStackTrace()
             }
+
         }
     }
 

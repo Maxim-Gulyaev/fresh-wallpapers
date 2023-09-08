@@ -46,9 +46,13 @@ class ImageSharedViewModel @Inject constructor(application: Application): Androi
     val imageMap: LiveData<LikedImageMap> = _imageMap
 
     //todo: do not like MainActivity here, consider to rid it
-    suspend fun getCollectionsList(context: MainActivity) = liveData {
-        repository.getCollectionsList(context).collect { value ->
-            emit(value)
+    suspend fun getCollectionsList() = liveData {
+        try {
+            repository.getCollectionsList().collect { value ->
+                emit(value)
+            }
+        } catch (exception: Exception) {
+            throw exception
         }
     }
 
