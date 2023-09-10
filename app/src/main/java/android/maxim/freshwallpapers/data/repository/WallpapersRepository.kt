@@ -93,8 +93,4 @@ class WallpapersRepository @Inject constructor(@ApplicationContext context: Cont
         }
         return response
     }
-
-    interface ErrorCallback {
-        fun onError(errorMessage: String)
-    }
 }

@@ -15,7 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(), WallpapersRepository.ErrorCallback {
+class MainActivity : AppCompatActivity() {
 
     @Inject
     @DarkModePrefs
@@ -38,15 +38,5 @@ class MainActivity : AppCompatActivity(), WallpapersRepository.ErrorCallback {
         }
 
         analytics = Firebase.analytics
-    }
-
-    override fun onError(errorMessage: String) {
-        runOnUiThread {
-            MessageUtils().showSnackbar(
-                findViewById(R.id.fragment_container),
-                errorMessage,
-                resources.getString(R.string.got_it)
-            )
-        }
     }
 }
