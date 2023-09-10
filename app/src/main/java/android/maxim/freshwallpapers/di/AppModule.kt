@@ -81,12 +81,6 @@ class AppModule {
     }
 
     @Provides
-    @Singleton
-    fun provideLikedImageHelper(@ApplicationContext appContext: Context): LikedImageHelper{
-        return LikedImageHelper(appContext)
-    }
-
-    @Provides
     fun provideSnackbarUtils(): MessageUtils {
         return MessageUtils()
     }

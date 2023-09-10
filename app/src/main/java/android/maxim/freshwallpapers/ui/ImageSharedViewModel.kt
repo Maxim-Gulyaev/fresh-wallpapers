@@ -11,7 +11,6 @@ import android.maxim.freshwallpapers.data.repository.WallpapersRepository
 import android.maxim.freshwallpapers.di.LikedImagesPrefs
 import android.maxim.freshwallpapers.utils.LIKED
 import android.maxim.freshwallpapers.utils.LIKED_IMAGE_MAP
-import android.maxim.freshwallpapers.utils.LikedImageHelper
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
@@ -37,8 +36,6 @@ class ImageSharedViewModel @Inject constructor(application: Application) :
     lateinit var sharedPreferences: SharedPreferences
     @Inject
     lateinit var gson: Gson
-    @Inject
-    lateinit var likedImageHelper: LikedImageHelper
     private lateinit var retrievedImageMap: LikedImageMap
     private val _imageList = MutableLiveData<List<Image>>()
     val imageList: LiveData<List<Image>> = _imageList
