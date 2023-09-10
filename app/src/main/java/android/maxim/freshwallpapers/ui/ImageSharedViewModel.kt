@@ -5,7 +5,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Bitmap
-import android.maxim.freshwallpapers.MainActivity
 import android.maxim.freshwallpapers.data.models.Image
 import android.maxim.freshwallpapers.data.models.LikedImageMap
 import android.maxim.freshwallpapers.data.repository.WallpapersRepository
@@ -28,7 +27,8 @@ import java.io.FileOutputStream
 import javax.inject.Inject
 
 @HiltViewModel
-class ImageSharedViewModel @Inject constructor(application: Application): AndroidViewModel(application) {
+class ImageSharedViewModel @Inject constructor(application: Application) :
+    AndroidViewModel(application) {
 
     @Inject
     lateinit var repository: WallpapersRepository
@@ -44,8 +44,8 @@ class ImageSharedViewModel @Inject constructor(application: Application): Androi
     val imageList: LiveData<List<Image>> = _imageList
     private val _imageMap = MutableLiveData<LikedImageMap>()
     val imageMap: LiveData<LikedImageMap> = _imageMap
+    val errorLiveData = MutableLiveData<Exception>()
 
-    //todo: do not like MainActivity here, consider to rid it
     suspend fun getCollectionsList() = liveData {
         try {
             repository.getCollectionsList().collect { value ->
@@ -56,13 +56,17 @@ class ImageSharedViewModel @Inject constructor(application: Application): Androi
         }
     }
 
-    //todo: do not like MainActivity here, consider to rid it
-    fun getImageList(category: String, context: MainActivity) {
+    fun getImageList(category: String) {
         if (category == LIKED) {
             _imageList.value = getLikedImageList()
         } else {
             viewModelScope.launch(Dispatchers.IO) {
-                val response = repository.getImageList(category, context).body()?.imageList
+                var response: List<Image>? = null
+                try {
+                    response = repository.getImageList(category).body()?.imageList
+                } catch (exception: Exception) {
+                    errorLiveData.postValue(exception)
+                }
                 withContext(Dispatchers.Main) {
                     if (response != null) {
                         _imageList.value = response!!

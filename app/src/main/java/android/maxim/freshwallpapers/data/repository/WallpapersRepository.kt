@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import okhttp3.ResponseBody.Companion.toResponseBody
 import retrofit2.Response
+import java.io.IOException
 import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -28,6 +29,7 @@ class WallpapersRepository @Inject constructor(@ApplicationContext context: Cont
     private val firestoreDb = hiltEntryPoint.firestoreDb()
     private val firestoreReference = firestoreDb.collection("collections")
     private val errorMessage = context.resources.getString(R.string.network_error_message)
+    lateinit var  response: Response<ImageList>
 
     fun getCollectionsList(): Flow<List<WallpapersCollection>> = flow {
        val collectionsList = suspendCoroutine<List<WallpapersCollection>> { continuation ->
@@ -51,8 +53,8 @@ class WallpapersRepository @Inject constructor(@ApplicationContext context: Cont
         emit(collectionsList)
     }.flowOn(Dispatchers.IO)
 
-    suspend fun getImageList(collection: String, errorCallback: ErrorCallback): Response<ImageList> {
-        return try {
+    suspend fun getImageList(collection: String): Response<ImageList> {
+        try {
             val deferred = CoroutineScope(Dispatchers.IO).async {
                 wallpapersApi.getImageList(
                     BuildConfig.API_KEY,
@@ -64,34 +66,32 @@ class WallpapersRepository @Inject constructor(@ApplicationContext context: Cont
                     collection
                 )
             }
-            val response = withTimeoutOrNull(5000) {
+            val responseWithTimeOut = withTimeoutOrNull(5000) {
                 deferred.await()
             }
-
             when {
-                response != null && response.isSuccessful -> {
-                    response
+                responseWithTimeOut != null && responseWithTimeOut.isSuccessful -> {
+                    response = responseWithTimeOut
                 }
-                response != null && !response.isSuccessful -> {
-                    val errorMessage = response.body().toString()
-                    errorCallback.onError(errorMessage)
-                    Response.error(400, errorMessage.toResponseBody(null))
+                responseWithTimeOut != null && !responseWithTimeOut.isSuccessful -> {
+                    response = Response.error(400, errorMessage.toResponseBody(null))
+                    throw IOException()
                 }
                 else -> {
-                    errorCallback.onError(errorMessage)
-                    Response.error(400, errorMessage.toResponseBody(null))
+                    response = Response.error(400, errorMessage.toResponseBody(null))
+                    throw IOException()
                 }
             }
-        } catch (e: Throwable) {
-            when (e) {
+        } catch (exception: Exception) {
+            response = Response.error(400, errorMessage.toResponseBody(null))
+            when (exception) {
                 is CancellationException -> {}
                 else -> {
-                    errorCallback.onError(errorMessage)
+                    throw Exception()
                 }
             }
-            e.printStackTrace()
-            Response.error(400, errorMessage.toResponseBody(null))
         }
+        return response
     }
 
     interface ErrorCallback {

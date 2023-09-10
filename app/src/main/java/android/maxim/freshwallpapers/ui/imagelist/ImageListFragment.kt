@@ -1,12 +1,12 @@
 package android.maxim.freshwallpapers.ui.imagelist
 
 import android.content.res.Configuration
-import android.maxim.freshwallpapers.MainActivity
 import android.maxim.freshwallpapers.R
 import android.maxim.freshwallpapers.data.models.Image
 import android.maxim.freshwallpapers.databinding.FragmentImageListBinding
 import android.maxim.freshwallpapers.ui.ImageSharedViewModel
 import android.maxim.freshwallpapers.utils.COLLECTION_KEY
+import android.maxim.freshwallpapers.utils.MessageUtils
 import android.maxim.freshwallpapers.utils.RECYCLER_STATE_KEY
 import android.os.Build
 import android.os.Bundle
@@ -25,10 +25,13 @@ import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ImageListFragment: Fragment(R.layout.fragment_image_list) {
 
+    @Inject
+    lateinit var messageUtils: MessageUtils
     private var _binding: FragmentImageListBinding? = null
     private val binding get() = _binding!!
     private val imageSharedViewModel: ImageSharedViewModel by viewModels()
@@ -46,7 +49,17 @@ class ImageListFragment: Fragment(R.layout.fragment_image_list) {
         binding.progressBarImageList.visibility = View.VISIBLE
 
         collection = arguments?.getString(COLLECTION_KEY)
-        imageSharedViewModel.getImageList(collection!!, requireActivity() as MainActivity)
+
+        imageSharedViewModel.getImageList(collection!!)
+
+        imageSharedViewModel.errorLiveData.observe(viewLifecycleOwner, Observer { exception ->
+            messageUtils.showSnackbar(
+                binding.root,
+                resources.getString(R.string.network_error_message),
+                resources.getString(R.string.got_it)
+            )
+            exception.printStackTrace()
+        })
 
         imageSharedViewModel.imageList.observe(viewLifecycleOwner, Observer { imageList ->
             if (recyclerStateBundle != null) restoreRecyclerState()
