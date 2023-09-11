@@ -67,11 +67,9 @@ class ImageListFragment: Fragment(R.layout.fragment_image_list) {
                 binding.progressBarImageList.visibility = View.GONE
                 initRecycler(imageList)
             } else {
-                Toast.makeText(
+                messageUtils.showToast(
                     requireActivity(),
-                    resources.getString(R.string.no_results_found),
-                    Toast.LENGTH_LONG)
-                    .show()
+                    resources.getString(R.string.no_results_found))
             }
         })
         return binding.root
