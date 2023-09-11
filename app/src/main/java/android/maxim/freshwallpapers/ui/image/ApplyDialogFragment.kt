@@ -8,6 +8,7 @@ import android.maxim.freshwallpapers.R
 import android.maxim.freshwallpapers.data.models.Image
 import android.maxim.freshwallpapers.databinding.FragmentDialogApplyBinding
 import android.maxim.freshwallpapers.utils.IMAGE_KEY
+import android.maxim.freshwallpapers.utils.MessageUtils
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,7 +16,6 @@ import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
@@ -24,15 +24,20 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class ApplyDialogFragment: DialogFragment(R.layout.fragment_dialog_apply) {
 
+    @Inject
+    lateinit var messageUtils: MessageUtils
     private var _binding: FragmentDialogApplyBinding? = null
     private val binding get() = _binding!!
     private lateinit var image: Image
-    private var toastMessage: Int? = null
+    private var toastMessage: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -89,7 +94,10 @@ class ApplyDialogFragment: DialogFragment(R.layout.fragment_dialog_apply) {
                     target: com.bumptech.glide.request.target.Target<Bitmap>?,
                     isFirstResource: Boolean
                 ): Boolean {
-                    showToast(R.string.loading_error)
+                    messageUtils.showToast(
+                        requireActivity(),
+                        resources.getString(R.string.loading_error)
+                    )
                     return false
                 }
                 @RequiresApi(Build.VERSION_CODES.N)
@@ -117,10 +125,10 @@ class ApplyDialogFragment: DialogFragment(R.layout.fragment_dialog_apply) {
                                 }
                             }
                         }
-                        toastMessage = R.string.setWallpaper_done
+                        toastMessage = resources.getString(R.string.setWallpaper_done)
                     } catch (e: Exception) {
                         e.printStackTrace()
-                        toastMessage = R.string.setWallpaper_error
+                        toastMessage = resources.getString(R.string.setWallpaper_error)
                     } finally {
                         this@ApplyDialogFragment.dismiss()
                     }
@@ -132,14 +140,12 @@ class ApplyDialogFragment: DialogFragment(R.layout.fragment_dialog_apply) {
 
     override fun onStop() {
         super.onStop()
-        toastMessage?.let { showToast(it) }
-    }
-
-    private fun showToast(messageResId: Int) {
-        Toast.makeText(
+        toastMessage?.let { toastMessage ->
+            messageUtils.showToast(
             requireActivity(),
-            requireActivity().getString(messageResId),
-            Toast.LENGTH_LONG).show()
+            toastMessage
+        ) }
+
     }
 
     private fun showProgressBar() {
