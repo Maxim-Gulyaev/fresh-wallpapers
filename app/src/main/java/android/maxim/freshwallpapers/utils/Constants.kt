@@ -16,8 +16,6 @@ const val COLLECTION_KEY = "collectionKey"
 const val RECYCLER_STATE_KEY = "recyclerStateKey"
 
 const val IMAGE_PER_PAGE = 198
-const val VERTICAL_ORIENTATION = "vertical"
-const val BACKGROUND = "background"
 const val PHOTO = "photo"
 const val SAFE_SEARCH = true
 const val WALLPAPERSAPI_BASE_URL = "https://pixabay.com/"

@@ -59,8 +59,6 @@ class WallpapersRepository @Inject constructor(@ApplicationContext context: Cont
                 wallpapersApi.getImageList(
                     BuildConfig.API_KEY,
                     IMAGE_PER_PAGE,
-                    BACKGROUND,
-                    VERTICAL_ORIENTATION,
                     PHOTO,
                     SAFE_SEARCH,
                     collection
