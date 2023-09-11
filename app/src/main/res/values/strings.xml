@@ -33,6 +33,7 @@
     <string name="collection_error">Error: collection is null</string>
     <string name="setWallpaper_error">Error: image has not been loaded</string>
     <string name="shared_prefs_error">Error: SharedPrefs is null.</string>
+    <string name="error_when_saving_image">Error when saving image.</string>
     <string name="loading_error">Loading error.</string>
     <string name="no_permission">No permission to access photo and media.</string>
     <string name="no_results_found">No results found.</string>

@@ -38,7 +38,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.io.IOException
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -344,15 +343,23 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
                     if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
                         try {
                             imageSharedViewModel.saveBitmapToExternalStorage(resource, image.id)
-                        } catch (e: IOException) {
+                        } catch (exception: Exception) {
                             messageUtils.showToast(
                                 requireActivity(),
-                                resources.getString(R.string.loading_error)
+                                resources.getString(R.string.error_when_saving_image)
                             )
-                            e.printStackTrace()
+                            exception.printStackTrace()
                         }
                     } else {
-                        imageSharedViewModel.saveBitmapToMediaStore(requireActivity(), resource, image.id)
+                        try {
+                            imageSharedViewModel.saveBitmapToMediaStore(requireActivity(), resource, image.id)
+                        } catch (exception: Exception) {
+                            messageUtils.showToast(
+                                requireActivity(),
+                                resources.getString(R.string.error_when_saving_image)
+                            )
+                            exception.printStackTrace()
+                        }
                     }
                     lifecycleScope.launch(Dispatchers.Main) {
                         messageUtils.showToast(
