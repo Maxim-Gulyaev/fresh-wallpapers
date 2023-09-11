@@ -174,7 +174,8 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
                         messageUtils.showSnackbar(
                             binding.ivImage,
                             resources.getString(R.string.network_error_message),
-                            resources.getString(R.string.got_it)
+                            resources.getString(R.string.got_it),
+                            binding.imageBottomAppBar
                         )
                     }
                     return false
