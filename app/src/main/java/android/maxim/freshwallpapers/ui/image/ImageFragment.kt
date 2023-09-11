@@ -17,7 +17,6 @@ import android.maxim.freshwallpapers.utils.MessageUtils
 import android.os.Build
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -61,7 +60,10 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
             if (isGranted) {
                 saveImage()
             } else {
-                showToast(R.string.no_permission)
+                messageUtils.showToast(
+                    requireActivity(),
+                    resources.getString(R.string.no_permission)
+                )
             }
         }
     }
@@ -237,14 +239,6 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
         _binding = null
     }
 
-    //todo: consider to delete this method if it has single usage
-    private fun showToast(messageResId: Int) {
-        Toast.makeText(
-            requireActivity(),
-            requireActivity().getString(messageResId),
-            Toast.LENGTH_LONG).show()
-    }
-
     private fun getStatusBarHeight(): Int {
         val rect = Rect()
         requireActivity().window.decorView.getWindowVisibleDisplayFrame(rect)
@@ -351,20 +345,29 @@ class ImageFragment: Fragment(R.layout.fragment_image) {
                         try {
                             imageSharedViewModel.saveBitmapToExternalStorage(resource, image.id)
                         } catch (e: IOException) {
-                            showToast(R.string.loading_error)
+                            messageUtils.showToast(
+                                requireActivity(),
+                                resources.getString(R.string.loading_error)
+                            )
                             e.printStackTrace()
                         }
                     } else {
                         imageSharedViewModel.saveBitmapToMediaStore(requireActivity(), resource, image.id)
                     }
                     lifecycleScope.launch(Dispatchers.Main) {
-                        showToast(R.string.image_saved)
+                        messageUtils.showToast(
+                            requireActivity(),
+                            resources.getString(R.string.image_saved)
+                        )
                     }
                 }
                 override fun onLoadFailed(errorDrawable: Drawable?) {
                     super.onLoadFailed(errorDrawable)
                     lifecycleScope.launch(Dispatchers.Main) {
-                        showToast(R.string.loading_error)
+                        messageUtils.showToast(
+                            requireActivity(),
+                            resources.getString(R.string.loading_error)
+                        )
                     }
                 }
                 override fun onLoadCleared(placeholder: Drawable?) {}
