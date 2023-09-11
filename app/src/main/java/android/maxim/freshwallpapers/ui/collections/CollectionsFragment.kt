@@ -1,7 +1,6 @@
 package android.maxim.freshwallpapers.ui.collections
 
 import android.content.res.Configuration
-import android.maxim.freshwallpapers.MainActivity
 import android.maxim.freshwallpapers.R
 import android.maxim.freshwallpapers.databinding.FragmentCollectionsBinding
 import android.maxim.freshwallpapers.ui.ImageSharedViewModel
@@ -25,10 +24,13 @@ import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class CollectionsFragment: Fragment(R.layout.fragment_collections) {
 
+    @Inject
+    lateinit var messageUtils: MessageUtils
     private var _binding: FragmentCollectionsBinding? = null
     private val binding get() = _binding!!
     private val imageSharedViewModel: ImageSharedViewModel by viewModels()
@@ -86,7 +88,7 @@ class CollectionsFragment: Fragment(R.layout.fragment_collections) {
                         }
                     }
             } catch (exception: Exception) {
-                MessageUtils().showToast(
+                messageUtils.showToast(
                     requireActivity(),
                     resources.getString(R.string.remote_server_error)
                 )
