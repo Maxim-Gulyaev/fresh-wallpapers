@@ -37,8 +37,12 @@ class ImageListAdapter(private val imageList: List<Image>)
     }
 
     override fun onBindViewHolder(holder: ImageListViewHolder, position: Int) {
-        val previewURL: String = imageList[position].previewURL
-        holder.bind(previewURL)
+        val rawPreviewURL: String = imageList[position].previewURL
+        val resizedPreviewURL = rawPreviewURL.replace(
+            "_640",
+            "_340"
+        )
+        holder.bind(resizedPreviewURL)
         holder.itemView.setOnClickListener {
             val bundle = Bundle()
             bundle.putParcelable(IMAGE_KEY, imageList[position])
