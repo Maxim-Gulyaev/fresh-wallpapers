@@ -19,5 +19,6 @@ const val IMAGE_PER_PAGE = 198
 const val PHOTO = "photo"
 const val SAFE_SEARCH = true
 const val WALLPAPERSAPI_BASE_URL = "https://pixabay.com/"
+const val PRIVACY_POLICY_URL = "https://www.termsfeed.com/live/3baccc57-c2fb-44e9-91c1-41adce28e4bb"
 
 const val SOURCE = "www.pixabay.com"

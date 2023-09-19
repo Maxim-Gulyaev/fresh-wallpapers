@@ -5,13 +5,16 @@ import android.maxim.freshwallpapers.R
 import android.maxim.freshwallpapers.databinding.FragmentSettingsBinding
 import android.maxim.freshwallpapers.utils.DARK_MODE
 import android.maxim.freshwallpapers.utils.LIGHT_MODE
+import android.maxim.freshwallpapers.utils.PRIVACY_POLICY_URL
 import android.maxim.freshwallpapers.utils.SYSTEM_MODE
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsetsController
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -43,6 +46,11 @@ class SettingsFragment: Fragment(R.layout.fragment_settings) {
 
         binding.llAppearance.setOnClickListener {
             findNavController().navigate(R.id.action_settingsFragment_to_appearanceDialogFragment)
+        }
+
+        binding.llPrivacy.setOnClickListener {
+            val cctIntent = CustomTabsIntent.Builder().build()
+            cctIntent.launchUrl(requireContext(), Uri.parse(PRIVACY_POLICY_URL))
         }
         return binding.root
     }

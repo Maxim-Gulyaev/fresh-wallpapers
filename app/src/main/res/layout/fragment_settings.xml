@@ -17,6 +17,8 @@
         app:layout_constraintTop_toTopOf="parent"
         />
 
+    <!--Linear layouts are used here for smooth tap animation-->
+
     <LinearLayout
         android:id="@+id/ll_appearance"
         android:layout_width="match_parent"
@@ -47,6 +49,30 @@
             tools:text="light"
             android:gravity="end|center_vertical"
             android:paddingEnd="16dp"
+            tools:ignore="RtlSymmetry"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_privacy"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:clickable="true"
+        app:layout_constraintTop_toBottomOf="@id/ll_appearance"
+        android:focusable="true"
+        android:background="?attr/selectableItemBackground">
+
+        <TextView
+            android:id="@+id/tv_privacy"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:textSize="20sp"
+            android:layout_weight="1"
+            android:text="@string/privacy_policy"
+            android:gravity="center_vertical"
+            android:paddingStart="16dp"
             tools:ignore="RtlSymmetry"
             />
 
