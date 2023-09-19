@@ -44,11 +44,11 @@ class SettingsFragment: Fragment(R.layout.fragment_settings) {
             }
         }
 
-        binding.llAppearance.setOnClickListener {
+        binding.layoutAppearance.setOnClickListener {
             findNavController().navigate(R.id.action_settingsFragment_to_appearanceDialogFragment)
         }
 
-        binding.llPrivacy.setOnClickListener {
+        binding.layoutPrivacy.setOnClickListener {
             val cctIntent = CustomTabsIntent.Builder().build()
             cctIntent.launchUrl(requireContext(), Uri.parse(PRIVACY_POLICY_URL))
         }
