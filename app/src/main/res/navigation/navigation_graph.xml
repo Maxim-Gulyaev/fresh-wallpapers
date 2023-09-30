@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/collectionsFragment"
-        android:name="android.maxim.freshwallpapers.ui.collections.CollectionsFragment"
+        android:name="com.maxim.freshwallpapers.ui.collections.CollectionsFragment"
         android:label="CollectionsFragment"
         tools:layout="@layout/fragment_collections">
         <action
@@ -24,7 +24,7 @@
 
     <fragment
         android:id="@+id/imageListFragment"
-        android:name="android.maxim.freshwallpapers.ui.imagelist.ImageListFragment"
+        android:name="com.maxim.freshwallpapers.ui.imagelist.ImageListFragment"
         android:label="ImageListFragment"
         tools:layout="@layout/fragment_image_list">
         <action
@@ -36,7 +36,7 @@
 
     <fragment
         android:id="@+id/imageFragment"
-        android:name="android.maxim.freshwallpapers.ui.image.ImageFragment"
+        android:name="com.maxim.freshwallpapers.ui.image.ImageFragment"
         android:label="ImageFragment"
         tools:layout="@layout/fragment_image">
         <action
@@ -48,7 +48,7 @@
     </fragment>
     <dialog
         android:id="@+id/infoDialogFragment"
-        android:name="android.maxim.freshwallpapers.ui.image.InfoDialogFragment">
+        android:name="com.maxim.freshwallpapers.ui.image.InfoDialogFragment">
         <action
             android:id="@+id/action_infoDialogFragment_to_imageFragment"
             app:destination="@+id/imageFragment"
@@ -57,7 +57,7 @@
     </dialog>
     <dialog
         android:id="@+id/applyDialogFragment"
-        android:name="android.maxim.freshwallpapers.ui.image.ApplyDialogFragment">
+        android:name="com.maxim.freshwallpapers.ui.image.ApplyDialogFragment">
         <action
             android:id="@+id/action_applyDialogFragment_to_imageFragment"
             app:destination="@id/imageFragment"
@@ -68,7 +68,7 @@
 
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="android.maxim.freshwallpapers.ui.settings.SettingsFragment"
+        android:name="com.maxim.freshwallpapers.ui.settings.SettingsFragment"
         android:label="SettingsFragment"
         tools:layout="@layout/fragment_settings">
         <action
@@ -77,7 +77,7 @@
     </fragment>
     <dialog
         android:id="@+id/appearanceDialogFragment"
-        android:name="android.maxim.freshwallpapers.ui.settings.AppearanceDialogFragment">
+        android:name="com.maxim.freshwallpapers.ui.settings.AppearanceDialogFragment">
         <action
             android:id="@+id/action_appearanceDialogFragment_to_settingsFragment"
             app:destination="@+id/settingsFragment"
