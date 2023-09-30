@@ -3,6 +3,11 @@
 Fresh Wallpapers is a free and open source application for Android.  
 The application offers images from professional and amateur photographers.
 
+## Downloads
+<a href="https://github.com/Maxim-Gulyaev/fresh-wallpapers/releases/latest">
+  <img src="https://raw.githubusercontent.com/patzly/doodle-android/master/assets/badge_github.png" alt="GitHub" width="260" height="100">
+</a>
+
 ## Screenshots
 <img src="https://github.com/Maxim-Gulyaev/fragmen-data-transition/assets/101832548/3ab63b1e-b75b-41f3-9ed4-16b456df60f8" width="260">
 <img src="https://github.com/Maxim-Gulyaev/fragmen-data-transition/assets/101832548/ceedc10b-747a-4dc6-93e1-01ce911f6079" width="260">
@@ -17,4 +22,5 @@ The application offers images from professional and amateur photographers.
 - [x] Favorites
 - [x] Search images on pixabay.com
 - [x] Light, dark or system appearance mode
-- [x] Link to support picture authors 
+- [x] Link to support picture authors
+
